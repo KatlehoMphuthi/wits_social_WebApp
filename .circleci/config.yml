@@ -28,8 +28,8 @@ jobs:
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: npm
       - run:
-          name: Run tests
-          command: npm test
+          name: firebase 
+          command: npm install firebase --save
       - run:
           command: npm test -- --coverage
     
