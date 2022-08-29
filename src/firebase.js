@@ -4,6 +4,7 @@ import { getDatabase } from "firebase/database"
 
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,18 +33,31 @@ export const database = getDatabase(app);
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA3nYLo0FSdnuzMRl3rE4ocV9B6o7C2s_0",
-  authDomain: "wits-social-a5069.firebaseapp.com",
-  databaseURL: "https://wits-social-a5069-default-rtdb.firebaseio.com",
-  projectId: "wits-social-a5069",
-  storageBucket: "wits-social-a5069.appspot.com",
-  messagingSenderId: "353931215460",
-  appId: "1:353931215460:web:3698eb84d9575c19621571",
-  measurementId: "G-J2P86TQJK9"
+  apiKey: "AIzaSyA8TWsczDtb8qAXypoRRNmsVt77msL2GXk",
+  authDomain: "wits-social-7aafb.firebaseapp.com",
+  databaseURL: "https://wits-social-7aafb-default-rtdb.firebaseio.com",
+  projectId: "wits-social-7aafb",
+  storageBucket: "wits-social-7aafb.appspot.com",
+  messagingSenderId: "929664260842",
+  appId: "1:929664260842:web:858134693a7d4da3db1593",
+  measurementId: "G-CTRL52YF52"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const database = getDatabase(app);
+export const auth = getAuth(app);
+
+export function createUsers(auth,email,password){
+  
+  createUserWithEmailAndPassword(auth,email,password)
+  .then(()=>{
+    console.log("Account created successfully!");
+  })
+  .catch((error) => {
+    const errorMessage = error.message;
+    console.log(errorMessage);
+  });
+};
 
