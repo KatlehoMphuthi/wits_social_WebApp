@@ -1,5 +1,6 @@
 
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Button } from 'semantic-ui-react';
@@ -10,22 +11,16 @@ import './styleR.css';
 export default function Register(){
 
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors, isSubmitSuccessful, isSubmitting, },watch } = useForm();
     const navigate = useNavigate();
+    const signin =() =>{navigate('/login',{replace:true})};
            
     //Send data to firebase
-    const onSubmit = (data) => {
+    const onSubmit = (data,e) => {
+        //
+        e.preventDefault()
 
-        //object with form inputs
-        console.log(data);
-        
-        //TODO
-        //Check if the username already exists in the database
-        //Implement confirm password
-        //Implement the show password eye
-        //Tell the user they have successfully registered
-        //Clear form after validation
-
+        //Get fields from inputs
         let obj = {
             firstName : data.firstName,
             lastName:data.lastName,
@@ -33,6 +28,7 @@ export default function Register(){
             password:data.password
         }
 
+        //create new user
         createUsers(obj.email,obj.password,obj.firstName,obj.lastName);
         navigate('/',{replace:true});
 
@@ -48,9 +44,9 @@ export default function Register(){
 
       };
     
-    return(
+      return(
         <div className='form-container'>
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form onSubmit={handleSubmit(onSubmit)} >
                 <Form.Field>
                     <label>First Name</label>
                     <input placeholder='First Name' type="text"
@@ -90,11 +86,24 @@ export default function Register(){
                 <Form.Field>
                     <label>Confirm Password</label>
                     <input placeholder='Confirm Password' type="password"
-                    //{...register("confirmpassword")}
+                    {...register("confirm_password", {
+                        required: true,
+                        validate: (val) => {
+                          if (watch('password') != val) {
+                            return "Your passwords do no match";
+                          }
+                        },
+                       })}
                     />
                 </Form.Field>
-                <Button type='submit'>Sign Up</Button>
-            </Form>
+                {errors.confirm_password && <p className="text-error">{errors.confirm_password.message}</p>}
+                <Button type='submit' loading={isSubmitting} class="ui primary button">
+                    Sign Up
+                </Button>
 
+                <span>Already a member? <Link to="/">Sign in</Link></span>
+            </Form>
         </div>
-    )}
+    )
+
+}

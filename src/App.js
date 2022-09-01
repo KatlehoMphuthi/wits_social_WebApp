@@ -1,6 +1,7 @@
 
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import Login from './Login';
 import Register from './Registration';
 import Reset from './Reset';
