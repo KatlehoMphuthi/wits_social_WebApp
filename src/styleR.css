@@ -3,6 +3,15 @@ body{
     background: -webkit-linear-gradient(to right, hsl(210, 25%, 98%), #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #f4f6f8, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+.form-container{
+    margin-top: 200px;
+}
+
+.text-error{
+    font-weight: 600;
+    color: red;
+  }
 /*
 .form{
     background-color: white;

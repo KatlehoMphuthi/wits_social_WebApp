@@ -83,6 +83,8 @@ export default function Register(){
                     />
                 </Form.Field>
                 {errors.password && <p className="text-error">your password should contain one Capital Letter, one Small Letter, and the number of characters should be between 6 to 15.</p>}
+               
+               
                 <Form.Field>
                     <label>Confirm Password</label>
                     <input placeholder='Confirm Password' type="password"
@@ -101,7 +103,7 @@ export default function Register(){
                     Sign Up
                 </Button>
 
-                <span>Already a member? <Link to="/">Sign in</Link></span>
+                <p>Already a member? <Link to="/">Sign in</Link></p>
             </Form>
         </div>
     )

@@ -61,7 +61,9 @@ function Login(){
         </Form>
         <div className='footer'>
                 <Button onClick={reset}>Forget Password</Button>
-                <p onClick={signup}>Sign Up</p>
+                <p> <Link to="/reset">Forget Password</Link></p>
+                <p>Become a member <Link to="/register">Sign up</Link></p>
+                
         </div>
     </div>
     );
