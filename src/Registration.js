@@ -1,128 +1,100 @@
 
-import React, {useState,setState} from 'react';
-import {database} from './firebase'
-import {ref,push,child,update} from "firebase/database";
-import './styleR.css'
+import React from 'react'
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Form, Button } from 'semantic-ui-react';
+import {createUsers} from './firebase';
+import './styleR.css';
 
-function RegistrationForm() {
-    
-    const [firstName, setFirstName] = useState(null);
-    const [lastName, setLastName] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [password,setPassword] = useState(null);
-    const [confirmPassword,setConfirmPassword] = useState(null);
 
-    const handleInputChange = (e) => {
-        const {id , value} = e.target;
-        if(id === "firstName"){
-            setFirstName(value);
-        }
-        if(id === "lastName"){
-            setLastName(value);
-        }
-        if(id === "email"){
-            setEmail(value);
-        }
-        if(id === "password"){
-            setPassword(value);
-        }
-        if(id === "confirmPassword"){
-            setConfirmPassword(value);
-        }
+export default function Register(){
 
-    }
 
-    
-    const handleValidation= () => {
-        let fields = this.state.fields;
-        let errors = {};
-        let formIsValid = true;
-    
-        //Name
-        if (!fields["name"]) {
-          formIsValid = false;
-          errors["name"] = "Cannot be empty";
-        }
-    
-        if (typeof fields["name"] !== "undefined") {
-          if (!fields["name"].match(/^[a-zA-Z]+$/)) {
-            formIsValid = false;
-            errors["name"] = "Only letters";
-          }
-        }
-    
-        //Email
-        if (!fields["email"]) {
-          formIsValid = false;
-          errors["email"] = "Cannot be empty";
-        }
-    
-        if (typeof fields["email"] !== "undefined") {
-          let lastAtPos = fields["email"].lastIndexOf("@");
-          let lastDotPos = fields["email"].lastIndexOf(".");
-    
-          if (
-            !(
-              lastAtPos < lastDotPos &&
-              lastAtPos > 0 &&
-              fields["email"].indexOf("@@") == -1 &&
-              lastDotPos > 2 &&
-              fields["email"].length - lastDotPos > 2
-            )
-          ) {
-            formIsValid = false;
-            errors["email"] = "Email is not valid";
-          }
-          
-        }
-    }
-    const handleSubmit = () =>{
-        let obj = {
-                firstName : firstName,
-                lastName:lastName,
-                email:email,
-                password:password,
-                confirmPassword:confirmPassword,
-            }       
-        const newPostKey = push(child(ref(database), 'posts')).key;
-        const updates = {};
-        updates['/' + newPostKey] = obj
-        return update(ref(database), updates);
-    }
-
-    return(
-        <div className="form">
-            <div className="form-body">
-                <div className="username">
-                   
-               
-               <input className="form__input" type="text" value={firstName} onChange = {(e) => handleInputChange(e)} id="firstName" placeholder="First Name"/>
-  
-                </div>
-                <div className="lastname">
-                   
-                    <input  type="text" name="" id="lastName" value={lastName}  className="form__input" onChange = {(e) => handleInputChange(e)} placeholder="LastName"/>
-                </div>
-                <div className="email">
-                   
-                    <input  type="email" id="email" className="form__input" value={email} onChange = {(e) => handleInputChange(e)} placeholder="Email"/>
-                </div>
-                <div className="password">
-                   
-                    <input className="form__input" type="password"  id="password" value={password} onChange = {(e) => handleInputChange(e)} placeholder="Password"/>
-                </div>
-                <div className="confirm-password">
-                    
-                    <input className="form__input" type="password" id="confirmPassword" value={confirmPassword} onChange = {(e) => handleInputChange(e)} placeholder="Confirm Password"/>
-                </div>
-                <div class="footer">
-                <button onClick={()=>handleSubmit()} type="submit" class="btn">Register</button>
-            </div>
-            </div>
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
            
-        </div>
-       
-    )       
-}
+    //Send data to firebase
+    const onSubmit = (data) => {
 
-export default RegistrationForm;
+        //object with form inputs
+        console.log(data);
+        
+        //TODO
+        //Check if the username already exists in the database
+        //Implement confirm password
+        //Implement the show password eye
+        //Tell the user they have successfully registered
+        //Clear form after validation
+
+        let obj = {
+            firstName : data.firstName,
+            lastName:data.lastName,
+            email:data.email,
+            password:data.password
+        }
+
+        createUsers(obj.email,obj.password,obj.firstName,obj.lastName);
+        navigate('/',{replace:true});
+
+       /* if(result === "success"){
+            navigate('/',{replace:true});
+        }else{
+            if(result === "auth/email-already-in-use"){
+                alert("Email already exists!");
+            }else{
+                //console.log(result);
+            }
+        }*/
+
+      };
+    
+    return(
+        <div className='form-container'>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form.Field>
+                    <label>First Name</label>
+                    <input placeholder='First Name' type="text"
+                    {...register("firstName" , { required: true, maxLength: 10 })}
+                    />
+                </Form.Field>
+                {errors.firstName && <p className="text-error">Please check the First Name</p>}
+                <Form.Field>
+                    <label>Last Name</label>
+                    <input placeholder='Last Name' type="text"
+                    {...register("lastName")}
+                    />
+                </Form.Field>
+                {errors.firstName && <p className="text-error">Please check the First Name</p>}
+
+                <Form.Field>
+                    <label>Email</label>
+                    <input placeholder='Email' type="email"
+                    {...register("email",{
+                        required: true,
+                        pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    })}
+                    />
+                </Form.Field>
+                {errors.email && <p className="text-error">Please check the Email</p>}
+
+                <Form.Field>
+                    <label>Password</label>
+                    <input placeholder='Password' type="password"
+                    {...register("password",  {
+                        required: true,
+                        pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+                    })}
+                    />
+                </Form.Field>
+                {errors.password && <p className="text-error">your password should contain one Capital Letter, one Small Letter, and the number of characters should be between 6 to 15.</p>}
+                <Form.Field>
+                    <label>Confirm Password</label>
+                    <input placeholder='Confirm Password' type="password"
+                    //{...register("confirmpassword")}
+                    />
+                </Form.Field>
+                <Button type='submit'>Sign Up</Button>
+            </Form>
+
+        </div>
+    )}
