@@ -114,7 +114,6 @@ export function resetPass(email){
     
   })
   .catch((error) => {
-    const errorCode = error.code;
     const errorMessage = error.message;
     console.log(errorMessage);
     return errorMessage;
@@ -125,14 +124,16 @@ export function resetPass(email){
 export function readData(){
   const userid = getCurrentUser();
   const dbRef = ref(database,'users/');
-  let username;
+  let name;
   onValue(dbRef,(DataSnapshot)=>{
-      username =DataSnapshot
+    const  username =DataSnapshot
                       .child(userid)
                       .child("firstname")
                       .val();
+    console.log(username);                  
+    name = username;                
   });
-return username;
+  return name;
 };
 
 
