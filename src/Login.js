@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form, Button } from 'semantic-ui-react';
@@ -9,7 +9,7 @@ function Login(){
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const reset = () =>{navigate('/reset',{replace:true})};
-    const signup =() =>{navigate('/register',{replace:true})};
+    //const signup =() =>{navigate('/register',{replace:true})};
 
     const handlesubmit = (data) =>{
     
