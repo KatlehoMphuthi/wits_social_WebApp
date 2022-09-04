@@ -7,6 +7,9 @@ on:
     # Optionally configure to run only for specific files. For example:
     # paths:
     # - "website/**"
+    
+env:
+     CI: ""
 
 jobs:
   deploy_live_website:
