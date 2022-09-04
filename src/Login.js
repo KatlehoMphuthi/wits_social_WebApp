@@ -33,7 +33,7 @@ function Login(){
     return(
         <div className='form-container'>
         <Form onSubmit={handleSubmit(handlesubmit)}>
-            <h1>Welcome to Wits Social</h1>
+            <h1>Welcome to Wits Social Web App</h1>
             <Form.Field>
                 <label>Email</label>
                 <input placeholder='Email' type="email"
