@@ -8,7 +8,7 @@ import './styleR.css';
 export default function Login(){
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const reset = () =>{navigate('/reset',{replace:true})};
+    //const reset = () =>{navigate('/reset',{replace:true})};
     //const signup =() =>{navigate('/register',{replace:true})};
 
 
@@ -18,7 +18,7 @@ export default function Login(){
 
 
     const handlesubmit = (data) =>{
-            let result;
+            
 
             let obj = {
                 email: data.email,
@@ -79,4 +79,4 @@ export default function Login(){
         </div>
     </div>
     );
-};
+}}
