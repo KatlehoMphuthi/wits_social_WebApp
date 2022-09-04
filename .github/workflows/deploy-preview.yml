@@ -1,7 +1,8 @@
 name: Deploy to Preview Channel
 on:
   pull_request:
-    branches: [ main ]
+    branches:
+     - main
     # Optionally configure to run only for specific files. For example:
     # paths:
     # - "website/**"
@@ -18,4 +19,4 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           expires: 30d
-          projectId: your-Firebase-project-ID
+          projectId: sdpwits-social
