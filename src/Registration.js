@@ -46,8 +46,9 @@ export default function Register(){
       };
     
       return(
-        <div className='form-container'>
+        <div class="ui form raised very padded text container segment">
             <Form onSubmit={handleSubmit(onSubmit)} >
+                <h1>Sign up</h1>
                 <Form.Field>
                     <label>First Name</label>
                     <input placeholder='First Name' type="text"
@@ -100,9 +101,8 @@ export default function Register(){
                     />
                 </Form.Field>
                 {errors.confirm_password && <p className="text-error">{errors.confirm_password.message}</p>}
-                <Button type='submit' loading={isSubmitting} class="ui primary button">
-                    Sign Up
-                </Button>
+                
+                <Button type='submit' loading={isSubmitting}  content='Sign up' primary />
 
                 <p>Already a member? <Link to="/">Sign in</Link></p>
             </Form>
