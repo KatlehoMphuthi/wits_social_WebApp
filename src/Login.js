@@ -5,7 +5,7 @@ import { Form, Button } from 'semantic-ui-react';
 import { loginUser } from './firebase';
 import './styleR.css';
 
-function Login(){
+export default function Login(){
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const reset = () =>{navigate('/reset',{replace:true})};
@@ -69,6 +69,4 @@ function Login(){
         </div>
     </div>
     );
-}
-
-export default Login;
+};
