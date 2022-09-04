@@ -1,5 +1,4 @@
 name: Deploy to Preview Channel
-
 on:
   pull_request:
     branches: [ main ]
