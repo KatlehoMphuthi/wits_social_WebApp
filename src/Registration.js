@@ -15,7 +15,7 @@ export default function Register(){
     const navigate = useNavigate();
     const signin =() =>{navigate('/login',{replace:true})};
            
-    //This is a test comment
+    //This is a test comment 2
     //Send data to firebase
     const onSubmit = (data,e) => {
         //
