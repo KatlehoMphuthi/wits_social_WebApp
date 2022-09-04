@@ -12,14 +12,16 @@ function Login(){
     //const signup =() =>{navigate('/register',{replace:true})};
 
     const handlesubmit = (data) =>{
-    
+            let result;
             let obj = {
                 email: data.email,
                 password: data.password,
             };
         
-            const user = loginUser(obj.email,obj.password);
-            if(user !== null){
+            const response = loginUser(obj.email,obj.password);
+            console.log(response);
+            
+            if(response === "success"){
                 navigate('/newsfeed',{replace: true});
             }else{
                 alert("There is an error");
