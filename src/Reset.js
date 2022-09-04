@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from 'semantic-ui-react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { resetPass } from "./firebase";
 import "./Reset.css";
 
@@ -29,7 +29,7 @@ const handlesubmit = (data) =>{
 };
 
   return (
-    <div className='reset__container'>
+    <div class="ui form raised very padded text container segment">
         <Form onSubmit={handleSubmit(handlesubmit)}>
 
             <Form.Field>
@@ -47,8 +47,7 @@ const handlesubmit = (data) =>{
 
         </Form>
         <div className='footer'>
-                <Button onClick={login}>Forget Password</Button>
-                <Button onClick={signup}>Sign Up</Button>
+        <p>Dont't have an account?<Link to="/register">Sign up</Link></p>
         </div>
     </div>
   );

@@ -11,8 +11,15 @@ function Login(){
     const reset = () =>{navigate('/reset',{replace:true})};
     //const signup =() =>{navigate('/register',{replace:true})};
 
+
+    const handlesubmit = (data, e) =>{
+        //Prevent from from resubmiting after cancel
+            e.preventDefault();
+
+
     const handlesubmit = (data) =>{
             let result;
+
             let obj = {
                 email: data.email,
                 password: data.password,
@@ -33,9 +40,11 @@ function Login(){
             
 
     return(
-        <div className='form-container'>
-        <Form onSubmit={handleSubmit(handlesubmit)}>
-            <h1>Welcome to Wits Social Web App</h1>
+        <div class="ui form raised very padded text container segment">
+        <Form onSubmit={handleSubmit(handlesubmit)} >
+            <h1>Sign in</h1>
+
+        
             <Form.Field>
                 <label>Email</label>
                 <input placeholder='Email' type="email"
@@ -47,24 +56,25 @@ function Login(){
             </Form.Field>
             {errors.email && <p className="text-error">Please check the Email</p>}
 
-            <Form.Field>
+
+            <Form.Field class="field">
                 <label>Password</label>
                 <input placeholder='Password' type="password"
                 {...register("password",  {
                     required: true,
                     pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
                 })}
+                
                 />
             </Form.Field>
-            {errors.password && <p className="text-error">Incorrect password</p>}
+             {errors.password && <p className="text-error ">Incorrect password</p>}
             
-            <Button type='submit'>Sign In</Button>
+            <Button type='submit' content='Sign in' primary />
 
         </Form>
         <div className='footer'>
-                <Button onClick={reset}>Forget Password</Button>
-                <p> <Link to="/reset">Forget Password</Link></p>
-                <p>Become a member <Link to="/register">Sign up</Link></p>
+                <p>Dont't have an account?<Link to="/register">Sign up</Link></p>
+                <p> <Link to="/reset">Forgot Password?</Link></p>
                 
         </div>
     </div>
