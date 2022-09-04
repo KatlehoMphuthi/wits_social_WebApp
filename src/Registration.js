@@ -11,10 +11,11 @@ import './styleR.css';
 export default function Register(){
 
 
-    const { register, handleSubmit, formState: { errors, isSubmitSuccessful, isSubmitting, },watch } = useForm();
+    const { register, handleSubmit, formState: { errors, isSubmitting, },watch } = useForm();
     const navigate = useNavigate();
-    const signin =() =>{navigate('/login',{replace:true})};
+    //const signin =() =>{navigate('/login',{replace:true})};
            
+    //This is a test comment 2
     //Send data to firebase
     const onSubmit = (data,e) => {
         //
@@ -91,7 +92,7 @@ export default function Register(){
                     {...register("confirm_password", {
                         required: true,
                         validate: (val) => {
-                          if (watch('password') != val) {
+                          if (watch('password') !== val) {
                             return "Your passwords do no match";
                           }
                         },
