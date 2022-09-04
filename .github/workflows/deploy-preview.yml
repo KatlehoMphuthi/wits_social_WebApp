@@ -6,7 +6,10 @@ on:
     # Optionally configure to run only for specific files. For example:
     # paths:
     # - "website/**"
-
+    
+env:
+     CI: ""
+     
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
