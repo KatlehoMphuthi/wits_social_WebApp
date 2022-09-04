@@ -11,12 +11,6 @@ export default function Login(){
     //const reset = () =>{navigate('/reset',{replace:true})};
     //const signup =() =>{navigate('/register',{replace:true})};
 
-
-    const handlesubmit = (data, e) =>{
-        //Prevent from from resubmiting after cancel
-            e.preventDefault();
-
-
     const handlesubmit = (data) =>{
             
 
@@ -79,4 +73,4 @@ export default function Login(){
         </div>
     </div>
     );
-}}
+}
