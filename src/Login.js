@@ -11,17 +11,24 @@ function Login(){
     const reset = () =>{navigate('/reset',{replace:true})};
     //const signup =() =>{navigate('/register',{replace:true})};
 
+
     const handlesubmit = (data, e) =>{
         //Prevent from from resubmiting after cancel
             e.preventDefault();
+
+
+    const handlesubmit = (data) =>{
+            let result;
 
             let obj = {
                 email: data.email,
                 password: data.password,
             };
         
-            const user = loginUser(obj.email,obj.password);
-            if(user !== null){
+            const response = loginUser(obj.email,obj.password);
+            console.log(response);
+            
+            if(response === "success"){
                 navigate('/newsfeed',{replace: true});
             }else{
                 alert("There is an error");

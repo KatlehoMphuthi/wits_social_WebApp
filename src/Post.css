@@ -1,0 +1,36 @@
+ .post{
+    /* size of pic */
+    background-color: #ffffff;
+    max-width: 800px;
+    border: 1px solid lightgray;
+    /* placing the images in a border-start-end-radius: ; */
+    margin-bottom:  45px;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    
+    /* gap between images */
+
+ }
+ .post_image{
+    
+    width: 100%;
+    object-fit: contain;
+    
+
+ }
+ .post_text{
+    /* make the  comment  different from name  */
+    font-weight: normal;
+ }
+ .post_header{
+    /* puts them in a row */
+    display: flex; 
+    align-items: center;
+    padding: 20px;
+ }
+ .post_avatar{
+    margin-right:10px ;
+ }

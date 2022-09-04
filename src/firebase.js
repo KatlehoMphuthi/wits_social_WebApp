@@ -11,7 +11,8 @@ import { getAnalytics } from "firebase/analytics";
 import {getAuth, 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail} from "firebase/auth";
+  sendPasswordResetEmail,
+  signOut} from "firebase/auth";
 
 
 // Your web app's Firebase configuration
@@ -29,24 +30,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+//get the access to the database
 export const database = getDatabase(app);
 export const auth = getAuth(app);
-
-function mapAuthCodeToMessage(authCode) {
-  switch (authCode) {
-    case "auth/invalid-password":
-      return "Password provided is not corrected";
-
-    case "auth/invalid-email":
-      return "Email provided is invalid";
-
-      case "auth/email-already-in-use":
-        return "Email already exists";
-  
-      default:
-        return "";
-    }
-  }
 
 
 //create a function to store users in the database
@@ -84,19 +70,31 @@ export function createUsers(email,password,name, lastName){
 }
 
 //Login function
-export const loginUser = async(email,password) =>{
+export const loginUser = (email,password) =>{
+  let errorMessage;
   try {
-    const res= await signInWithEmailAndPassword(auth,email,password);
+    const res= signInWithEmailAndPassword(auth,email,password);
     const user = res.user;
     console.log("user has logged in");
-    
-    
+    errorMessage = "success";
   } catch (error) {
     console.log(error);
-    alert(error.message);
+    if(error.message === "Firebase: Error (auth/wrong-password)."){
+      errorMessage = "error";
+      
+      alert("The password you have entered is incorrect");
+    }
+    else{
+      errorMessage = "error";
+      alert("An error has occured");
+    }
+    
   }
 
+  return errorMessage;
+
 }
+
 
 //Get current user 
 function getCurrentUser(){
@@ -114,7 +112,6 @@ export function resetPass(email){
     
   })
   .catch((error) => {
-    const errorCode = error.code;
     const errorMessage = error.message;
     console.log(errorMessage);
     return errorMessage;
@@ -122,18 +119,34 @@ export function resetPass(email){
   });
 }
 
+// get the user information
+export function getUserinfo(){
+  const info = readData();
+  return info;
+};
+// Read the data from the database
 export function readData(){
   const userid = getCurrentUser();
   const dbRef = ref(database,'users/');
-  let username;
+  let name;
   onValue(dbRef,(DataSnapshot)=>{
-      username =DataSnapshot
+    const  username =DataSnapshot
                       .child(userid)
                       .child("firstname")
                       .val();
+    console.log(username);                  
+    name = username;                
   });
-return username;
+  return name;
 };
+
+//User logout
+
+export const logout = () => {
+  signOut(auth);
+};
+
+
 
 
 
