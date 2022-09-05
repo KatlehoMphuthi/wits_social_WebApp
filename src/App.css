@@ -1,0 +1,18 @@
+.App {
+  margin: 0;
+}
+.app_headerImage{
+  /* keeping the image still no matter what */
+  width: 400px;
+    height: 20;
+  object-fit: contain;
+  background-color: white;
+  /* boarder grey line */
+  padding: 1%;
+  border-bottom:1px solid lightblue ;
+}
+.app{
+   background-color: #fafafaef; 
+   height: 100%;
+}
+ 

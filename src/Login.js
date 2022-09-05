@@ -5,20 +5,14 @@ import { Form, Button } from 'semantic-ui-react';
 import { loginUser } from './firebase';
 import './styleR.css';
 
-function Login(){
+export default function Login(){
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const reset = () =>{navigate('/reset',{replace:true})};
+    //const reset = () =>{navigate('/reset',{replace:true})};
     //const signup =() =>{navigate('/register',{replace:true})};
 
-
-    const handlesubmit = (data, e) =>{
-        //Prevent from from resubmiting after cancel
-            e.preventDefault();
-
-
     const handlesubmit = (data) =>{
-            let result;
+            
 
             let obj = {
                 email: data.email,
@@ -80,5 +74,3 @@ function Login(){
     </div>
     );
 }
-
-export default Login;
