@@ -31,6 +31,7 @@ export default function Login () {
     }
   }
 
+
   return (
     <div className='login-container'>
       <div class='ui form  text container'>
@@ -42,6 +43,14 @@ export default function Login () {
               width={65}
               className='form-logo'
             />
+
+            
+            
+
+    return(
+        <div className="ui form raised very padded text container segment">
+        <Form onSubmit={handleSubmit(handlesubmit)} >
+
             <h1>Sign in</h1>
             <p>
               Sign in with your email and password created during your
@@ -74,7 +83,23 @@ export default function Login () {
           </Form.Field>
           {errors.password && <p className='text-error '>Incorrect password</p>}
 
+
           <Button type='submit' content='Sign in' primary />
+
+            <Form.Field className="field">
+                <label>Password</label>
+                <input placeholder='Password' type="password"
+                {...register("password",  {
+                    required: true,
+                    pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
+                })}
+                
+                />
+            </Form.Field>
+             {errors.password && <p className="text-error ">Incorrect password</p>}
+            
+            <Button type='submit' content='Sign in' primary />
+
 
           <p>
             Dont't have an account?
