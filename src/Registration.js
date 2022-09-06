@@ -32,17 +32,9 @@ export default function Register () {
 
     //create new user
     createUsers(obj.email, obj.password, obj.firstName, obj.lastName)
+    
+    //navigate to login page
     navigate('/', { replace: true })
-
-    /* if(result === "success"){
-            navigate('/',{replace:true});
-        }else{
-            if(result === "auth/email-already-in-use"){
-                alert("Email already exists!");
-            }else{
-                //console.log(result);
-            }
-        }*/
   }
 
   return (
