@@ -89,4 +89,40 @@ describe("Register", ()=>{
         //expect(mockLogin).toBeCalled();
       });
     
+      it("test firebase response", () => {
+        fireEvent.input(screen.getByPlaceholderText(/first name/i),{
+            target: {
+                value: "test02"
+            }
+        });
+
+        fireEvent.input(screen.getByPlaceholderText(/last name/i),{
+            target: {
+                value: "testuser02"
+            }
+        });
+
+        const min = 1;
+        const max = 100;
+        const rand = min + Math.random() * (max - min);
+
+        fireEvent.input(screen.getByPlaceholderText(/email/i), {
+          target: { 
+            value: "test000"+rand.toString()+"@mail.com"
+          }
+        });
+    
+        userEvent.type(screen.getAllByPlaceholderText(/password/i)[0],"Password123");
+
+        fireEvent.input(screen.getByPlaceholderText(/confirm password/i), {
+            target: {
+              value: "Password123"
+            }
+          });
+    
+        fireEvent.submit(screen.getByRole("button", {name: /sign up/i}));
+    
+        waitFor(() => expect(window.alert).toBeCalledWith("success"));
+        //expect(mockLogin).toBeCalled();
+      });
 });
