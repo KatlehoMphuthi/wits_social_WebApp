@@ -1,3 +1,9 @@
+.navbar{
+  position: static;
+  top: 0;
+  z-index: 100;
+}
+
 .Newsfeed {
   margin: 0;
 }
@@ -14,4 +20,82 @@
 .newsfeed{
    background-color: #fafafaef; 
    height: 100%;
+}
+
+/*-----Code from Siys */
+
+.layout {
+  display: grid;
+  background-color: #FAFCFE;
+  grid-template-columns: 200px auto 300px;
+  margin: 0 auto;
+}
+
+.layout__right-sidebar {
+  position: fixed;
+  width: 300px;
+}
+
+.tweet {
+  display: flex;
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.tweet:hover {
+  background: rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+}
+
+.tweet a {
+  color: #1b94e0;
+  text-decoration: none;
+}
+
+.tweet a:hover {
+  text-decoration: underline;
+}
+
+.tweet__author-logo {
+  width: 50px !important;
+  height: 50px !important; 
+  border-radius: 50%;
+  margin-right: 1.5rem;
+}
+
+.tweet__header {
+  display: flex;
+}
+
+.tweet__author-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #14171a;
+  margin-right: 5px;
+}
+
+.tweet__author-slug {
+  color: #5b7083;
+  font-size: 15px;
+}
+
+.tweet__publish-time {
+  margin-left: 5px;
+  color: #657786;
+}
+
+.tweet__image {
+  width: 100%;
+  border-radius: 15px;
+  margin-top: 1.5rem;
+}
+
+.layout__main{
+  margin-top:0.1rem;
+}
+
+.tweet__content{
+  margin-top: 1rem;
 }
