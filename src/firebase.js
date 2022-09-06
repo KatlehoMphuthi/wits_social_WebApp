@@ -86,6 +86,7 @@ export const loginUser = (email,password) =>{
     }
     else{
       errorMessage = "error";
+      console.log(error.message);
       alert("An error has occured");
     }
     

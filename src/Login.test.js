@@ -43,6 +43,47 @@ describe("Login", ()=>{
         expect(screen.getByPlaceholderText(/password/i).value).toBe("password");
 
     });
+    //Test alert error messages
+    it("should say that user does not exist", () => {
+      const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
+      fireEvent.input(screen.getByPlaceholderText(/email/i), {
+        target: {
+          value: "test1000@mail.com"
+        }
+      });
+  
+      fireEvent.input(screen.getByPlaceholderText(/password/i), {
+        target: {
+          value: "Password123"
+        }
+      });
+  
+      fireEvent.submit(screen.getByRole("button", {name: /sign in/i}));
+  
+      waitFor(() => expect(alertMock).toBeCalledWith("An error has occured"));
+      expect(mockLogin).not.toBeCalled();
+    });
+
+    //test alert error: wrong password
+    it("should say that user does not exist", () => {
+      const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
+      fireEvent.input(screen.getByPlaceholderText(/email/i), {
+        target: {
+          value: "test01@mail.com"
+        }
+      });
+  
+      fireEvent.input(screen.getByPlaceholderText(/password/i), {
+        target: {
+          value: "Password"
+        }
+      });
+  
+      fireEvent.submit(screen.getByRole("button", {name: /sign in/i}));
+  
+       waitFor(() => expect(alertMock).toBeCalledWith("The password you have entered is incorrect"));
+      //expect(mockLogin).toBeCalled();
+    });
 
 
 
