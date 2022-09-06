@@ -147,7 +147,7 @@ export default function Register () {
           </p>
         </Form>
       </div>
-      <div className='info-sidebar-signin'></div>
+      <div className='info-sidebar-signup'></div>
     </div>
   )
 }

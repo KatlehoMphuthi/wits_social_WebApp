@@ -33,12 +33,12 @@ export default function Login () {
 
   return (
     <div className='login-container'>
-      <div class='ui form  text container'>
+      <div class='ui form text container'>
         <Form onSubmit={handleSubmit(handlesubmit)}>
           <div className='form-header'>
             <img
               src='/svg/WS_Logo.svg'
-              alt=''
+              alt='Wits Social Logo'
               width={65}
               className='form-logo'
             />
@@ -79,12 +79,10 @@ export default function Login () {
           <p>
             Dont't have an account?
             <Link to='/register' className='form-sm-bold'>
-              {' '}
               Sign up
             </Link>
           </p>
           <p className='form-sm-bold'>
-            {' '}
             <Link to='/reset'>Forgot Password?</Link>
           </p>
         </Form>
