@@ -13,13 +13,16 @@ function Reset() {
   const signup =() =>{navigate('/register',{replace:true})};
 
 const handlesubmit = (data) =>{
-
+        //create an object to store the information 
         let obj = {
             email: data.email,
         };
-
+        
+        //call the reset password function from firebase
         const result = resetPass(obj.email);
-
+        
+  
+        // determine if the email was either sent or not  sent 
         if(result === "success"){
           navigate('/',{replace:true});
         }else{
