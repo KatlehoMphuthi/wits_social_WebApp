@@ -13,8 +13,6 @@ function Newsfeed(){
      imgUrl : "https://i.ytimg.com/vi/zeO1yrVeC0U/maxresdefault.jpg ",
      name:"@MichaelM"
     },
-
-    
     {
       username:"BMW Motors",
        caption:" Carry out a random act of kindness, with no expectation of reward, safe in the knowledge that one day someone might do the same for you",
@@ -22,7 +20,6 @@ function Newsfeed(){
       name:"@OfficialBMWMotors"
      
     },
-    
     {
       username:"Boera",
        caption:"", 
