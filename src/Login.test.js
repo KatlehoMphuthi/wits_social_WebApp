@@ -17,9 +17,9 @@ describe("Login", ()=>{
 
 
     it("should display the required error when value is invalid", () =>{
-        fireEvent.submit(screen.getByRole('button', {
+        fireEvent.submit(screen.getAllByRole('button', {
             name: /sign in/i
-          }));
+          })[0]);
 
         expect(mockLogin).not.toBeCalled();
     });
@@ -31,16 +31,16 @@ describe("Login", ()=>{
             }
         });
 
-        fireEvent.input(screen.getByPlaceholderText(/password/i), {
+        fireEvent.input(screen.getAllByPlaceholderText(/password/i)[0], {
             target: {
               value: "password"
             }
           });
 
-        fireEvent.submit(screen.getByRole("button", {name: /sign in/i}));
+        fireEvent.submit(screen.getAllByRole("button", {name: /sign in/i})[0]);
         expect(mockLogin).not.toBeCalled();
         expect(screen.getByRole("textbox").value).toBe("test");
-        expect(screen.getByPlaceholderText(/password/i).value).toBe("password");
+        expect(screen.getAllByPlaceholderText(/password/i)[0].value).toBe("password");
 
     });
     //Test alert error messages
@@ -52,13 +52,13 @@ describe("Login", ()=>{
         }
       });
   
-      fireEvent.input(screen.getByPlaceholderText(/password/i), {
+      fireEvent.input(screen.getAllByPlaceholderText(/password/i)[0], {
         target: {
           value: "Password123"
         }
       });
   
-      fireEvent.submit(screen.getByRole("button", {name: /sign in/i}));
+      fireEvent.submit(screen.getAllByRole("button", {name: /sign in/i})[0]);
   
       waitFor(() => expect(alertMock).toBeCalled());
       expect(mockLogin).not.toBeCalled();
@@ -73,13 +73,13 @@ describe("Login", ()=>{
         }
       });
   
-      fireEvent.input(screen.getByPlaceholderText(/password/i), {
+      fireEvent.input(screen.getAllByPlaceholderText(/password/i)[0], {
         target: {
           value: "Password"
         }
       });
   
-      fireEvent.submit(screen.getByRole("button", {name: /sign in/i}));
+      fireEvent.submit(screen.getAllByRole("button", {name: /sign in/i})[0]);
   
        waitFor(() => expect(alertMock).toBeCalledWith("The password you have entered is incorrect"));
       //expect(mockLogin).toBeCalled();
@@ -94,13 +94,13 @@ describe("Login", ()=>{
           }
         });
     
-        fireEvent.input(screen.getByPlaceholderText(/password/i), {
+        fireEvent.input(screen.getAllByPlaceholderText(/password/i)[0], {
           target: {
             value: "Password123"
           }
         });
     
-        fireEvent.submit(screen.getByRole("button", {name: /sign in/i}));
+        fireEvent.submit(screen.getAllByRole("button", {name: /sign in/i})[0]);
     
         waitFor(() => expect(screen.getByRole('button', { name: /logout/i })).toBeInTheDocument());
         //expect(mockLogin).toBeCalled();
