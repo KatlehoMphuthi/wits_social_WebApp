@@ -12,10 +12,10 @@ export default function Login () {
     formState: { errors }
   } = useForm()
   const navigate = useNavigate()
-  //const reset = () =>{navigate('/reset',{replace:true})};
-  //const signup =() =>{navigate('/register',{replace:true})};
 
+  //create a submit function 
   const handlesubmit = data => {
+    
     let obj = {
       email: data.email,
       password: data.password
@@ -43,13 +43,6 @@ export default function Login () {
               width={65}
               className='form-logo'
             />
-
-            
-            
-
-    return(
-        <div className="ui form raised very padded text container segment">
-        <Form onSubmit={handleSubmit(handlesubmit)} >
 
             <h1>Sign in</h1>
             <p>
@@ -118,3 +111,4 @@ export default function Login () {
     </div>
   )
 }
+
