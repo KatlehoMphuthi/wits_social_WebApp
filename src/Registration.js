@@ -76,7 +76,7 @@ export default function Register(){
                 {errors.email && <p className="text-error">Please check the Email</p>}
 
                 <Form.Field>
-                    <label>Password</label>
+                    <label for ="pass">Password</label>
                     <input placeholder='Password' type="password"
                     {...register("password",  {
                         required: true,
