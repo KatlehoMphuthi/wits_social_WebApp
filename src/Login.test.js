@@ -60,7 +60,7 @@ describe("Login", ()=>{
   
       fireEvent.submit(screen.getByRole("button", {name: /sign in/i}));
   
-      waitFor(() => expect(alertMock).toBeCalledWith("An error has occured"));
+      waitFor(() => expect(alertMock).toBeCalled());
       expect(mockLogin).not.toBeCalled();
     });
 
