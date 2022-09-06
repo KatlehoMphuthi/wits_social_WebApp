@@ -34,13 +34,19 @@ export default function Login(){
             
 
     return(
-        <div class="ui form raised very padded text container segment">
-        <Form onSubmit={handleSubmit(handlesubmit)} >
-            <h1>Sign in</h1>
+        <div className="login-container">
+            
+             <div class="ui form  text container">
 
-        
+
+        <Form onSubmit={handleSubmit(handlesubmit)} >
+            <div className='form-header'>
+                <img src="/svg/WS_Logo.svg" alt="" width={65} className="form-logo"/>
+                <h1>Sign in</h1>
+                <p>Sign in with your email and password created during your registration</p>
+            </div>
             <Form.Field>
-                <label>Email</label>
+                <label className='lb'>Email</label>
                 <input placeholder='Email' type="email"
                 {...register("email",{
                     required: true,
@@ -65,12 +71,12 @@ export default function Login(){
             
             <Button type='submit' content='Sign in' primary />
 
+            <p>Dont't have an account?<Link to="/register" className='form-sm-bold'>   Sign up</Link></p>
+                <p className='form-sm-bold'> <Link to="/reset">Forgot Password?</Link></p>
         </Form>
-        <div className='footer'>
-                <p>Dont't have an account?<Link to="/register">Sign up</Link></p>
-                <p> <Link to="/reset">Forgot Password?</Link></p>
-                
-        </div>
+    </div>
+    <div className='info-sidebar-signin'></div>
+    
     </div>
     );
 }

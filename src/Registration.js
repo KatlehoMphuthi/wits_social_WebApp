@@ -46,9 +46,15 @@ export default function Register(){
       };
     
       return(
-        <div class="ui form raised very padded text container segment">
+        <div className="login-container">
+            
+             <div class="ui form  text container">
             <Form onSubmit={handleSubmit(onSubmit)} >
-                <h1>Sign up</h1>
+            <div className='form-header'>
+                <img src="/svg/WS_Logo.svg" alt="" width={65} className="form-logo"/>
+                <h1>Sign Up</h1>
+                <p>Become the member of Wits Social!</p>
+            </div>
                 <Form.Field>
                     <label>First Name</label>
                     <input placeholder='First Name' type="text"
@@ -104,9 +110,12 @@ export default function Register(){
                 
                 <Button type='submit' loading={isSubmitting}  content='Sign up' primary />
 
-                <p>Already a member? <Link to="/">Sign in</Link></p>
+                <p>Already a member? <Link to="/" className='form-sm-bold'>Sign in</Link></p>
             </Form>
-        </div>
+            </div>
+    <div className='info-sidebar-signin'></div>
+    
+    </div>
     )
 
 }
