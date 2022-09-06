@@ -47,7 +47,7 @@ export default function Register () {
 
   return (
     <div className='login-container'>
-      <div class='ui form  text container'>
+      <div className='ui form  text container'>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className='form-header'>
             <img
@@ -134,7 +134,7 @@ export default function Register () {
           )}
 
                 <Form.Field>
-                    <label for ="pass">Password</label>
+                    <label >Password</label>
                     <input placeholder='Password' type="password"
                     {...register("password",  {
                         required: true,

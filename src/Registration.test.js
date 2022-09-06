@@ -18,9 +18,9 @@ describe("Register", ()=>{
 
 
     it("Should errors in the form fields", () =>{
-        fireEvent.submit(screen.getByRole('button', {
+        fireEvent.submit(screen.getAllByRole('button', {
             name: /sign up/i
-          }));
+          })[0]);
 
         expect(screen.getByRole('heading', {
             name: /sign up/i
@@ -36,7 +36,7 @@ describe("Register", ()=>{
             }
         });
 
-        fireEvent.submit(screen.getByRole("button", {name: /sign up/i}));
+        fireEvent.submit(screen.getAllByRole("button", {name: /sign up/i})[0]);
         expect(mockSignUp).not.toBeCalled();
         expect(screen.getByPlaceholderText(/first name/i).value).toBe("test");
 
@@ -50,7 +50,7 @@ describe("Register", ()=>{
             }
         });
 
-        fireEvent.submit(screen.getByRole("button", {name: /sign up/i}));
+        fireEvent.submit(screen.getAllByRole("button", {name: /sign up/i})[0]);
         expect(mockSignUp).not.toBeCalled();
         expect(screen.getByPlaceholderText(/last name/i).value).toBe("test");
 
@@ -75,15 +75,15 @@ describe("Register", ()=>{
           }
         });
     
-        userEvent.type(screen.getAllByPlaceholderText(/password/i),"Password123");
+        userEvent.type(screen.getAllByPlaceholderText(/password/i)[0],"Password123");
 
-        fireEvent.input(screen.getByPlaceholderText(/confirm password/i), {
+        fireEvent.input(screen.getAllByPlaceholderText(/confirm password/i)[0], {
             target: {
               value: "Password123"
             }
           });
     
-        fireEvent.submit(screen.getByRole("button", {name: /sign up/i}));
+        fireEvent.submit(screen.getAllByRole("button", {name: /sign up/i})[0]);
     
         waitFor(() => expect(window.alert).toBeInTheDocument());
         //expect(mockLogin).toBeCalled();
@@ -114,13 +114,13 @@ describe("Register", ()=>{
     
         userEvent.type(screen.getAllByPlaceholderText(/password/i)[0],"Password123");
 
-        fireEvent.input(screen.getByPlaceholderText(/confirm password/i), {
+        fireEvent.input(screen.getAllByPlaceholderText(/confirm password/i)[0], {
             target: {
               value: "Password123"
             }
           });
     
-        fireEvent.submit(screen.getByRole("button", {name: /sign up/i}));
+        fireEvent.submit(screen.getAllByRole("button", {name: /sign up/i})[0]);
     
         waitFor(() => expect(window.alert).toBeCalledWith("success"));
         //expect(mockLogin).toBeCalled();
