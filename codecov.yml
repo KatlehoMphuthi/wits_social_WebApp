@@ -3,4 +3,4 @@ ignore:
   - "src/Buttons.js"
   - "src/reportWebVitals.js"
   - "src/Header.js"
-  - "src/firbase.js"
+  - "src/firebase.js"
