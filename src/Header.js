@@ -19,7 +19,7 @@ export default function Header() {
 		navigate('/',{replace: true});
 	};
 return (
-	<AppBar position="static">
+	<AppBar position="fixed">
 		<Toolbar>
 		{/*Inside the IconButton, we
 		can render various icons*/}
@@ -47,7 +47,9 @@ return (
 			component="div" sx={{ flexGrow: 1 }}>
 			Wits Social
 		</Typography>
+
 		<Button color="inherit" onClick={submit}>Logout</Button>
+
 		</Toolbar>
 	</AppBar>
 );
