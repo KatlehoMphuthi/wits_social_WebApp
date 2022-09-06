@@ -34,7 +34,7 @@ export default function Login(){
             
 
     return(
-        <div class="ui form raised very padded text container segment">
+        <div className="ui form raised very padded text container segment">
         <Form onSubmit={handleSubmit(handlesubmit)} >
             <h1>Sign in</h1>
 
@@ -51,7 +51,7 @@ export default function Login(){
             {errors.email && <p className="text-error">Please check the Email</p>}
 
 
-            <Form.Field class="field">
+            <Form.Field className="field">
                 <label>Password</label>
                 <input placeholder='Password' type="password"
                 {...register("password",  {
