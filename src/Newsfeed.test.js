@@ -16,5 +16,12 @@ describe("Newsfeed", ()=>{
     it("Should show the header", () =>{
         expect(screen.getByText(/wits social/i)).toBeInTheDocument();
     });
+
+    //should click the logout button
+    it("Should click button and change screens", () =>{
+        fireEvent.submit(screen.getByRole("button", {name: /logout/i}));
+        waitFor(() => expect(screen.getByRole("button", {name: /sign in/i})).toBeInTheDocument());
+
+    });
     
 });
