@@ -1,23 +1,23 @@
 import React from 'react'
 import './Post.css';
-import { Avatar } from '@mui/material'
-import { Provider, LikeButton } from "@lyket/react";
 
-function Posts({username,caption,imgUrl}) {
+function Posts({username,caption,imgUrl,name}) {
+
+  let time = Math.floor((Math.random() * 45) + 1)
   return (
 
     <div className="tweet">
-          <img className="tweet__author-logo" src="https://source.unsplash.com/random/50×50" />
+          <img className="tweet__author-logo" src="https://source.unsplash.com/random/100*100" />
           <div className="tweet__main">
             <div className="tweet__header">
               <div className="tweet__author-name">
               {username}
               </div>
               <div className="tweet__author-slug">
-                @elixirdigest
+                {name}
               </div>
               <div className="tweet__publish-time">
-                10d
+                {time + "min ago"}
               </div>
             </div>
             <div className="tweet__content">

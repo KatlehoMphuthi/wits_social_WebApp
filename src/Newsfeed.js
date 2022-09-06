@@ -2,32 +2,41 @@ import React from "react";
 import { useState } from 'react';
 import Header from "./Header";
 import Post from './Posts';
-import LeftSidebar from './LeftSidebar'
 import './Newsfeed.css'
+import Topbar from "./Topbar";
 
 function Newsfeed(){
   const [posts,setPost] = useState([
     {
     username : "Michael",
-     caption : "Welcome guys",
-     imgUrl : "https://i.ytimg.com/vi/zeO1yrVeC0U/maxresdefault.jpg "
-      
-
+     caption : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
+     imgUrl : "https://i.ytimg.com/vi/zeO1yrVeC0U/maxresdefault.jpg ",
+     name:"@MichaelM"
     },
 
     
     {
       username:"BMW Motors",
-       caption:" The New BMW M3",
-      imgUrl:"https://source.unsplash.com/random/300×300"
+       caption:" Carry out a random act of kindness, with no expectation of reward, safe in the knowledge that one day someone might do the same for you",
+      imgUrl:"https://source.unsplash.com/random/100*200",
+      name:"@OfficialBMWMotors"
      
     },
     
     {
       username:"Boera",
-       caption:"Heyyyy", 
-       imgUrl:"https://source.unsplash.com/random/300×300"
-       
+       caption:"", 
+       imgUrl:"https://source.unsplash.com/random/100*210",
+       name:"@Human"
+    }
+
+    ,
+    
+    {
+      username:"Lebohang",
+       caption:"", 
+       imgUrl:"https://source.unsplash.com/random/100*205",
+       name:"@Human"
     }
     
   ]);
@@ -35,19 +44,20 @@ function Newsfeed(){
   
   return (
     <div>
-    <Header className="navbar"/>
+    <Topbar className="navbar"/>
     <div className="layout">
-    
+
       <div className="layout__left--sidebar">
-        <LeftSidebar />
       </div>
 
       <div className="layout__main">
       {
          posts.map(post=>(
           <Post username={post.username} 
-          caption= {post.caption}
-            imgUrl = {post.imgUrl}            
+              name={post.name}
+            caption= {post.caption}
+            imgUrl = {post.imgUrl}
+            time = {post.time}          
           />)) 
        }
        </div>
