@@ -10,9 +10,9 @@ The platform will be accesses through an android application.
 
 ## Tools:
 These are software tools used to build the application:
-- [Android Studio](https://developer.android.com/studio) (Front End)
+- [React Framework](https://reactjs.org/) (Front End)
 - [Firebase](https://firebase.google.com/) (Backend)
-- [Material Design](https://material.io/develop/android) (user interface)
+- [Material Design](https://www.figma.com/) (user interface)
 
 ## Features:
 This section will talk about the features implemented thus far:
