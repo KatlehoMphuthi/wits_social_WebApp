@@ -6,24 +6,30 @@ import { loginUser } from './firebase'
 import './styleR.css'
 
 export default function Login () {
+
+    //React hook forms to hadle validation
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
-  const navigate = useNavigate()
-  //const reset = () =>{navigate('/reset',{replace:true})};
-  //const signup =() =>{navigate('/register',{replace:true})};
 
+  //To navigate between the pages
+  const navigate = useNavigate()
+
+
+  //This funtion submits the form to firebase
   const handlesubmit = data => {
+
+    //Get form inputs
     let obj = {
       email: data.email,
       password: data.password
     }
 
     const response = loginUser(obj.email, obj.password)
-    console.log(response)
 
+    //When credintals are valid
     if (response === 'success') {
       navigate('/newsfeed', { replace: true })
     } else {
@@ -31,6 +37,7 @@ export default function Login () {
     }
   }
 
+  //Login form component
   return (
     <div className='login-container'>
       <div class='ui form text container'>
