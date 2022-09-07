@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
-import { createUsers } from './firebase'
-import './styleR.css'
+import { createUsers } from '../../firebase'
+import './authentication.css'
 
 export default function Register () {
   const {
@@ -14,10 +14,8 @@ export default function Register () {
     watch
   } = useForm()
   const navigate = useNavigate()
-  //const signin =() =>{navigate('/login',{replace:true})};
 
-  //This is a test comment 2
-  //Send data to firebase
+
   const onSubmit = (data, e) => {
     //
     e.preventDefault()
@@ -34,7 +32,8 @@ export default function Register () {
     createUsers(obj.email, obj.password, obj.firstName, obj.lastName)
     navigate('/', { replace: true })
 
-    /* if(result === "success"){
+    /*
+     if(result === "success"){
             navigate('/',{replace:true});
         }else{
             if(result === "auth/email-already-in-use"){
@@ -46,7 +45,7 @@ export default function Register () {
   }
 
   return (
-    <div className='login-container'>
+    <div className='form-wrapper'>
       <div class='ui form  text container'>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className='form-header'>

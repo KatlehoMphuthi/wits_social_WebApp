@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
-import { loginUser } from './firebase'
-import './styleR.css'
+import { loginUser } from '../../firebase'
+import './authentication.css'
 
 export default function Login () {
 
@@ -39,7 +39,7 @@ export default function Login () {
 
   //Login form component
   return (
-    <div className='login-container'>
+    <div className='form-wrapper'>
       <div class='ui form text container'>
         <Form onSubmit={handleSubmit(handlesubmit)}>
           <div className='form-header'>

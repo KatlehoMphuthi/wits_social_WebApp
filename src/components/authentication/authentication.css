@@ -1,0 +1,86 @@
+/*---------------- GLOBAL-----------------*/
+* {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.form-container {
+  margin-top: 200px;
+}
+
+.form-wrapper {
+  flex: 1 2;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui.form.text {
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 50%;
+  border-radius: 1rem;
+}
+
+.ui.form {
+  width: 60%;
+}
+
+/*------------------- UTILITIES----------------------*/
+.text-error {
+  font-weight: 600;
+  color: red;
+}
+
+.form-sm-bold {
+  font-size: 1rem;
+  font-weight: bolder;
+  text-transform: none;
+}
+
+.form-header {
+  margin-bottom: 1.5rem;
+}
+
+.form-logo {
+  padding-bottom: 1rem;
+}
+
+.ui.form > label {
+  font-size: 12px;
+  color: gray;
+}
+
+/*-------------- SIGN IN & SIAN UP--------------------*/
+
+.info-sidebar-signup,
+.info-sidebar-signin,
+.info-sidebar-reset{
+  height: 100%;
+  width: 60%;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+}
+
+/*---------------------SIGN UP--------------------------*/
+.info-sidebar-signup {
+  background-image: url("../../images/signup-cover.jpg"); /* Go two levels up to the images directory */
+}
+
+/*---------------------SIGN IN--------------------------*/
+
+.info-sidebar-signin {
+  background-image: url("../../images/signin-cover.jfif"); /* Go two levels up to the images directory */
+}
+
+/*---------------------RESET PASSWORD--------------------------*/
+
+.info-sidebar-reset {
+  background-image: url("../../images/forgot-password-cover.jpg");
+}
