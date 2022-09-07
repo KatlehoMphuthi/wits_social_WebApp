@@ -1,9 +1,6 @@
-//import * as React from "react";
 import React from 'react'
-import { render } from "react-dom";
-//import c from "classnames";
-import "./bstyle.css";
 
+//This class build the like buton component
 class Buttons extends React.Component {
   state = {
     like: 0,
@@ -66,9 +63,3 @@ class Buttons extends React.Component {
 
 
 export default Buttons
-//function App() {
-//  return <Buttons />;
-//}
-
-//const rootElement = document.getElementById("root");
-//render(<App />, rootElement);
