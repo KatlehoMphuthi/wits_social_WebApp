@@ -10,9 +10,22 @@ The platform will be accesses through an android application.
 
 ## Tools:
 These are software tools used to build the application:
-- [React Framework](https://reactjs.org/) (Front End)
-- [Firebase](https://firebase.google.com/) (Backend)
-- [Material Design](https://www.figma.com/) (user interface)
+* Nodejs:
+[![npm version](https://badge.fury.io/js/node.png)](https://badge.fury.io/js/node)
+* React Framework:
+[![npm version](https://badge.fury.io/js/react.svg)](https://badge.fury.io/js/react)
+* Firebase:
+[![npm version](https://badge.fury.io/js/firebase.svg)](https://badge.fury.io/js/firebase)
+* Material UI:
+[![npm version](https://badge.fury.io/js/@mui%2Fmaterial.svg)](https://badge.fury.io/js/@mui%2Fmaterial)
+* Bootstrap:
+[![npm version](https://badge.fury.io/js/bootstrap.svg)](https://badge.fury.io/js/bootstrap)
+* Semantic UI:
+[![npm version](https://badge.fury.io/js/semantic-ui.svg)](https://badge.fury.io/js/semantic-ui)
+* Testing:
+   * jest:[![npm version](https://badge.fury.io/js/@testing-library%2Fjest-dom.svg)](https://badge.fury.io/js/@testing-library%2Fjest-dom)
+   * user-event: [![npm version](https://badge.fury.io/js/@testing-library%2Fuser-event.svg)](https://badge.fury.io/js/@testing-library%2Fuser-event)
+   * react: [![npm version](https://badge.fury.io/js/@testing-library%2Freact.svg)](https://badge.fury.io/js/@testing-library%2Freact)
 
 ## Features:
 This section will talk about the features implemented thus far:
