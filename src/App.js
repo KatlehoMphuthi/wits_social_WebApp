@@ -7,8 +7,7 @@ import Register from './Registration';
 import Reset from './Reset';
 import Newsfeed from './Newsfeed';
 
-
-//import RegistrationForm from './Registration';
+//App components and paths
 function App() {
   return (
     <div className="App">

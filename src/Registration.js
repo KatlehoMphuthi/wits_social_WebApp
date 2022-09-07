@@ -32,22 +32,14 @@ export default function Register () {
 
     //create new user
     createUsers(obj.email, obj.password, obj.firstName, obj.lastName)
+    
+    //navigate to login page
     navigate('/', { replace: true })
-
-    /* if(result === "success"){
-            navigate('/',{replace:true});
-        }else{
-            if(result === "auth/email-already-in-use"){
-                alert("Email already exists!");
-            }else{
-                //console.log(result);
-            }
-        }*/
   }
 
   return (
     <div className='login-container'>
-      <div class='ui form  text container'>
+      <div className='ui form  text container'>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className='form-header'>
             <img
@@ -134,7 +126,7 @@ export default function Register () {
           )}
 
                 <Form.Field>
-                    <label for ="pass">Password</label>
+                    <label >Password</label>
                     <input placeholder='Password' type="password"
                     {...register("password",  {
                         required: true,
@@ -178,7 +170,7 @@ export default function Register () {
           </p>
         </Form>
       </div>
-      <div className='info-sidebar-signin'></div>
+      <div className='info-sidebar-signup'></div>
     </div>
   )
 }

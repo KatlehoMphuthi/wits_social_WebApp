@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from 'react';
-import Header from "./Header";
 import Post from './Posts';
 import './Newsfeed.css'
 import Topbar from "./Topbar";

@@ -17,66 +17,7 @@ body{
     font-weight: 600;
     color: red;
   }
-/*
-.form{
-    background-color: white;
-    
-    /*position: absolute;
-    border-radius: 5px;
-    width: 700px;
-    margin: 20px auto;
-    padding: 60px  ;
-    height: 400px; */
 
-    /*position: absolute;*/
-    /*top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);*/
-
-    /*
-    border-radius: 20px;
-    padding: 40px  ;
-    position: absolute;
-    width: 700px;
-    height: 400px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    
-
-   
-}
-/*
-.form-body{
-    text-align: center;
-    padding: 50px 10px;
-    position: absolute;
-    width: 800px;
-    height: 300px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
-
-.form-body > *{
-    padding: 10px;
-}
-
-
-.form_input{
-
-    width: 90%;
-    justify-content: space-between;
-    flex-direction: row;
-    height: 4vh;
-    display: flex;
-    
-}
-
-.footer{
-    text-align: center;
-}
-*/
 
 .login-container{
     flex: 1 2;
@@ -84,14 +25,20 @@ body{
     display: flex;
   justify-content: center;
   align-items: center;
+ 
 }
 
 .ui.form.text{
-    padding: 2rem 3rem;
-    max-width: 20%;
+    padding: 1rem 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+
+
+.ui.form{
+    width: 60%;
 }
 
 .form-header{
@@ -108,11 +55,15 @@ body{
 }
 
 .info-sidebar-signup{
-    background-image: url("../public/images/Fbpwvq6XEAQYlpx.jfif");
+    background-image: url("../public/images/reg-image.jpg");
 }
 
 .info-sidebar-signin{
     background-image: url("../public/images/Fbpwvq6XEAQYlpx.jfif");
+}
+
+.info-sidebar-reset{
+    background-image: url("../public/images/rest.jpg");
 }
 
 .form-logo{
