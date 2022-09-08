@@ -11,8 +11,10 @@ export default function Login () {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isSubmitting }
+    
   } = useForm()
+
 
   //To navigate between the pages
   const navigate = useNavigate()
@@ -41,7 +43,7 @@ export default function Login () {
   return (
     <div className='form-wrapper'>
       <div class='ui form text container'>
-        <Form onSubmit={handleSubmit(handlesubmit)}>
+        <Form onSubmit={handleSubmit(handlesubmit)} disabled={isSubmitting}>
           <div className='form-header'>
             <img
               src='/svg/WS_Logo.svg'
