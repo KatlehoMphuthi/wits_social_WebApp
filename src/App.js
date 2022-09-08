@@ -1,11 +1,8 @@
-
-//import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-//import { Link } from 'react-router-dom';
-import Login from './Login';
-import Register from './Registration';
-import Reset from './Reset';
-import Newsfeed from './Newsfeed';
+import Login from './components/authentication/Login';
+import Register from './components/authentication/Registration';
+import Reset from './components/authentication/Reset';
+import Newsfeed from './components/newsfeed/Newsfeed';
 
 //App components and paths
 function App() {

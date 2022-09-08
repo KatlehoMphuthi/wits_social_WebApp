@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from 'react';
 import Post from './Posts';
 import './Newsfeed.css'
-import Topbar from "./Topbar";
+import Topbar from '../common/Topbar';
 
 function Newsfeed(){
   const [posts,setPost] = useState([

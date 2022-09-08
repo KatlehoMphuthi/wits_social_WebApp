@@ -2,8 +2,8 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
-import { loginUser } from './firebase'
-import './styleR.css'
+import { loginUser } from '../../firebase'
+import './authentication.css'
 
 export default function Login () {
 
@@ -11,8 +11,10 @@ export default function Login () {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isSubmitting }
+    
   } = useForm()
+
 
   //To navigate between the pages
   const navigate = useNavigate()
@@ -39,9 +41,9 @@ export default function Login () {
 
   //Login form component
   return (
-    <div className='login-container'>
+    <div className='form-wrapper'>
       <div class='ui form text container'>
-        <Form onSubmit={handleSubmit(handlesubmit)}>
+        <Form onSubmit={handleSubmit(handlesubmit)} disabled={isSubmitting}>
           <div className='form-header'>
             <img
               src='/svg/WS_Logo.svg'
