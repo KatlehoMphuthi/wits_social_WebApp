@@ -86,6 +86,7 @@ export const loginUser = (email,password) =>{
     }
     else{
       errorMessage = "error";
+      console.log(error.message);
       alert("An error has occured");
     }
     
@@ -104,19 +105,22 @@ function getCurrentUser(){
 
 // function to reset the password 
 export function resetPass(email){
-  sendPasswordResetEmail(auth, email)
-  .then(() => {
-    // Password reset email sent!
-    console.log("success!");
-    return "success";
-    
-  })
-  .catch((error) => {
-    const errorMessage = error.message;
-    console.log(errorMessage);
-    return errorMessage;
+  let errorMessage; 
+  try{
+    const res  = sendPasswordResetEmail(auth, email)
+    console.log("success")
+    errorMessage = "success";
+  }catch(error) {
+    errorMessage = error.message;
+    if(errorMessage === "Firebase: Error (auth/user-not-found)"){
+      alert("You are not a registered user. Please proceed to the sign up page.");
+    }else{
+      alert("An error has occured!");
+    }
     // ..
-  });
+  };
+
+  return errorMessage;
 }
 
 // get the user information

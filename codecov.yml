@@ -1,0 +1,6 @@
+ignore:
+  - "src/index.js"
+  - "src/Buttons.js"
+  - "src/reportWebVitals.js"
+  - "src/Header.js"
+  - "src/firebase.js"
