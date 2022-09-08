@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import Newsfeed from "./Newsfeed";
+import Newsfeed from "../newsfeed/Newsfeed";
 
 
 describe("Newsfeed", ()=>{
