@@ -4,8 +4,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import { logout } from "./firebase";
+import { logout } from "../../firebase";
 
 export default function Topbar() {
 

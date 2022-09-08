@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import Login from "./Login";
+import Login from "../authentication/Login";
 
 const mockLogin = jest.fn((email,password ) =>{
     return Promise.resolve(email,password);

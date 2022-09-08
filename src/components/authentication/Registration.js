@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
-import { createUsers } from './firebase'
-import './styleR.css'
+import { createUsers } from '../../firebase'
+import './authentication.css'
 
 export default function Register () {
   const {
@@ -14,10 +14,8 @@ export default function Register () {
     watch
   } = useForm()
   const navigate = useNavigate()
-  //const signin =() =>{navigate('/login',{replace:true})};
 
-  //This is a test comment 2
-  //Send data to firebase
+
   const onSubmit = (data, e) => {
     //
     e.preventDefault()
@@ -35,11 +33,22 @@ export default function Register () {
     
     //navigate to login page
     navigate('/', { replace: true })
+
+    /*
+     if(result === "success"){
+            navigate('/',{replace:true});
+        }else{
+            if(result === "auth/email-already-in-use"){
+                alert("Email already exists!");
+            }else{
+                //console.log(result);
+            }
+        }*/
   }
 
   return (
-    <div className='login-container'>
-      <div className='ui form  text container'>
+    <div className='form-wrapper'>
+      <div class='ui form  text container'>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className='form-header'>
             <img
@@ -62,6 +71,8 @@ export default function Register () {
           {errors.firstName && (
             <p className='text-error'>Please check the First Name</p>
           )}
+
+            
           <Form.Field>
             <label>Last Name</label>
             <input
@@ -125,43 +136,9 @@ export default function Register () {
             <p className='text-error'>{errors.confirm_password.message}</p>
           )}
 
-                <Form.Field>
-                    <label >Password</label>
-                    <input placeholder='Password' type="password"
-                    {...register("password",  {
-                        required: true,
-                        pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
-                    })}
-                    />
-                </Form.Field>
-                {errors.password && <p className="text-error">your password should contain one Capital Letter, one Small Letter, and the number of characters should be between 6 to 15.</p>}
-               
-               
-                <Form.Field>
-                    <label>Confirm Password</label>
-                    <input placeholder='Confirm Password' type="password"
-                    {...register("confirm_password", {
-                        required: true,
-                        validate: (val) => {
-                          if (watch('password') !== val) {
-                            return "Your passwords do no match";
-                          }
-                        },
-                       })}
-                    />
-                </Form.Field>
-                {errors.confirm_password && <p className="text-error">{errors.confirm_password.message}</p>}
+                
                 
                 <Button type='submit' loading={isSubmitting}  content='Sign up' primary />
-
-
-          <Button
-            type='submit'
-            loading={isSubmitting}
-            content='Sign up'
-            primary
-          />
-
           <p>
             Already a member?{' '}
             <Link to='/' className='form-sm-bold'>

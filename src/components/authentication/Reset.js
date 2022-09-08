@@ -2,16 +2,13 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from 'semantic-ui-react';
 import { Link, useNavigate } from "react-router-dom";
-import { resetPass } from "./firebase";
-
-import './styleR.css'
+import { resetPass } from "../../firebase";
+import './authentication.css'
 
 function Reset() {
   
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
-  const login = () =>{navigate('/',{replace:true})};
-  const signup =() =>{navigate('/register',{replace:true})};
 
 const handlesubmit = (data) =>{
         //create an object to store the information 
@@ -33,7 +30,7 @@ const handlesubmit = (data) =>{
 };
 
   return (
-    <div className='login-container'>
+    <div className='form-wrapper'>
     <div class='ui form text container'>
         <Form onSubmit={handleSubmit(handlesubmit)}>
         <div className='form-header'>
@@ -43,7 +40,7 @@ const handlesubmit = (data) =>{
               width={65}
               className='form-logo'
             />
-            <p>Enter your email to reset password</p>
+            <p>Forgot your password? <br /> Our team is ready to recover it for you!</p>
           </div>
             <Form.Field>
                 <label>Email</label>
