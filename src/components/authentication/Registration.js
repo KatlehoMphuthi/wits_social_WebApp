@@ -71,6 +71,8 @@ export default function Register () {
           {errors.firstName && (
             <p className='text-error'>Please check the First Name</p>
           )}
+
+            
           <Form.Field>
             <label>Last Name</label>
             <input
@@ -134,43 +136,9 @@ export default function Register () {
             <p className='text-error'>{errors.confirm_password.message}</p>
           )}
 
-                <Form.Field>
-                    <label >Password</label>
-                    <input placeholder='Password' type="password"
-                    {...register("password",  {
-                        required: true,
-                        pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/
-                    })}
-                    />
-                </Form.Field>
-                {errors.password && <p className="text-error">your password should contain one Capital Letter, one Small Letter, and the number of characters should be between 6 to 15.</p>}
-               
-               
-                <Form.Field>
-                    <label>Confirm Password</label>
-                    <input placeholder='Confirm Password' type="password"
-                    {...register("confirm_password", {
-                        required: true,
-                        validate: (val) => {
-                          if (watch('password') !== val) {
-                            return "Your passwords do no match";
-                          }
-                        },
-                       })}
-                    />
-                </Form.Field>
-                {errors.confirm_password && <p className="text-error">{errors.confirm_password.message}</p>}
+                
                 
                 <Button type='submit' loading={isSubmitting}  content='Sign up' primary />
-
-
-          <Button
-            type='submit'
-            loading={isSubmitting}
-            content='Sign up'
-            primary
-          />
-
           <p>
             Already a member?{' '}
             <Link to='/' className='form-sm-bold'>
