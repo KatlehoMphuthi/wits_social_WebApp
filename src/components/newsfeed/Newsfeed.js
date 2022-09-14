@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Post from './Posts';
 import './Newsfeed.css'
 import Topbar from '../common/Topbar';
+import CreatePost from "../post/CreatePost";
 
 function Newsfeed(){
   const [posts,setPost] = useState([
@@ -47,6 +48,7 @@ function Newsfeed(){
       </div>
 
       <div className="layout__main">
+        <div><CreatePost /></div>
       {
          posts.map(post=>(
           <Post username={post.username} 
