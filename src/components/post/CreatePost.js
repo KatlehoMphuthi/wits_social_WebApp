@@ -6,10 +6,12 @@ function CreatePost() {
 
     const addImage = () =>{
         alert("Add image")
+        //render an image block under post
     }
 
 
     const post = () =>{
+        //run validation first
         alert("Post")
     }
   return (

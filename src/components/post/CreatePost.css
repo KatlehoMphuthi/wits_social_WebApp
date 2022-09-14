@@ -20,6 +20,18 @@ background: #EEF2F6;
 border-radius: 8px;
 }
 
+.searchInput:focus{
+    font-family: Roboto;
+font-size: 16px;
+font-weight: 400;
+line-height: 20px;
+letter-spacing: 0.33984375px;
+text-align: left;
+
+color:#00000099;
+background: white;
+}
+
 .action_buttons{
     display: flex;
     justify-content: space-between;
