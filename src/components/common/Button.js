@@ -1,11 +1,11 @@
 import React from 'react'
 import { ReactPropTypes } from "react"
 
-function Button({text,color, onClick}) {
+function Button({text,color, onClick,type}) {
   return (
     <button onClick = {onClick}
     style={{backgroundColor : color }}
-    className="btn">{text}
+    className="btn" type={type}>{text}
     </button>
   )
 }
