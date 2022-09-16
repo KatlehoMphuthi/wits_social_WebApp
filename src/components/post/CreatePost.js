@@ -22,19 +22,11 @@ function CreatePost() {
     setShow(true)
    }
 
-   function isPostValid(){
-      if(!file && postText === "" ){
-        alert(postText)
-        return false
-      }else{
-        return true
-      }
-   }
 
     const post = () =>{
-      if(isPostValid()){
+      if(!file && postText === ""){
         alert('Add text or image to post')
-        alert(postText)
+        alert("emty text ?" + postText)
       }else{
         alert("Add data to firebase")
         alert(postText)
