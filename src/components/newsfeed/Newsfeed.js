@@ -1,10 +1,17 @@
 import React from "react";
-import { useState } from 'react';
+import { useState,useContext} from 'react';
 import Post from './Posts';
 import './Newsfeed.css'
 import Topbar from '../common/Topbar';
+import RightSideBar from "../common/RightSideBar";
+import { AuthContext } from "../../AuthProvider";
 
 function Newsfeed(){
+  
+  const { currentUser } = useContext(AuthContext);
+  
+ 
+  
   const [posts,setPost] = useState([
     {
     username : "Michael",
@@ -59,7 +66,7 @@ function Newsfeed(){
        </div>
 
        <div className="layout__right-sidebar-container">
-       
+          <RightSideBar />
        </div>
     </div>
     </div>

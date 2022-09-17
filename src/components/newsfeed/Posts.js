@@ -22,7 +22,7 @@ function Posts({username,caption,imgUrl,name}) {
             </div>
             <div className="tweet__content">
               {caption}
-              <img class="tweet__image" src={imgUrl} />
+              <img className="tweet__image" src={imgUrl} />
             </div>
           </div>
         </div>

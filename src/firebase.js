@@ -3,11 +3,10 @@ import { getDatabase,set, ref,onValue } from "firebase/database"
 
 import { initializeApp } from "firebase/app";
 
-import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-
+//import from the authentication
 import {getAuth, 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -96,11 +95,54 @@ export const loginUser = (email,password) =>{
 
 }
 
+//Login function
+export const loginUser2 = (email,password) =>{
+  let status;
+  try {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    
+    const dbRef = ref(database,'users/'+ user.uid);
+    onValue(dbRef,(DataSnapshot)=>{              
+      if (DataSnapshot.exists()) {
+       const  data = DataSnapshot.val();
+        const name = data.firstname;
+        console.log(name + " has signed in.");
+      }
+    
+    },{
+      onlyOnce: true
+    });
+    
+  });
+    status = 'done';
+  } catch (error) {
+    console.log(error.message);
+    status = 'failed';
+  }
+  
+
+  return status;
+}
+
+
+
 
 //Get current user 
-function getCurrentUser(){
+export function getCurrentUser(){
+  let userid;
+  const auth = getAuth();
   const user = auth.currentUser;
-  return user.uid;
+
+  if(user !== null){
+    console.log(user.uid);
+    userid = user.uid;
+  }else{
+    console.log(" I do not know what is happening");
+  }
+  return userid;
 }
 
 // function to reset the password 
@@ -130,9 +172,11 @@ export function getUserinfo(){
 };
 // Read the data from the database
 export function readData(){
-  const userid = getCurrentUser();
-  const dbRef = ref(database,'users/');
   let name;
+  if(auth.currentUser !== null){
+  const userid = auth.currentUser.uid;
+  const dbRef = ref(database,'users/');
+  
   onValue(dbRef,(DataSnapshot)=>{
     const  username =DataSnapshot
                       .child(userid)
@@ -141,8 +185,58 @@ export function readData(){
     console.log(username);                  
     name = username;                
   });
+  }
+  
   return name;
 };
+
+
+
+// get all the users with information
+export function getUsers( userid){
+    let users =[]; //initialise the array to store the users in
+    try {
+      let p = new Promise( resolve => {
+        const userRef = ref(database,'users/'); // get reference to the users on databases
+
+        // loop through each user
+        onValue(userRef,(snapshot)=>{
+          snapshot.forEach((childSnapshot)=> 
+           {
+            const childKey = childSnapshot.key;
+            users.push(childKey);
+            resolve(users);
+          });
+        },{
+          onlyOnce:true
+        });
+        
+      });
+
+      p.then((arr) => {
+        console.log(arr);
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+}
+
+// get the follow function 
+export function followHelper(currentUserid,userid){
+  let status; //to let us know if the follow worked or not
+  try {
+    //set reference to follow for the current user
+    set(ref(database,'follow/' + currentUserid+ '/following/'+ userid),true);
+    //set reference to follow for other users
+    set(ref(database,'follow/' + userid+ '/followers/'+ currentUserid),true);
+    
+    status = "finished";
+  } catch (error) {
+    console.log(error.message);
+    status = "failed";
+  }
+  return status;
+}
 
 //User logout
 

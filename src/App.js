@@ -3,10 +3,12 @@ import Login from './components/authentication/Login';
 import Register from './components/authentication/Registration';
 import Reset from './components/authentication/Reset';
 import Newsfeed from './components/newsfeed/Newsfeed';
+import { AuthProvider } from "./AuthProvider";
 
 //App components and paths
 function App() {
   return (
+    <AuthProvider>
     <div className="App">
       <Router>
         <Routes>
@@ -17,6 +19,7 @@ function App() {
         </Routes>
       </Router>
     </div>
+    </AuthProvider>
   );
   
 }
