@@ -2,13 +2,18 @@ import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Newsfeed from "../newsfeed/Newsfeed";
+import { AuthProvider} from "../../AuthProvider";
 
 
 describe("Newsfeed", ()=>{
     beforeEach(() =>{
-        render(<Router>
-                <Newsfeed />
-            </Router>
+        render(
+            <AuthProvider>
+                <Router>
+                    <Newsfeed />
+                </Router>
+            </AuthProvider>
+            
         );
     });
 
