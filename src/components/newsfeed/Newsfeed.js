@@ -5,13 +5,12 @@ import './Newsfeed.css'
 import Topbar from '../common/Topbar';
 import RightSideBar from "../common/RightSideBar";
 import { AuthContext } from "../../AuthProvider";
+import Button from "@mui/material/Button";
+import { logout } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import SidebarMenu from "../common/SidebarMenu";
 
-function Newsfeed(){
-  
-  const { currentUser } = useContext(AuthContext);
-  
- 
-  
+function Newsfeed(){  
   const [posts,setPost] = useState([
     {
     username : "Michael",
@@ -50,7 +49,8 @@ function Newsfeed(){
     <Topbar className="navbar"/>
     <div className="layout">
 
-      <div className="layout__left--sidebar">
+    <div class="layout__left-sidebar">
+      <SidebarMenu />
       </div>
 
       <div className="layout__main">
@@ -66,7 +66,7 @@ function Newsfeed(){
        </div>
 
        <div className="layout__right-sidebar-container">
-          <RightSideBar />
+       <RightSideBar />
        </div>
     </div>
     </div>

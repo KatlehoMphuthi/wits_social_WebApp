@@ -1,26 +1,26 @@
-import "./rightsidebar.css";
+
 import Users_Rsidebar from "./Users_Rsidebar";
 
 function RightSideBar(){
    
     return(
-        <div className="right_sidebarContainer">
-            <div className="header_right">
-                Who to follow?
+        <div className="layout__right-sidebar">
+            <div className="who-to-follow">
+            <div className="who-to-follow__block">
+              <div className="who-to-follow__heading">
+                Who to follow
+              </div>
             </div>
-            <div className="user_container">
                 <Users_Rsidebar />
-            </div>
-
-            <div className="user_container">
                 <Users_Rsidebar />
-            </div>
-
-            <div className="user_container">
                 <Users_Rsidebar />
-            </div>
+       
 
         </div>
+            </div>
+
+
+           
     )
 }
 

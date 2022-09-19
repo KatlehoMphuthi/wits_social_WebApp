@@ -127,6 +127,20 @@ export const loginUser2 = (email,password) =>{
   return status;
 }
 
+//Get current user Object
+export function getCurrentUserObject(){
+  let userid;
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if(user !== null){
+    console.log(user);
+  }else{
+    console.log(" I do not know what is happening");
+  }
+  return user;
+}
+
 
 
 
@@ -170,6 +184,7 @@ export function getUserinfo(){
   const info = readData();
   return info;
 };
+
 // Read the data from the database
 export function readData(){
   let name;
@@ -188,6 +203,24 @@ export function readData(){
   }
   
   return name;
+};
+
+// Read all data from the database about the user
+export function getUserObject(){
+  let userObjectResult;
+  if(auth.currentUser !== null){
+  const userid = auth.currentUser.uid;
+  const dbRef = ref(database,'users/');
+
+  onValue(dbRef,(DataSnapshot)=>{
+    const  userObject =DataSnapshot
+                      .child(userid)
+                      .val();
+    console.log(userObject);                  
+    userObjectResult = userObject;                
+  });
+  }
+  return userObjectResult;
 };
 
 

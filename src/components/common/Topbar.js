@@ -1,26 +1,21 @@
 import "./topbar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { logout } from "../../firebase";
+import { getUserObject, logout } from "../../firebase";
 import { AuthContext } from "../../AuthProvider";
+import {getUserinfo, getCurrentUser} from "../../firebase"
 
 export default function Topbar() {
-    const { currentUser } = useContext(AuthContext);
-    const navigate = useNavigate();
-	
+  let user;
+const [fname, setfname] = useState("")
 
-	const submit = () =>{
-    if(currentUser){
-      logout();
-		  navigate('/',{replace: true});
-    }else{
-      alert("An error has occured");
-    }
-		
-	};
+ 
+
+ // console.log(getCurrentUser())
+ console.log(user.firstname, user.lastName)
 
   return (
     <div className="topbarContainer">
@@ -39,9 +34,9 @@ export default function Topbar() {
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-         
+        <span> <p>{user.firstname}</p></span>
         </div>
-        <span><Button onClick={submit}>Logout</Button></span>
+        
       </div>
     </div>
   );

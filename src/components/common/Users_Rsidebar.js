@@ -115,21 +115,26 @@ export default function Users_Rsidebar(){
   }
 
     return(
-     <div className="user_info_container">
-            <div className="user_name_container">
-            {currentUser && <p>{name}</p>}
-            </div>
+     <div className="who-to-follow__block">
 
-            <div className="user_avatar">
+            <div className="who-to-follow__author-logo">
                 <FontAwesomeIcon icon={faUser}/>
             </div>
-            <div className="follow_container">
-                <span><Button onClick={follow} 
-                style={{
-                backgroundColor: isActive ? ' ': 'blue',
-                color: isActive ? '' : 'white',
-                }}>{currentUser && <p> {followbtn}</p>}</Button></span>
-            </div>           
+
+            <div class="who-to-follow__content">
+                <div className="who-to-follow__author-name">
+                {currentUser && <p>{name}</p>}
+                </div>
+
+                
+                <div className="who-to-follow__button">
+                    <span><Button onClick={follow} 
+                    style={{
+                    backgroundColor: isActive ? ' ': 'blue',
+                    color: isActive ? '' : 'white',
+                    }}>{currentUser && <p> {followbtn}</p>}</Button></span>
+                </div>      
+            </div>     
      </div>   
     )
 }
