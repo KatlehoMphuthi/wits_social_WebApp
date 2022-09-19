@@ -24,18 +24,19 @@ export default function Topbar() {
   const fetchUsers = () => {
 
     const userRef = ref(database, 'users/')
+    const arr = [];
      //ref = ref(database, 'users/')
     onValue(userRef, (snapshot) => 
     {
       snapshot.forEach((childSnapshot) => 
       {
-        const childKey = childSnapshot.key;
+       // const childKey = childSnapshot.key;
         const username = (childSnapshot.val().firstname) 
-        users.push(username);
+        arr.push(username);
         //(users);
       });
       
-      setUsers(users);
+      setUsers(arr);
     }
 
     )}
