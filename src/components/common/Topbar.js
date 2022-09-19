@@ -9,48 +9,54 @@ import { logout } from "../../firebase";
 
 
 import { getDatabase, set, ref, onValue } from "firebase/database"
+import { blue } from "@mui/material/colors";
 
 
 
 export default function Topbar() {
-   const database = getDatabase();
+  const database = getDatabase();
 
   const navigate = useNavigate();
   const [filtered, setFiltered] = useState([])
   const [word, setWord] = useState("")
   const [users, setUsers] = useState([])
 
-///----------------------------------Start firebase testing-------------
+  ///----------------------------------Start firebase testing-------------
   const fetchUsers = () => {
 
     const userRef = ref(database, 'users/')
     const arr = [];
-     //ref = ref(database, 'users/')
-    onValue(userRef, (snapshot) => 
-    {
-      snapshot.forEach((childSnapshot) => 
-      {
-       // const childKey = childSnapshot.key;
-        const username = (childSnapshot.val().firstname) 
-        arr.push(username);
-        //(users);
+    //ref = ref(database, 'users/')
+    onValue(userRef, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        // const childKey = childSnapshot.key; (childSnapshot.val()) 
+        const user_data = {
+          // get the user object
+          email: childSnapshot.val().email,
+          firstname: childSnapshot.val().firstname,
+          lastName: childSnapshot.val().lastname,
+          userid: childSnapshot.val().userid,
+        }
+        arr.push(user_data);
+
       });
-      
+
       setUsers(arr);
     }
 
-    )}
+    )
+  }
 
   useEffect(() => {
-     fetchUsers()
+    fetchUsers()
   })
-///----------------------------------End testing-------------
+  ///----------------------------------End testing-------------
 
   const searchUser = (val) => {
     setWord(val)
-    const filt = users.filter(v=>{
-      return v.toLowerCase().includes(val.toLowerCase());
-      
+    const filt = users.filter(v => {
+      return v.firstname.toLowerCase().includes(val.toLowerCase());
+
     })
     // console.log(filt)
     setFiltered(filt);
@@ -61,6 +67,14 @@ export default function Topbar() {
     logout();
     navigate('/', { replace: true });
   };
+  //function to go to user profile
+  const goToUserProfile=(u)=>{
+    console.log(u.email)
+    // for navigation, pass the user u,  use a function navigate
+    //navigate('userprofile',user:u) 
+
+    // how to pass data to another page in  navigation 
+  }
 
   return (
     <div className="topbarContainer">
@@ -71,15 +85,19 @@ export default function Topbar() {
         <div className="searchbar">
           <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon" />
           <input
-            onChange={(e)=>searchUser(e.target.value)}
+            onChange={(e) => searchUser(e.target.value)}
             placeholder="Search for friend, post or video coming Soon"
             className="searchInput"
           />
         </div>
 
-        { word!=="" &&<div style={searchStyle}>
-          {word!=="" && filtered.map((u) => {
-            return <p>{u}</p>
+
+        {word !== "" && <div style={searchStyle}>
+          {word !== "" && filtered.map((u) => {
+            return <p
+              style={{ padding: 10,margin:0, background: "blue" }}
+              onClick={ ()=>goToUserProfile(u)} // go to user profile
+            >{u.firstname}</p>
           })}
         </div>}
       </div>
@@ -98,12 +116,3 @@ const searchStyle = {
   padding: 10,
   // width: 200,
 }
-     // ref.then((snapshot) => {
-      //   // now map users into the Array
-      //   let users = snapshot.docs.map(doc => {
-      //     const data = doc.data();
-      //     const id = doc.id;
-      //     return { id, ...data }
-      //   });
-      //   setUsers(users)
-      // })
