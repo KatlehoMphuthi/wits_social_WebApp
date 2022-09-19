@@ -2,8 +2,6 @@
 import { getDatabase,set, ref,onValue } from "firebase/database"
 
 import { initializeApp } from "firebase/app";
-
-import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -13,6 +11,7 @@ import {getAuth,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut} from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 
 // Your web app's Firebase configuration
@@ -32,6 +31,7 @@ const app = initializeApp(firebaseConfig);
 
 //get the access to the database
 export const database = getDatabase(app);
+export const storage = getStorage(app);
 export const auth = getAuth(app);
 
 
