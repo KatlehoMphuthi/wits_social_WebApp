@@ -150,7 +150,34 @@ export const logout = () => {
   signOut(auth);
 };
 
+// get all the users with information
+export function getUsers( userid){
+    let users =[]; //initialise the array to store the users in
+    try {
+      let p = new Promise( resolve => {
+        const userRef = ref(database,'users/'); // get reference to the users on databases
 
+        // loop through each user
+        onValue(userRef,(snapshot)=>{
+          snapshot.forEach((childSnapshot)=> 
+           {
+            const childKey = childSnapshot.key;
+            users.push(childKey);
+            resolve(users);
+          });
+        },{
+          onlyOnce:true
+        });
+        
+      });
+
+      p.then((arr) => {
+        console.log(arr);
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+}
 
 
 
