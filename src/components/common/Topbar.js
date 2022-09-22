@@ -130,3 +130,9 @@ return fname === "" ?
   )
  ;
 }
+
+const searchStyle = {
+  background: "white",
+  padding: 10,
+  // width: 200,
+}
