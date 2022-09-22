@@ -132,7 +132,7 @@ return fname === "" ?
 }
 
 const searchStyle = {
-  background: "white",
+  background: "whit",
   padding: 10,
   // width: 200,
 }
