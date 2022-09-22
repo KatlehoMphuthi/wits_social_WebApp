@@ -46,7 +46,7 @@ function Newsfeed(){
             imagePost.push(post);
           }
         });
-      },{onlyOnce: true});
+      });
       setPost(imagePost); 
     }
     
