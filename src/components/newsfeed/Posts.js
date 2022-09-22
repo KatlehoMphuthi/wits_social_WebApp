@@ -1,5 +1,56 @@
-import React from 'react'
+//import React from 'react'
 import './Post.css';
+import React, { useState } from "react";
+import cn from "classnames";
+import { ReactComponent as Hand } from "./hand.svg";
+import "./likestyle.scss";
+
+/*const LikeButton = () => {
+  const [liked, setLiked] = useState(null);
+
+  return (
+    <button
+      onClick={() => setLiked(!liked)}
+      onAnimationEnd={() => setClicked(false)}
+      className={cn("like-button-wrapper", {
+        liked,
+      })}
+    >
+      <div className="like-button">
+        <Hand />
+        <span>Like</span>
+      </div>
+    </button>
+  );
+};
+*/
+const LikeButton = () => {
+  const [liked, setLiked] = useState(null);
+  const [clicked, setClicked] = useState(false);
+  const count = 0;
+  return (
+    <button
+      onClick={() => {
+        setLiked(!liked);
+        setClicked(true);
+        //count++;
+        console.log(count);
+      }}
+      onAnimationEnd={() => setClicked(false)}
+      className={cn("like-button-wrapper", {
+        liked,
+        clicked,
+      })}
+    >
+      <div className="like-button">
+        <Hand />
+        <span>Like</span>
+        <span className={cn("suffix", {  liked })}>d</span>
+      </div>
+    </button>
+  );
+};
+
 
 function Posts({username,caption,imgUrl,name}) {
 
@@ -24,6 +75,8 @@ function Posts({username,caption,imgUrl,name}) {
               {caption}
               <img className="tweet__image" src={imgUrl} />
             </div>
+            <LikeButton/>
+
           </div>
         </div>
 

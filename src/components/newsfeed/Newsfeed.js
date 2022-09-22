@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 import SidebarMenu from "../common/SidebarMenu";
 import {database} from '../../firebase';
 import {onValue,ref} from 'firebase/database';
+ 
+function Newsfeed(){
 
-function Newsfeed(){  
   const {currentUser} = useContext(AuthContext);
   const [posts,setPost] = useState([
     {
@@ -46,6 +47,47 @@ function Newsfeed(){
     
   ]);
 
+  useEffect(() =>{
+    if(currentUser){
+      //create ref to the posts 
+      const postRef = ref(database,'posts/');
+      const imagePost = [] // create an empty array to store the posts in 
+      //loop through all posts
+      onValue(postRef,(snapshot) =>{
+        snapshot.forEach((child) =>{
+          const childData = child.val(); // data of each post 
+          if(childData.imageUrl){ // for post with that contain images 
+            
+            const post = { 
+              username: "",
+              caption: childData.caption !== "" ? childData.caption: "",
+              imgUrl: childData.imageUrl,
+              name: childData.username
+
+            }
+            
+            imagePost.push(post);
+            console.log('data successfully sent')
+          } else{ 
+            // for posts that consists of large texts
+            const post = { 
+              username: "",
+              caption: childData.text,
+              imgUrl: "",
+              name: childData.username
+
+            }
+            imagePost.push(post);
+          }
+        });
+      });
+      setPost(imagePost); 
+    }
+    
+  },[currentUser])
+
+
+
   
   return (
     <div>
@@ -57,6 +99,7 @@ function Newsfeed(){
       </div>
 
       <div className="layout__main">
+        <div><CreatePost /></div>
       {
          posts.map(post=>(
           <Post username={post.username} 
