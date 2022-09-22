@@ -78,7 +78,7 @@ export default function Users_Rsidebar(){
                     }
                    
                 });
-            },{onlyOnce: true}); //Reads only onces
+            }); //Reads only onces
             
         })
          .catch(error => console.log(error));
@@ -121,7 +121,7 @@ export default function Users_Rsidebar(){
                 <FontAwesomeIcon icon={faUser}/>
             </div>
 
-            <div class="who-to-follow__content">
+            <div className="who-to-follow__content">
                 <div className="who-to-follow__author-name">
                 {currentUser && <p>{name}</p>}
                 </div>

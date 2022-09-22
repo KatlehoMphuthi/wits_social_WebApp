@@ -52,8 +52,11 @@ function Newsfeed(){
     if(currentUser){
       //create ref to the posts 
       const postRef = ref(database,'posts/');
-      const imagePost = [] // create an empty array to store the posts in 
-      //loop through all posts
+      const imagePost = [] // create an empty array to store the posts in
+      //create a promise 
+
+      let p = new Promise(resolve =>{
+              //loop through all posts
       onValue(postRef,(snapshot) =>{
         snapshot.forEach((child) =>{
           const childData = child.val(); // data of each post 
@@ -68,7 +71,7 @@ function Newsfeed(){
             }
             
             imagePost.push(post);
-            console.log('data successfully sent')
+            resolve(imagePost);
           } else{ 
             // for posts that consists of large texts
             const post = { 
@@ -79,10 +82,17 @@ function Newsfeed(){
 
             }
             imagePost.push(post);
+            resolve(imagePost);
           }
         });
       });
-      setPost(imagePost); 
+
+      });
+
+      p.then(imagePost => setPost(imagePost) ).catch(error => console.log(error));
+
+      
+     
     }
     
   },[currentUser])
@@ -95,7 +105,7 @@ function Newsfeed(){
     <Topbar className="navbar"/>
     <div className="layout">
 
-    <div class="layout__left-sidebar">
+    <div className="layout__left-sidebar">
       <SidebarMenu />
       </div>
 
