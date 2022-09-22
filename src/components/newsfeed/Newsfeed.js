@@ -12,7 +12,6 @@ import SidebarMenu from "../common/SidebarMenu";
 import {database} from '../../firebase';
 import {onValue,ref} from 'firebase/database';
 
-
 function Newsfeed(){
   const {currentUser} = useContext(AuthContext);
   const [posts,setPost] = useState([
