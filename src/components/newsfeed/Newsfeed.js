@@ -1,10 +1,14 @@
-import React, { useContext, useEffect } from "react";
-import { useState } from 'react';
+import React from "react";
+import { useState,useContext} from 'react';
 import Post from './Posts';
 import './Newsfeed.css'
 import Topbar from '../common/Topbar';
-import CreatePost from "../post/CreatePost";
-import {AuthContext} from '../../AuthProvider';
+import RightSideBar from "../common/RightSideBar";
+import { AuthContext } from "../../AuthProvider";
+import Button from "@mui/material/Button";
+import { logout } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import SidebarMenu from "../common/SidebarMenu";
 import {database} from '../../firebase';
 import {onValue,ref} from 'firebase/database';
 
