@@ -1,7 +1,8 @@
 import React from "react";
-import { useState,useContext} from 'react';
+import { useState,useContext,useEffect} from 'react';
 import Post from './Posts';
-import './Newsfeed.css'
+import CreatePost from "../post/CreatePost";
+import './Newsfeed.css';
 import Topbar from '../common/Topbar';
 import RightSideBar from "../common/RightSideBar";
 import { AuthContext } from "../../AuthProvider";
