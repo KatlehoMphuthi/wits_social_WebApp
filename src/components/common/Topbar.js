@@ -1,5 +1,5 @@
 import "./topbar.css";
-import {getUserinfo, getUserObject, getCurrentUser, database, readData} from "../../firebase"
+import {database, readData} from "../../firebase"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState, } from 'react';
@@ -74,7 +74,7 @@ const goToUserProfile=(u)=>{
   // how to pass data to another page in  navigation 
 }
 
-return fname === "" ? 
+return fname !== "" ? 
   (
       <div className="topbarContainer">
         <div className="topbarLeft">
@@ -100,7 +100,7 @@ return fname === "" ?
         </div>
         <div className="topbarRight">
           <div className="topbarLinks">
-          <span> <p>Loading ... </p></span>
+          <span> <p>{fname} </p></span>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ return fname === "" ?
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-        <span><p>{fname}</p></span>
+        <span><p>Loading...</p></span>
         </div>
       </div>
     </div>
@@ -132,7 +132,7 @@ return fname === "" ?
 }
 
 const searchStyle = {
-  background: "whit",
+  background: "white",
   padding: 10,
   // width: 200,
 }
