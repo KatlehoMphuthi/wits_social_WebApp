@@ -1,41 +1,58 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from 'react';
 import Post from './Posts';
 import './Newsfeed.css'
 import Topbar from '../common/Topbar';
+import CreatePost from "../post/CreatePost";
+import {AuthContext} from '../../AuthProvider';
+import {database} from '../../firebase';
+import {onValue,ref} from 'firebase/database';
+
 
 function Newsfeed(){
-  const [posts,setPost] = useState([
-    {
-    username : "Michael",
-     caption : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
-     imgUrl : "https://i.ytimg.com/vi/zeO1yrVeC0U/maxresdefault.jpg ",
-     name:"@MichaelM"
-    },
-    {
-      username:"BMW Motors",
-       caption:" Carry out a random act of kindness, with no expectation of reward, safe in the knowledge that one day someone might do the same for you",
-      imgUrl:"https://source.unsplash.com/random/100*200",
-      name:"@OfficialBMWMotors"
-     
-    },
-    {
-      username:"Boera",
-       caption:"", 
-       imgUrl:"https://source.unsplash.com/random/100*210",
-       name:"@Human"
-    }
+  const {currentUser} = useContext(AuthContext);
+  const [posts,setPost] = useState([]);
 
-    ,
-    
-    {
-      username:"Lebohang",
-       caption:"", 
-       imgUrl:"https://source.unsplash.com/random/100*205",
-       name:"@Human"
+  useEffect(() =>{
+    if(currentUser){
+      //create ref to the posts 
+      const postRef = ref(database,'posts/');
+      const imagePost = [] // create an empty array to store the posts in 
+      //loop through all posts
+      onValue(postRef,(snapshot) =>{
+        snapshot.forEach((child) =>{
+          const childData = child.val(); // data of each post 
+          if(childData.imageUrl){ // for post with that contain images 
+            
+            const post = { 
+              username: "",
+              caption: childData.caption !== "" ? childData.caption: "",
+              imgUrl: childData.imageUrl,
+              name: childData.username
+
+            }
+            
+            imagePost.push(post);
+            console.log('data successfully sent')
+          } else{ 
+            // for posts that consists of large texts
+            const post = { 
+              username: "",
+              caption: childData.text,
+              imgUrl: "",
+              name: childData.username
+
+            }
+            imagePost.push(post);
+          }
+        });
+      },{onlyOnce: true});
+      setPost(imagePost); 
     }
     
-  ]);
+  },[currentUser])
+
+
 
   
   return (
@@ -47,6 +64,7 @@ function Newsfeed(){
       </div>
 
       <div className="layout__main">
+        <div><CreatePost /></div>
       {
          posts.map(post=>(
           <Post username={post.username} 
