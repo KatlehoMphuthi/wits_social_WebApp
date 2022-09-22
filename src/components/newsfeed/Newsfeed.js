@@ -9,8 +9,11 @@ import Button from "@mui/material/Button";
 import { logout } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import SidebarMenu from "../common/SidebarMenu";
+import {database} from '../../firebase';
+import {onValue,ref} from 'firebase/database';
 
 function Newsfeed(){  
+  const {currentUser} = useContext(AuthContext);
   const [posts,setPost] = useState([
     {
     username : "Michael",
