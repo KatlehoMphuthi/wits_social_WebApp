@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
-import { loginUser } from '../../firebase'
+import { loginUser2} from '../../firebase'
 import './authentication.css'
 
 export default function Login () {
@@ -29,11 +29,11 @@ export default function Login () {
       password: data.password
     }
 
-    const response = loginUser(obj.email, obj.password)
-
+    const response = loginUser2(obj.email, obj.password)
+    console.log(response);
     //When credintals are valid
-    if (response === 'success') {
-      navigate('/newsfeed', { replace: true })
+    if (response === 'done' ) {
+      navigate('/newsfeed', { replace: true });
     } else {
       alert('There is an error')
     }
@@ -42,7 +42,7 @@ export default function Login () {
   //Login form component
   return (
     <div className='form-wrapper'>
-      <div class='ui form text container'>
+      <div className='ui form text container'>
         <Form onSubmit={handleSubmit(handlesubmit)} disabled={isSubmitting}>
           <div className='form-header'>
             <img
@@ -70,7 +70,7 @@ export default function Login () {
           </Form.Field>
           {errors.email && <p className='text-error'>Please check the Email</p>}
 
-          <Form.Field class='field'>
+          <Form.Field className='field'>
             <label>Password</label>
             <input
               placeholder='Password'

@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 import SidebarMenu from "../common/SidebarMenu";
 import {database} from '../../firebase';
 import {onValue,ref} from 'firebase/database';
-
+ 
 function Newsfeed(){
+
   const {currentUser} = useContext(AuthContext);
   const [posts,setPost] = useState([
     {
@@ -93,7 +94,8 @@ function Newsfeed(){
     <Topbar className="navbar"/>
     <div className="layout">
 
-      <div className="layout__left--sidebar">
+    <div class="layout__left-sidebar">
+      <SidebarMenu />
       </div>
 
       <div className="layout__main">
@@ -110,7 +112,7 @@ function Newsfeed(){
        </div>
 
        <div className="layout__right-sidebar-container">
-       
+       <RightSideBar />
        </div>
     </div>
     </div>
