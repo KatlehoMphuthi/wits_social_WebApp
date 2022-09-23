@@ -65,6 +65,10 @@
   margin-right: 1.5rem;
 }
 
+.tweet__main{
+  width: 100%;
+}
+
 .tweet__header {
   display: flex;
 }

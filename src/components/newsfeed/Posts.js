@@ -4,6 +4,10 @@ import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { ReactComponent as Hand } from "./hand.svg";
 import "./likestyle.scss";
+
+import Button from '../common/Button';
+import { database } from '../../firebase';
+
 import { set } from 'firebase/database';
 
 /*const LikeButton = () => {
@@ -52,7 +56,83 @@ const LikeButton = () => {
   );
 };
 
+function Posts({username,caption,imgUrl,name}) {
 
+  const toggleComment = () =>{
+    if(showCommentBox == true){
+      setShowComentBox(false)
+    }else{
+      setShowComentBox(true)
+    }
+   
+  }
+  
+  const [comment, setComment] = useState("");
+  const[showCommentBox, setShowComentBox] = useState(false)
+  
+  const handleCommentTextInput = event => {
+    setComment(event.target.value);
+    console.log('value is:', event.target.value);
+  };
+
+
+  const submitComment = (event) =>{
+
+    //Get comment feilds
+    alert("I am responsibel for sending the comment");
+
+    //get post id
+    const value = event;
+
+    console.log(prop)
+    
+    /*
+    //=======================
+    if(currentUser){ // check if there is user logged in
+
+      //Check if the user has typeed something
+      if(comment === ""){
+        alert('Type something to comment')
+      }else{
+        //get reference for posts
+
+
+        //Get post id from the clicked post
+        const postsRef = ref(database,'posts/');
+        const commentsRef = ref(database, 'comments')
+        const userRef = ref(database,'users/' + currentUser.uid);
+
+        const commentid = push(commentsRef).key;
+        console.log(commentid);
+
+        //get clicked post id
+
+
+          //get reference to the post with the id
+          const new_commentRef = ref(database,'comments/' + commentid);
+
+          //retrieving the current user firstname
+          onValue(userRef,(DataSnapshot) =>{
+            if(DataSnapshot.exists()){
+              const data = DataSnapshot.val();
+              // stores in the real time database
+              set(new_commentRef,{
+                username: data.firstname,
+                userid: currentUser.uid,
+                postid:postid,
+                comment: comment
+              });
+            }
+          });  
+                
+      }
+    }
+*/
+
+
+    //===================
+  }
+  
 function Posts({username,caption,imgUrl,name,time}) {
   const [timeCreated, setTime] = useState("");
   let  SECOND_MILLIS = 1000;
@@ -91,6 +171,7 @@ function Posts({username,caption,imgUrl,name,time}) {
 
   
   
+
   return (
 
     <div className="tweet">
@@ -111,7 +192,26 @@ function Posts({username,caption,imgUrl,name,time}) {
               {caption}
               <img className="tweet__image" src={imgUrl} />
             </div>
+
+            <div className='tweet__action-buttons'>
             <LikeButton/>
+            <Button
+            text="comment"
+            onClick={toggleComment}/>
+
+            <Button
+            text="Share"/>
+            </div>
+
+            {showCommentBox?<div className='tweet__comment-section'>
+        <input
+            placeholder="Add comment..." className="searchInput" onChange={handleCommentTextInput}
+            value={comment}
+          /> 
+
+          <Button  text='Send' color='#2C76EE' onClick={submitComment} type='' />
+        </div> : null}
+
 
           </div>
         </div>

@@ -34,3 +34,10 @@
  .post_avatar{
     margin-right:10px ;
  }
+
+ .tweet__action-buttons{
+   display: flex;
+   width: 100%;
+   justify-content: space-between;
+   margin-top: 1.5rem;
+ }
