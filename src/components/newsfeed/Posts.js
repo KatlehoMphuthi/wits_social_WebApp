@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import cn from "classnames";
 import { ReactComponent as Hand } from "./hand.svg";
 import "./likestyle.scss";
+import Button from '../common/Button';
 
 /*const LikeButton = () => {
   const [liked, setLiked] = useState(null);
@@ -52,7 +53,31 @@ const LikeButton = () => {
 };
 
 
+
+
+
+
 function Posts({username,caption,imgUrl,name}) {
+
+  const toggleComment = () =>{
+    alert("Hi")
+
+    if(showCommentBox == true){
+      setShowComentBox(false)
+    }else{
+      setShowComentBox(true)
+    }
+   
+  }
+  
+  const[commentBox, setCommentBox] = useState("");
+  const [comment, setComment] = useState("");
+  const[showCommentBox, setShowComentBox] = useState(false)
+  
+  const handleCommentTextInput = event => {
+    setComment(event.target.value);
+    console.log('value is:', event.target.value);
+  };
 
   let time = Math.floor((Math.random() * 45) + 1)
   return (
@@ -75,7 +100,26 @@ function Posts({username,caption,imgUrl,name}) {
               {caption}
               <img className="tweet__image" src={imgUrl} />
             </div>
+
+            <div className='tweet__action-buttons'>
             <LikeButton/>
+            <Button
+            text="comment"
+            onClick={toggleComment}/>
+
+            <Button
+            text="Share"/>
+            </div>
+
+            <div className='tweet__comment-section'>
+        {showCommentBox?<input
+            placeholder="Add comment..."
+            className="searchInput"
+            onChange={handleCommentTextInput}
+            value={comment}
+          /> : null}
+        </div>
+
 
           </div>
         </div>

@@ -13,6 +13,7 @@ function CreatePost() {
    const [file, setFile] = useState("");
    const [postText, setPostText] = useState("");
    const [show, setShow] = useState(false); //Shoe and hide remove image cross
+
    const image = useRef(null);
 
    const handlePostTextInput = event => {
@@ -32,6 +33,7 @@ function CreatePost() {
     setShow(true)
    }
 
+   
 
     const post = () =>{
       if(currentUser){ // check if there is user logged in

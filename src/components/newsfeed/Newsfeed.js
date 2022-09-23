@@ -103,6 +103,7 @@ function Newsfeed(){
   return (
     <div className="app-container">
     <Topbar className="navbar"/>
+    
     <div className="layout">
 
     <div className="layout__left-sidebar">
