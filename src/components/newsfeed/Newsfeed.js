@@ -1,17 +1,15 @@
 import React from "react";
-import { useState,useContext,useEffect} from 'react';
+import { useState,useContext,useEffect,useRef} from 'react';
 import Post from './Posts';
 import CreatePost from "../post/CreatePost";
 import './Newsfeed.css';
 import Topbar from '../common/Topbar';
 import RightSideBar from "../common/RightSideBar";
 import { AuthContext } from "../../AuthProvider";
-import Button from "@mui/material/Button";
-import { logout } from "../../firebase";
-import { useNavigate } from "react-router-dom";
 import SidebarMenu from "../common/SidebarMenu";
 import {database} from '../../firebase';
-import {onValue,ref} from 'firebase/database';
+import {onValue,ref,query} from 'firebase/database';
+import { async } from "@firebase/util";
  
 function Newsfeed(){
 
@@ -52,8 +50,9 @@ function Newsfeed(){
     }
     
   ]);
-
-  useEffect(() =>{
+  //const PostsArr = useRef([]); // create an empty array to store the posts in
+  const postRef = ref(database,'posts/'); 
+  useEffect(()=>{
     if(currentUser){
       //create ref to the posts 
       const postRef = ref(database,'posts/');
@@ -88,19 +87,36 @@ function Newsfeed(){
             }
             imagePost.push(post);
             resolve(imagePost);
-          }
-        });
-      });
 
-      });
-
-      p.then(imagePost => setPost(imagePost) ).catch(error => console.log(error));
-
-      
+    if(currentUser !== null){
+    const PostsArr = [];
      
+      
+      onValue(postRef,(Datasnapshot) =>{
+        Datasnapshot.forEach((child)=>{
+          const postdata = child.val();
+          const post = {
+            username: "",
+            caption: postdata.caption !== "" ? postdata.caption: postdata.text,
+            imgUrl: postdata.imageUrl === "" ? "":postdata.imageUrl,
+            name: postdata.username,
+            time: postdata.time
+
+          }
+
+          
+          PostsArr.push(post);
+        });
+        
+      });
+      
+      
+      setPost(PostsArr.reverse());
     }
-    
-  },[currentUser])
+
+  },[currentUser,postRef]);
+
+  
 
 
 

@@ -1,11 +1,14 @@
 //import React from 'react'
 import './Post.css';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { ReactComponent as Hand } from "./hand.svg";
 import "./likestyle.scss";
+
 import Button from '../common/Button';
 import { database } from '../../firebase';
+
+import { set } from 'firebase/database';
 
 /*const LikeButton = () => {
   const [liked, setLiked] = useState(null);
@@ -52,11 +55,6 @@ const LikeButton = () => {
     </button>
   );
 };
-
-
-
-
-
 
 function Posts({username,caption,imgUrl,name}) {
 
@@ -134,8 +132,46 @@ function Posts({username,caption,imgUrl,name}) {
 
     //===================
   }
+  
+function Posts({username,caption,imgUrl,name,time}) {
+  const [timeCreated, setTime] = useState("");
+  let  SECOND_MILLIS = 1000;
+  let   MINUTE_MILLIS = 60 * SECOND_MILLIS;
+  let  HOUR_MILLIS = 60 * MINUTE_MILLIS;
+  let   DAY_MILLIS = 24 * HOUR_MILLIS;
 
-  let time = Math.floor((Math.random() * 45) + 1)
+  useEffect(() => {
+    if (time < 1000000000000) {
+      time *= 1000;
+  }
+  let  now = Date.now();
+
+    if (time > now || time <= 0) {
+      setTime("");
+    }
+    let timePosted = now - time;
+
+    if (timePosted < MINUTE_MILLIS){
+      setTime("just now");
+    }
+    else if(timePosted < 2*MINUTE_MILLIS){
+        setTime("a minute ago");
+    }else if(timePosted < 50*MINUTE_MILLIS){
+        setTime(Math.floor(timePosted/MINUTE_MILLIS) +" minutes ago");
+    }else if (timePosted < 90*MINUTE_MILLIS){
+      setTime("an hour ago");
+    } else if(timePosted<24 * HOUR_MILLIS){
+      setTime(Math.floor(timePosted/HOUR_MILLIS) + " hours ago");
+    }else if(timePosted < 48 * HOUR_MILLIS){
+      setTime("yesterday");
+    } else{
+      setTime(Math.floor(timePosted/DAY_MILLIS) + " days ago");
+    }
+  },[timeCreated]);
+
+  
+  
+
   return (
 
     <div className="tweet">
@@ -149,7 +185,7 @@ function Posts({username,caption,imgUrl,name}) {
                 {name}
               </div>
               <div className="tweet__publish-time">
-                {time + "min ago"}
+                {timeCreated}
               </div>
             </div>
             <div className="tweet__content">

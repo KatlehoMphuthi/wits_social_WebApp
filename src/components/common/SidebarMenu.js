@@ -2,8 +2,9 @@ import React from 'react'
 import { useState,useContext} from 'react';
 import { AuthContext } from "../../AuthProvider";
 import Button from "@mui/material/Button";
-import { logout } from "../../firebase";
+import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
+import { signOut } from 'firebase/auth';
 
 function SidebarMenu() {
 
@@ -13,7 +14,8 @@ function SidebarMenu() {
   
   const submit = () =>{
     if(currentUser){
-      logout();
+      alert("Are you sure want to logout?");
+      signOut(auth);
       navigate('/',{replace: true});
     }else{
       alert("An error has occured");
