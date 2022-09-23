@@ -21,20 +21,23 @@ function Newsfeed(){
     username : "Michael",
      caption : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
      imgUrl : "https://i.ytimg.com/vi/zeO1yrVeC0U/maxresdefault.jpg ",
-     name:"@MichaelM"
+     name:"@MichaelM",
+     id: "12345"
     },
     {
       username:"BMW Motors",
        caption:" Carry out a random act of kindness, with no expectation of reward, safe in the knowledge that one day someone might do the same for you",
       imgUrl:"https://source.unsplash.com/random/100*200",
-      name:"@OfficialBMWMotors"
+      name:"@OfficialBMWMotors",
+      id: "12346"
      
     },
     {
       username:"Boera",
        caption:"", 
        imgUrl:"https://source.unsplash.com/random/100*210",
-       name:"@Human"
+       name:"@Human",
+       id: "12347"
     }
 
     ,
@@ -44,6 +47,8 @@ function Newsfeed(){
        caption:"", 
        imgUrl:"https://source.unsplash.com/random/100*205",
        name:"@Human"
+       ,
+     id: "12348"
     }
     
   ]);
@@ -66,8 +71,8 @@ function Newsfeed(){
               username: "",
               caption: childData.caption !== "" ? childData.caption: "",
               imgUrl: childData.imageUrl,
-              name: childData.username
-
+              name: childData.username,
+              id : childData.id
             }
             
             imagePost.push(post);
@@ -78,8 +83,8 @@ function Newsfeed(){
               username: "",
               caption: childData.text,
               imgUrl: "",
-              name: childData.username
-
+              name: childData.username,
+              id : childData.id
             }
             imagePost.push(post);
             resolve(imagePost);
@@ -114,11 +119,14 @@ function Newsfeed(){
         <CreatePost />
       {
          posts.map(post=>(
-          <Post username={post.username} 
+          <Post 
+          key={post.id}
+          username={post.username} 
               name={post.name}
             caption= {post.caption}
             imgUrl = {post.imgUrl}
-            time = {post.time}          
+            time = {post.time} 
+            postid = {post.id}         
           />)) 
        }
        </div>
