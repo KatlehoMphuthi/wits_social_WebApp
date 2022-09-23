@@ -149,9 +149,9 @@ function CreatePost() {
 
 
   return (
-    <div className="create-post-container">
+    <div className="tweet">
         <img className="tweet__author-logo" src="https://source.unsplash.com/random/100*100" />
-        <div className="tweet__main">
+        <div className="create-post__main">
 
         <div className="postTextInput">
           <input
