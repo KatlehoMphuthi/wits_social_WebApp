@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
 import { loginUser2} from '../../firebase'
+import {AuthContext} from '../../AuthProvider'
 import './authentication.css'
 
 export default function Login () {
-
+  const {login} = useContext(AuthContext);
     //React hook forms to hadle validation
   const {
     register,
@@ -21,7 +22,7 @@ export default function Login () {
 
 
   //This funtion submits the form to firebase
-  const handlesubmit = data => {
+ const handlesubmit = async (data) => {
 
     //Get form inputs
     let obj = {
@@ -29,14 +30,9 @@ export default function Login () {
       password: data.password
     }
 
-    const response = loginUser2(obj.email, obj.password)
-    console.log(response);
-    //When credintals are valid
-    if (response === 'done' ) {
-      navigate('/newsfeed', { replace: true });
-    } else {
-      alert('There is an error')
-    }
+    await login(obj.email, obj.password).catch(error => console.log(error));
+    
+    navigate('/newsfeed',{replace:true})
   }
 
   //Login form component

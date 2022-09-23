@@ -6,7 +6,7 @@ import { useContext, useEffect, useState, } from 'react';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../../AuthProvider";
-import {onValue,ref } from "firebase/database";
+import {onValue,ref, set } from "firebase/database";
 
 export default function Topbar() {
 const {currentUser} = useContext(AuthContext);
@@ -47,8 +47,14 @@ const fetchUsers = () => {
 
 useEffect(()=>{
   if(currentUser){
-  
-  setfname(readData());
+    //setting the username 
+    onValue(ref(database,'users/'+ currentUser.uid),(DataSnapshot)=>{
+      if(DataSnapshot.exists()){
+        const data = DataSnapshot.val();
+        setfname(data.firstname);
+      }
+                   
+    });
   fetchUsers();
 
   }
