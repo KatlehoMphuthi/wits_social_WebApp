@@ -82,7 +82,7 @@ function Newsfeed(){
 
   
   return (
-    <div>
+    <div className="app-container">
     <Topbar className="navbar"/>
     <div className="layout">
 
@@ -91,7 +91,7 @@ function Newsfeed(){
       </div>
 
       <div className="layout__main">
-        <div><CreatePost /></div>
+        <CreatePost />
       {
          posts.map(post=>(
           <Post username={post.username} 

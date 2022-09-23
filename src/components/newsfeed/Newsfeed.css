@@ -1,3 +1,9 @@
+.app-container{
+  max-width: 1300px;
+  background-color: #F5F7F9;
+  margin: auto;
+}
+
 .navbar{
   position: static;
   top: 0;
@@ -21,7 +27,7 @@
    height: 100%;
 }
 
-/*-----Code from Siys */
+/*-----Code from Siya */
 
 .layout__right-sidebar {
   position: fixed;
@@ -32,9 +38,10 @@
   display: flex;
   margin: 1rem;
   margin-top: 2rem;
-  padding: 2rem;
+  padding: 2rem 2rem 1rem 2rem;
   border-radius: 10px;
   background-color: white;
+
 }
 
 .tweet:hover {
@@ -82,7 +89,7 @@
 .tweet__image {
   width: 100%;
   border-radius: 15px;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .layout__main{
@@ -90,7 +97,6 @@
 }
 
 .tweet__content{
-  margin-top: 1rem;
 }
 
 /*--------------------SIDEBAR MENU---------------------*/
