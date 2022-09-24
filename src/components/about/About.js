@@ -39,6 +39,7 @@ function About(){
         <h1 style= {{color: 'blue'}}>CONTACT TEAM</h1>
       
         <a href ="https://wa.me/+27628948188">click here to whatsapp us</a>
+        
        </div>
 
        <div className="layout__right-sidebar-container">
