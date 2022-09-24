@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
-import { loginUser2} from '../../firebase'
+import { useAlert } from 'react-alert'
+import {AuthContext} from '../../AuthProvider'
 import './authentication.css'
 
 export default function Login () {
-
+  const {login} = useContext(AuthContext);
     //React hook forms to hadle validation
   const {
     register,
@@ -14,14 +15,14 @@ export default function Login () {
     formState: { errors, isSubmitting }
     
   } = useForm()
-
+  const alert = useAlert();
 
   //To navigate between the pages
   const navigate = useNavigate()
 
 
   //This funtion submits the form to firebase
-  const handlesubmit = data => {
+ const handlesubmit = async (data) => {
 
     //Get form inputs
     let obj = {
@@ -29,14 +30,30 @@ export default function Login () {
       password: data.password
     }
 
-    const response = loginUser2(obj.email, obj.password)
-    console.log(response);
-    //When credintals are valid
-    if (response === 'done' ) {
-      navigate('/newsfeed', { replace: true });
-    } else {
-      alert('There is an error')
-    }
+    await login(obj.email, obj.password).then(user =>{
+      navigate('/newsfeed',{replace:true})
+    }).catch(error => {console.log(error.code)
+                        if (error.code === "auth/wrong-password"){
+                          alert.show("Your email/password is incorrect",{
+                            type : 'error',
+                            timeout : 2000
+                          });
+                        }
+                         if (error.code === "auth/user-not-found"){
+                          alert.show("You are not registered",{
+                            type : 'error',
+                            timeout : 2000
+                          });
+                         }
+                         else{
+                          alert.show("Oops, an error has occurred!",{
+                            type : 'error',
+                            timeout : 2000
+                          });
+                         }
+                        });
+    
+    
   }
 
   //Login form component

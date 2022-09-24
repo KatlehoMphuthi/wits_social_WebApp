@@ -85,7 +85,7 @@ export default function Users_Rsidebar(){
 
          /***********************************PROMISE ENDS HERE******************************************* */
           }
-    },[currentUser]); // renders only if there is a user 
+    },[]); // renders only if there is a user 
     
    
   //follow and toggle button functionality  

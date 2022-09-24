@@ -35,7 +35,7 @@ export const database = getDatabase(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
 
-
+/******************************************************************************************************************************/ 
 //create a function to store users in the database
 function createData(userId,email,name,surname){
     
@@ -187,11 +187,10 @@ export function getUserinfo(){
   return info;
 };
 
-// Read the data from the database
-export function readData(){
+// Read the data from the users database
+export function readData(userid){
   let name;
-  if(auth.currentUser !== null){
-  const userid = auth.currentUser.uid;
+
   const dbRef = ref(database,'users/');
   
   onValue(dbRef,(DataSnapshot)=>{
@@ -202,7 +201,7 @@ export function readData(){
     console.log(username);                  
     name = username;                
   });
-  }
+  
   
   return name;
 };

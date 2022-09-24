@@ -2,8 +2,9 @@ import React from 'react'
 import { useState,useContext} from 'react';
 import { AuthContext } from "../../AuthProvider";
 import Button from "@mui/material/Button";
-import { logout } from "../../firebase";
+import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
+import { signOut } from 'firebase/auth';
 
 function SidebarMenu() {
 
@@ -13,7 +14,8 @@ function SidebarMenu() {
   
   const submit = () =>{
     if(currentUser){
-      logout();
+      alert("Are you sure want to logout?");
+      signOut(auth);
       navigate('/',{replace: true});
     }else{
       alert("An error has occured");
@@ -21,17 +23,29 @@ function SidebarMenu() {
     
   };
 
+  const goToAbout = () => {
+    if(currentUser){
+      navigate('/about',{replace:true});
+    }
+  }
+
+  const goToHome = () =>{
+    if(currentUser){
+      navigate('/newsfeed',{replace:true});
+    }
+  }
+
 
   return (
     <div className="sidebar-menu">
-    <div className="sidebar-menu__item sidebar-menu__item--active">
+    <div className="sidebar-menu__item sidebar-menu__item--active" onClick={goToHome}>
       <img src="./svg/home.svg" className="sidebar-menu__item-icon" />
       Home
     </div>
 
-    <div className="sidebar-menu__item">
+    <div className="sidebar-menu__item" onClick={goToAbout}>
       <img src="./svg/explore.svg" className="sidebar-menu__item-icon" />
-      Explore
+      About
     </div>
 
     <div className="sidebar-menu__item">
