@@ -58,17 +58,19 @@ const LikeButton = () => {
 
 
 
-function Posts({username,caption,imgUrl,name}) {
+function Posts({username,caption,imgUrl,name,postid}) {
 
   const toggleComment = () =>{
     if(showCommentBox == true){
       setShowComentBox(false)
+      console.log(username)
     }else{
       setShowComentBox(true)
     }
    
   }
   
+  const [id, setId] = useState("efsdf");
   const [comment, setComment] = useState("");
   const[showCommentBox, setShowComentBox] = useState(false)
   
@@ -85,8 +87,8 @@ function Posts({username,caption,imgUrl,name}) {
 
     //get post id
     const value = event;
-
-    console.log(prop)
+    setId(postid)
+    console.log(id)
     
     /*
     //=======================
