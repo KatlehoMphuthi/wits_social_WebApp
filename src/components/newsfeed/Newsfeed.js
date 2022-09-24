@@ -10,46 +10,12 @@ import SidebarMenu from "../common/SidebarMenu";
 import {database} from '../../firebase';
 import {onValue,ref,query} from 'firebase/database';
 import { async } from "@firebase/util";
+import Posts from "./Posts";
  
 function Newsfeed(){
 
   const {currentUser} = useContext(AuthContext);
-  const [posts,setPost] = useState([
-    {
-    username : "Michael",
-     caption : "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
-     imgUrl : "https://i.ytimg.com/vi/zeO1yrVeC0U/maxresdefault.jpg ",
-     name:"@MichaelM",
-     id: "12345"
-    },
-    {
-      username:"BMW Motors",
-       caption:" Carry out a random act of kindness, with no expectation of reward, safe in the knowledge that one day someone might do the same for you",
-      imgUrl:"https://source.unsplash.com/random/100*200",
-      name:"@OfficialBMWMotors",
-      id: "12346"
-     
-    },
-    {
-      username:"Boera",
-       caption:"", 
-       imgUrl:"https://source.unsplash.com/random/100*210",
-       name:"@Human",
-       id: "12347"
-    }
-
-    ,
-    
-    {
-      username:"Lebohang",
-       caption:"", 
-       imgUrl:"https://source.unsplash.com/random/100*205",
-       name:"@Human"
-       ,
-     id: "12348"
-    }
-    
-  ]);
+  const [posts,setPost] = useState([]);
   //const PostsArr = useRef([]); // create an empty array to store the posts in
   const postRef = ref(database,'posts/'); 
   useEffect(()=>{
@@ -66,7 +32,7 @@ function Newsfeed(){
             imgUrl: postdata.imageUrl === "" ? "":postdata.imageUrl,
             name: postdata.username,
             time: postdata.time,
-            id: postdata.id
+            id: postdata.postid
 
           }
 
@@ -83,8 +49,6 @@ function Newsfeed(){
   },[currentUser,postRef]);
 
   
-
-
 
   
   return (
@@ -107,8 +71,8 @@ function Newsfeed(){
               name={post.name}
             caption= {post.caption}
             imgUrl = {post.imgUrl}
-            time = {post.time} 
-            postid = {post.id}         
+            time = {post.time}
+            postid = {post.id} 
           />)) 
        }
        </div>

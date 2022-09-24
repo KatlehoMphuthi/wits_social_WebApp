@@ -1,14 +1,14 @@
 //import React from 'react'
 import './Post.css';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import cn from "classnames";
 import { ReactComponent as Hand } from "./hand.svg";
 import "./likestyle.scss";
+import {AuthContext} from '../../AuthProvider';
 
 import Button from '../common/Button';
 import { database } from '../../firebase';
-
-import { set } from 'firebase/database';
+import {set,ref, push, onValue} from 'firebase/database';
 
 /*const LikeButton = () => {
   const [liked, setLiked] = useState(null);
@@ -56,8 +56,9 @@ const LikeButton = () => {
   );
 };
 
-function Posts({username,caption,imgUrl,name,time,postid}) {
-
+function Posts({username,name,caption,imgUrl,time,postid}) {
+  const {currentUser} = useContext(AuthContext); //get the current user.
+  const [clickedPostId, setClickedPostId] = useState(postid)
   const [timeCreated, setTime] = useState("");
   const [comment, setComment] = useState("");
   const[showCommentBox, setShowComentBox] = useState(false);
@@ -81,16 +82,13 @@ function Posts({username,caption,imgUrl,name,time,postid}) {
 
 
   const submitComment = (event) =>{
-
     //Get comment feilds
-    alert("I am responsibel for sending the comment");
 
     //get post id
-    const value = event;}
+    const value = event
 
     //console.log(prop)}
     
-    /*
     //=======================
     if(currentUser){ // check if there is user logged in
 
@@ -123,16 +121,19 @@ function Posts({username,caption,imgUrl,name,time,postid}) {
               set(new_commentRef,{
                 username: data.firstname,
                 userid: currentUser.uid,
-                postid:postid,
+                postid:clickedPostId,
                 comment: comment
               });
             }
-          });  
-                
+          }); 
+
+          //Success message
+          setShowComentBox(false)
+          alert("Comment added to post")           
       }
     }
-*/
 
+  }
 
     //===================
   
@@ -187,7 +188,9 @@ document.addEventListener('click', (e) =>
     }
   },[timeCreated]);
 
-  
+  useEffect(()=>{
+    setClickedPostId(postid)
+  },[showCommentBox])
   
 
   return (
@@ -200,7 +203,7 @@ document.addEventListener('click', (e) =>
               {username}
               </div>
               <div className="tweet__author-slug">
-                {name}
+              {name}
               </div>
               <div className="tweet__publish-time">
                 {timeCreated}
