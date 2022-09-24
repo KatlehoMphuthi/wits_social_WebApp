@@ -1,11 +1,14 @@
 //import React from 'react'
 import './Post.css';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import { ReactComponent as Hand } from "./hand.svg";
 import "./likestyle.scss";
+
 import Button from '../common/Button';
 import { database } from '../../firebase';
+
+import { set } from 'firebase/database';
 
 /*const LikeButton = () => {
   const [liked, setLiked] = useState(null);
@@ -53,26 +56,23 @@ const LikeButton = () => {
   );
 };
 
+function Posts({username,caption,imgUrl,name,time,postid}) {
 
+  const [timeCreated, setTime] = useState("");
+  const [comment, setComment] = useState("");
+  const[showCommentBox, setShowComentBox] = useState(false);
 
-
-
-
-function Posts({username,caption,imgUrl,name,postid}) {
 
   const toggleComment = () =>{
     if(showCommentBox == true){
       setShowComentBox(false)
-      console.log(username)
     }else{
       setShowComentBox(true)
     }
    
   }
   
-  const [id, setId] = useState("efsdf");
-  const [comment, setComment] = useState("");
-  const[showCommentBox, setShowComentBox] = useState(false)
+
   
   const handleCommentTextInput = event => {
     setComment(event.target.value);
@@ -86,9 +86,9 @@ function Posts({username,caption,imgUrl,name,postid}) {
     alert("I am responsibel for sending the comment");
 
     //get post id
-    const value = event;
-    setId(postid)
-    console.log(id)
+    const value = event;}
+
+    //console.log(prop)}
     
     /*
     //=======================
@@ -135,9 +135,61 @@ function Posts({username,caption,imgUrl,name,postid}) {
 
 
     //===================
-  }
+  
+  
 
-  let time = Math.floor((Math.random() * 45) + 1)
+ 
+  let  SECOND_MILLIS = 1000;
+  let   MINUTE_MILLIS = 60 * SECOND_MILLIS;
+  let  HOUR_MILLIS = 60 * MINUTE_MILLIS;
+  let   DAY_MILLIS = 24 * HOUR_MILLIS;
+
+  useEffect(() => {
+      // Create event listener
+document.addEventListener('click', (e) =>
+{
+  // Retrieve id from clicked element
+  let elementId = e.target.id;
+  // If element has id
+  if (elementId !== '') {
+      console.log(elementId);
+  }
+  // If element has no id
+  else { 
+      console.log("An element without an id was clicked.");
+  }
+});
+    if (time < 1000000000000) {
+      time *= 1000;
+  }
+  let  now = Date.now();
+
+    if (time > now || time <= 0) {
+      setTime("");
+    }
+    let timePosted = now - time;
+
+    if (timePosted < MINUTE_MILLIS){
+      setTime("just now");
+    }
+    else if(timePosted < 2*MINUTE_MILLIS){
+        setTime("a minute ago");
+    }else if(timePosted < 50*MINUTE_MILLIS){
+        setTime(Math.floor(timePosted/MINUTE_MILLIS) +" minutes ago");
+    }else if (timePosted < 90*MINUTE_MILLIS){
+      setTime("an hour ago");
+    } else if(timePosted<24 * HOUR_MILLIS){
+      setTime(Math.floor(timePosted/HOUR_MILLIS) + " hours ago");
+    }else if(timePosted < 48 * HOUR_MILLIS){
+      setTime("yesterday");
+    } else{
+      setTime(Math.floor(timePosted/DAY_MILLIS) + " days ago");
+    }
+  },[timeCreated]);
+
+  
+  
+
   return (
 
     <div className="tweet">
@@ -151,7 +203,7 @@ function Posts({username,caption,imgUrl,name,postid}) {
                 {name}
               </div>
               <div className="tweet__publish-time">
-                {time + "min ago"}
+                {timeCreated}
               </div>
             </div>
             <div className="tweet__content">

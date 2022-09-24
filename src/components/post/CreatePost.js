@@ -6,6 +6,8 @@ import {AuthContext} from '../../AuthProvider';
 import {database,storage} from '../../firebase';
 import {set,ref, push, onValue} from 'firebase/database';
 import {getDownloadURL, ref as Ref,uploadBytesResumable } from 'firebase/storage';
+import { useAlert,positions,transitions } from 'react-alert';
+
 
 function CreatePost() {
 
@@ -15,6 +17,7 @@ function CreatePost() {
    const [show, setShow] = useState(false); //Shoe and hide remove image cross
 
    const image = useRef(null);
+   const  alert = useAlert();
 
    const handlePostTextInput = event => {
     setPostText(event.target.value);
@@ -38,8 +41,11 @@ function CreatePost() {
     const post = () =>{
       if(currentUser){ // check if there is user logged in
         if(!file && postText === ""){
-          alert('Add text or image to post')
-          alert("emty text ?" + postText)
+          alert.show('Add text or image to post',
+                {type:'error',
+                timeout: 2000, 
+                position: positions.BOTTOM_CENTER });
+          
         }else{
           //get reference for posts
           const postsRef = ref(database,'posts/');
@@ -67,7 +73,9 @@ function CreatePost() {
                   imageUrl: ""
                 });
               }
-            });  
+            });
+            setPostText("");  
+            
           } 
           // image only 
           if(file && postText === ""){
@@ -137,7 +145,13 @@ function CreatePost() {
                 );
               }); 
             }
-        }
+            alert.show("Posted successfully",{
+              type: 'success',
+              position: 'bottom right',
+              timeout: 2000,
+              transition: transitions.SCALE
+            });
+          }
       }
         
     }
