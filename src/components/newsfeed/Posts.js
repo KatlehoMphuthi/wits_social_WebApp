@@ -9,6 +9,7 @@ import {AuthContext} from '../../AuthProvider';
 import Button from '../common/Button';
 import { database } from '../../firebase';
 import {set,ref, push, onValue} from 'firebase/database';
+import Comment from './Comment';
 
 /*const LikeButton = () => {
   const [liked, setLiked] = useState(null);
@@ -57,13 +58,20 @@ const LikeButton = () => {
 };
 
 function Posts({username,name,caption,imgUrl,time,postid}) {
+
+  const commentsRef = ref(database, 'comments')
+  
   const {currentUser} = useContext(AuthContext); //get the current user.
   const [clickedPostId, setClickedPostId] = useState(postid)
   const [timeCreated, setTime] = useState("");
+
+
+  const [comments,setComments] = useState([]);
   const [comment, setComment] = useState("");
   const[showCommentBox, setShowComentBox] = useState(false);
 
 
+  //Toggel comments section
   const toggleComment = () =>{
     if(showCommentBox == true){
       setShowComentBox(false)
@@ -73,14 +81,14 @@ function Posts({username,name,caption,imgUrl,time,postid}) {
    
   }
   
-
-  
-  const handleCommentTextInput = event => {
+  //Get comment made by a user
+    const handleCommentTextInput = event => {
     setComment(event.target.value);
     console.log('value is:', event.target.value);
   };
 
 
+  //Submit comment written on post
   const submitComment = (event) =>{
     //Get comment feilds
 
@@ -101,7 +109,6 @@ function Posts({username,name,caption,imgUrl,time,postid}) {
 
         //Get post id from the clicked post
         const postsRef = ref(database,'posts/');
-        const commentsRef = ref(database, 'comments')
         const userRef = ref(database,'users/' + currentUser.uid);
 
         const commentid = push(commentsRef).key;
@@ -140,6 +147,7 @@ function Posts({username,name,caption,imgUrl,time,postid}) {
   
 
  
+    //To be used for post timestamp
   let  SECOND_MILLIS = 1000;
   let   MINUTE_MILLIS = 60 * SECOND_MILLIS;
   let  HOUR_MILLIS = 60 * MINUTE_MILLIS;
@@ -188,8 +196,37 @@ document.addEventListener('click', (e) =>
     }
   },[timeCreated]);
 
+
+  //Get id of a clicked post
   useEffect(()=>{
     setClickedPostId(postid)
+
+    //Get all comments from database
+
+    if(currentUser !== null){
+      const CommentsArr = [];
+       
+        
+        onValue(commentsRef,(Datasnapshot) =>{
+          Datasnapshot.forEach((child)=>{
+            const commentdata = child.val();
+            const commentByUser = {
+              username: commentdata.username,
+              commentFromUser: commentdata.comment,
+              postid : commentdata.postid
+            }
+  
+            if(commentdata.postid === clickedPostId)
+            CommentsArr.push(commentByUser);
+          });
+          
+        });
+        
+        
+        setComments(CommentsArr.reverse());
+      }
+
+
   },[showCommentBox])
   
 
@@ -224,17 +261,32 @@ document.addEventListener('click', (e) =>
             text="Share"/>
             </div>
 
-            {showCommentBox?<div className='tweet__comment-section'>
-        <input
-            placeholder="Add comment..." className="searchInput" onChange={handleCommentTextInput}
-            value={comment}
-          /> 
+            {showCommentBox?
+            
+            <div className='tweet__comment-section'>
+              <input
+                  placeholder="Add comment..." className="searchInput" onChange={handleCommentTextInput}
+                  value={comment}
+                /> 
+                <Button  text='Send' color='#2C76EE' onClick={submitComment} type='' />
 
-          <Button  text='Send' color='#2C76EE' onClick={submitComment} type='' />
-        </div> : null}
+                <div>
+            {
+                comments.map(commentToShow=>(
+          <Comment 
+          key={commentToShow.postid}
+          username = {commentToShow.username}
+          comment = {commentToShow.commentFromUser}
+          />)) 
+          }
+
+                </div>
+            </div>
+            : null}
 
 
           </div>
+
         </div>
 
 
