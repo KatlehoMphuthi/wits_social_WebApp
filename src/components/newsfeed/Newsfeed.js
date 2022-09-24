@@ -53,41 +53,6 @@ function Newsfeed(){
   //const PostsArr = useRef([]); // create an empty array to store the posts in
   const postRef = ref(database,'posts/'); 
   useEffect(()=>{
-    if(currentUser){
-      //create ref to the posts 
-      const postRef = ref(database,'posts/');
-      const imagePost = [] // create an empty array to store the posts in
-      //create a promise 
-
-      let p = new Promise(resolve =>{
-              //loop through all posts
-      onValue(postRef,(snapshot) =>{
-        snapshot.forEach((child) =>{
-          const childData = child.val(); // data of each post 
-          if(childData.imageUrl){ // for post with that contain images 
-            
-            const post = { 
-              username: "",
-              caption: childData.caption !== "" ? childData.caption: "",
-              imgUrl: childData.imageUrl,
-              name: childData.username,
-              id : childData.id
-            }
-            
-            imagePost.push(post);
-            resolve(imagePost);
-          } else{ 
-            // for posts that consists of large texts
-            const post = { 
-              username: "",
-              caption: childData.text,
-              imgUrl: "",
-              name: childData.username,
-              id : childData.id
-            }
-            imagePost.push(post);
-            resolve(imagePost);
-
     if(currentUser !== null){
     const PostsArr = [];
      
@@ -100,7 +65,8 @@ function Newsfeed(){
             caption: postdata.caption !== "" ? postdata.caption: postdata.text,
             imgUrl: postdata.imageUrl === "" ? "":postdata.imageUrl,
             name: postdata.username,
-            time: postdata.time
+            time: postdata.time,
+            id: postdata.id
 
           }
 

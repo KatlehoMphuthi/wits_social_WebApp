@@ -56,7 +56,12 @@ const LikeButton = () => {
   );
 };
 
-function Posts({username,caption,imgUrl,name}) {
+function Posts({username,caption,imgUrl,name,time,postid}) {
+
+  const [timeCreated, setTime] = useState("");
+  const [comment, setComment] = useState("");
+  const[showCommentBox, setShowComentBox] = useState(false);
+
 
   const toggleComment = () =>{
     if(showCommentBox == true){
@@ -67,8 +72,7 @@ function Posts({username,caption,imgUrl,name}) {
    
   }
   
-  const [comment, setComment] = useState("");
-  const[showCommentBox, setShowComentBox] = useState(false)
+
   
   const handleCommentTextInput = event => {
     setComment(event.target.value);
@@ -82,9 +86,9 @@ function Posts({username,caption,imgUrl,name}) {
     alert("I am responsibel for sending the comment");
 
     //get post id
-    const value = event;
+    const value = event;}
 
-    console.log(prop)
+    //console.log(prop)}
     
     /*
     //=======================
@@ -131,16 +135,30 @@ function Posts({username,caption,imgUrl,name}) {
 
 
     //===================
-  }
   
-function Posts({username,caption,imgUrl,name,time}) {
-  const [timeCreated, setTime] = useState("");
+  
+
+ 
   let  SECOND_MILLIS = 1000;
   let   MINUTE_MILLIS = 60 * SECOND_MILLIS;
   let  HOUR_MILLIS = 60 * MINUTE_MILLIS;
   let   DAY_MILLIS = 24 * HOUR_MILLIS;
 
   useEffect(() => {
+      // Create event listener
+document.addEventListener('click', (e) =>
+{
+  // Retrieve id from clicked element
+  let elementId = e.target.id;
+  // If element has id
+  if (elementId !== '') {
+      console.log(elementId);
+  }
+  // If element has no id
+  else { 
+      console.log("An element without an id was clicked.");
+  }
+});
     if (time < 1000000000000) {
       time *= 1000;
   }
