@@ -5,3 +5,6 @@ ignore:
   - "src/Header.js"
   - "src/firebase.js"
   - "src/components/common"
+  - "src/components/post"
+  - "src/components/about"
+  - "src/components/newsfeed"
