@@ -99,8 +99,8 @@ return fname !== "" ?
           </div>
           {word !== "" && <div style={searchStyle}>
           {word !== "" && filtered.map((u) => {
-            return <p
-              style={{ padding: 10,margin:0, background: "blue" }}
+            return <p className="who-to-follow__block"
+              style={{ padding: 10,margin:0, background: "white" }}
               onClick={ ()=>goToUserProfile(u)} // go to user profile
             >{u.firstname}</p>
           })}
