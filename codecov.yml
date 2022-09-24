@@ -4,3 +4,4 @@ ignore:
   - "src/reportWebVitals.js"
   - "src/Header.js"
   - "src/firebase.js"
+  - "src/components/common"
