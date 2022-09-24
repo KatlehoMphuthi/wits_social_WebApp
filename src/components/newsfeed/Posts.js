@@ -3,6 +3,7 @@ import './Post.css'
 import React, { useEffect, useState, useContext } from 'react'
 import cn from 'classnames'
 import { ReactComponent as Hand } from './hand.svg'
+import { ReactComponent as Heart } from './heart.svg'
 import './likestyle.scss'
 import { AuthContext } from '../../AuthProvider'
 
@@ -49,7 +50,7 @@ const LikeButton = () => {
       })}
     >
       <div className='like-button'>
-        <Hand />
+      
         <span>Like</span>
         <span className={cn('suffix', { liked })}>d</span>
       </div>
@@ -231,9 +232,22 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         </div>
 
         <div className='tweet__action-buttons'>
-          <Button text='comment' onClick={toggleComment} />
-          <LikeButton />
-          <Button text='Share' />
+
+       
+     
+      <Button text='comment' onClick={toggleComment} />
+ 
+
+    <LikeButton />
+
+ 
+     
+      <Button text='Share' />
+ 
+
+         
+       
+      
         </div>
 
         {showCommentBox ? (

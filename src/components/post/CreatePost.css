@@ -84,6 +84,7 @@ letter-spacing: 0.15px;
 
 color: #343E4B;
     width: 25%;
+    margin: 0 1rem;
     height: 2.7rem;
     cursor: pointer;
     text-align: center;
@@ -95,7 +96,7 @@ color: #343E4B;
 
 button:hover,
 button:focus {
-    background: #0053ba;
+    opacity: 80%;
 }
 
 button:focus {

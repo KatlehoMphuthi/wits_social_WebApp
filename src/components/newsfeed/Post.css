@@ -55,3 +55,21 @@
    border: 2px solid blue;
    background-color: white;
  }
+
+ .tweet-action__item{
+  color: #0F141A;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  justify-content: space-around;
+  background-color: #F8F8F8;
+  padding: 0 1rem;
+  border-radius: 8px;
+  flex: 1;
+  margin: 0 1rem;
+ }
+
+ .tweet-action__item-icon{
+   width: 24px;
+   height: 24px;
+ }
