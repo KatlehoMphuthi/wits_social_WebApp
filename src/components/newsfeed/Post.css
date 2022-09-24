@@ -37,7 +37,21 @@
 
  .tweet__action-buttons{
    display: flex;
-   width: 100%;
    justify-content: space-between;
    margin-top: 1.5rem;
+ }
+
+
+ .tweet__comment-section{
+   margin-top: 1.5rem;
+ }
+
+ .tweet__comment-section input{
+   border-radius: 8px;
+   margin-right: 1rem;
+ }
+
+ .tweet__comment-section input:focus{
+   border: 2px solid blue;
+   background-color: white;
  }

@@ -91,15 +91,15 @@ export default function Users_Rsidebar(){
   //follow and toggle button functionality  
   const follow = () =>{
     if(currentUser !== null ){
-        if(followbtn === "FOLLOW"){ // check the follow status
+        if(followbtn === "follow"){ // check the follow status
             // This sets the follow button to following 
             console.log(userid.current);
             const response = followHelper(currentUser.uid,userid.current); //function returns finish status or not failed 
             if( response === "finished"){
-                setfollowBtn("FOLLOWING");
+                setfollowBtn("following");
                 setIsActive(false);
             }else{
-                alert("Following "+ name + " failed!");
+                alert("following "+ name + " failed!");
             }
             }
             else{// status = following user
@@ -127,13 +127,17 @@ export default function Users_Rsidebar(){
                 </div>
 
                 
-                <div className="who-to-follow__button">
-                    <span><Button onClick={follow} 
+                    <div className="followcont">
+                    {currentUser && <p
+                    
+                    className="followbtn"
+                    onClick={follow} 
                     style={{
                     backgroundColor: isActive ? ' ': 'blue',
                     color: isActive ? '' : 'white',
-                    }}>{currentUser && <p> {followbtn}</p>}</Button></span>
-                </div>      
+                    }}
+                    > {followbtn}</p>}
+</div>
             </div>     
      </div>   
     )

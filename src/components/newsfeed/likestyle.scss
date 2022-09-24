@@ -1,7 +1,8 @@
-$dark: #222f3e;
-$darkLower: #22303f8c;
+$dark: #F8F8F8;
+$darkLower: #F8F8F8;
 $grey: #8395a7;
 $white: #fff;
+$text : #343E4B;
 $primary: #54a0ff;
 
 .like-button-wrapper {
@@ -11,7 +12,7 @@ $primary: #54a0ff;
   border: none;
   cursor: pointer;
   padding: 16px 24px;
-  color: $white;
+  color: $text;
   font-size: 16px;
   font-weight: 600;
   background-color: transparent;
@@ -59,6 +60,7 @@ $primary: #54a0ff;
     display: flex;
     align-items: center;
     z-index: 1;
+    text-align: center;
     transform: translateX(3px);
   }
 
