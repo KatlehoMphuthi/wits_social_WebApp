@@ -1,3 +1,9 @@
+.app-container{
+  max-width: 1300px;
+  background-color: #F5F7F9;
+  margin: auto;
+}
+
 .navbar{
   position: static;
   top: 0;
@@ -18,18 +24,10 @@
   border-bottom:1px solid lightblue ;
 }
 .newsfeed{
-   background-color: #fafafaef; 
    height: 100%;
 }
 
-/*-----Code from Siys */
-
-.layout {
-  display: grid;
-  background-color: #FAFCFE;
-  grid-template-columns: 200px auto 300px;
-  margin: 0 auto;
-}
+/*-----Code from Siya */
 
 .layout__right-sidebar {
   position: fixed;
@@ -38,10 +36,12 @@
 
 .tweet {
   display: flex;
+  margin: 1rem;
   margin-top: 2rem;
-  padding: 2rem;
+  padding: 2rem 2rem 1rem 2rem;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: white;
+
 }
 
 .tweet:hover {
@@ -63,6 +63,10 @@
   height: 50px !important; 
   border-radius: 50%;
   margin-right: 1.5rem;
+}
+
+.tweet__main{
+  width: 100%;
 }
 
 .tweet__header {
@@ -89,7 +93,7 @@
 .tweet__image {
   width: 100%;
   border-radius: 15px;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .layout__main{
@@ -97,5 +101,119 @@
 }
 
 .tweet__content{
-  margin-top: 1rem;
+}
+
+/*--------------------SIDEBAR MENU---------------------*/
+
+.sidebar-menu {
+  position: fixed;
+}
+
+.sidebar-menu__item {
+  font-size: 19px;
+  color: #0F141A;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  padding: 10px;
+}
+
+.sidebar-menu__item:hover {
+  background: rgba(29, 161, 242, 0.1);
+  color: #1da0f2;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.sidebar-menu__item--active {
+  color: #1da0f2;
+}
+
+.sidebar-menu__item-icon {
+  height: 26px;
+  margin-right: 20px;
+}
+
+.sidebar-menu__item--active .sidebar-menu__item-icon {
+  filter: invert(67%) sepia(60%) saturate(4956%) hue-rotate(176deg) brightness(95%) contrast(99%);
+}
+
+
+/******************RIGHT SIDEBAR*************/
+
+.layout {
+  display: grid;
+  grid-template-columns: 180px auto 300px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+
+.layout__right-sidebar {
+  position: fixed;
+  width: 300px;
+}
+
+/*-----------------WHO TO FOLLOW-------------------*/
+
+.who-to-follow {
+  background: #f5f8fa;
+  border-radius: 15px;
+}
+
+
+.who-to-follow__block {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e6ecf0;
+}
+
+.who-to-follow__block:last-child {
+  border-bottom: none;
+}
+
+.who-to-follow__author-logo {
+  width: 49px;
+  height: 49px;
+  border-radius: 50px;
+  margin-right: 10px;
+}
+
+.who-to-follow__author-slug {
+  color: #657786;
+  font-size: 15px;
+}
+
+.who-to-follow__author-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.who-to-follow__content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.who-to-follow__heading {
+  font-size: 19px;
+  font-weight: bold;
+  color: #14171a;
+}
+
+.who-to-follow__button {
+  border: 1px solid #1da0f2;
+  color: #1da0f2;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 15px;
+  padding: 5px;
+  min-width: 67px;
+  text-align: center;
+}
+
+.who-to-follow__button:hover {
+  background: rgba(29, 161, 242, 0.1);
+  cursor: pointer;
 }
