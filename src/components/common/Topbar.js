@@ -11,6 +11,7 @@ import {onValue,ref, set } from "firebase/database";
 export default function Topbar() {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
+const [lname, setlname] = useState("");
 const navigate = useNavigate();
 const [filtered, setFiltered] = useState([]);
 const [word, setWord] = useState("");
@@ -52,6 +53,7 @@ useEffect(()=>{
       if(DataSnapshot.exists()){
         const data = DataSnapshot.val();
         setfname(data.firstname);
+        setlname(data.lastName);
       }
                    
     });
@@ -97,8 +99,8 @@ return fname !== "" ?
           </div>
           {word !== "" && <div style={searchStyle}>
           {word !== "" && filtered.map((u) => {
-            return <p
-              style={{ padding: 10,margin:0, background: "blue" }}
+            return <p className="who-to-follow__block"
+              style={{ padding: 10,margin:0, background: "white" }}
               onClick={ ()=>goToUserProfile(u)} // go to user profile
             >{u.firstname}</p>
           })}
@@ -106,7 +108,7 @@ return fname !== "" ?
         </div>
         <div className="topbarRight">
           <div className="topbarLinks">
-          <span> <p>{fname} </p></span>
+          <span> <p> <span className="profile__initals">{fname[0]}{lname[0]}</span>{fname} {lname}</p></span>
           </div>
         </div>
       </div>

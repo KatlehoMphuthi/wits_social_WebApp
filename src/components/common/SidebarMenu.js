@@ -38,19 +38,22 @@ function SidebarMenu() {
 
   return (
     <div className="sidebar-menu">
+      <div className='top-menu'>
     <div className="sidebar-menu__item sidebar-menu__item--active" onClick={goToHome}>
       <img src="./svg/home.svg" className="sidebar-menu__item-icon" />
       Home
     </div>
 
     <div className="sidebar-menu__item" onClick={goToAbout}>
-      <img src="./svg/explore.svg" className="sidebar-menu__item-icon" />
+      <img src="./svg/about.svg" className="sidebar-menu__item-icon" />
       About
     </div>
-
+</div>
+   
     <div className="sidebar-menu__item">
-      <img src="./svg/explore.svg" className="sidebar-menu__item-icon" />
+      <img src="./svg/logout.svg" className="sidebar-menu__item-icon" />
       <Button onClick={submit}>Logout</Button>
+
     </div>
   </div>
   )

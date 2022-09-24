@@ -1,5 +1,4 @@
 import React from "react";
-import "./About.css";
 import Topbar from "../common/Topbar";
 import SidebarMenu from "../common/SidebarMenu";
 import RightSideBar from "../common/RightSideBar";
@@ -19,10 +18,6 @@ function About(){
       <div className="layout__main">
         About Wits Social
       
-       </div>
-
-       <div className="layout__right-sidebar-container">
-       <RightSideBar />
        </div>
     </div>
     </div>
