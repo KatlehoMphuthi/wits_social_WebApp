@@ -34,3 +34,42 @@
  .post_avatar{
     margin-right:10px ;
  }
+
+ .tweet__action-buttons{
+   display: flex;
+   justify-content: space-between;
+   margin-top: 1.5rem;
+ }
+
+
+ .tweet__comment-section{
+   margin-top: 1.5rem;
+ }
+
+ .tweet__comment-section input{
+   border-radius: 8px;
+   margin-right: 1rem;
+ }
+
+ .tweet__comment-section input:focus{
+   border: 2px solid blue;
+   background-color: white;
+ }
+
+ .tweet-action__item{
+  color: #0F141A;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  justify-content: space-around;
+  background-color: #F8F8F8;
+  padding: 0 1rem;
+  border-radius: 8px;
+  flex: 1;
+  margin: 0 1rem;
+ }
+
+ .tweet-action__item-icon{
+   width: 24px;
+   height: 24px;
+ }

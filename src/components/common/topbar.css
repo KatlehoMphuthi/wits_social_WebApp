@@ -2,15 +2,15 @@
   padding: 1.5rem;
   width: 100%;
   display: flex;
-  background-color: #fff;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 999;
+  background-color: inherit;
 }
 
 .topbarLeft {
-  flex: 3;
+  flex: 2;
 }
 
 .logo {
@@ -57,7 +57,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  color: white;
+  color: black;
 }
 
 .topbarLink {
@@ -101,4 +101,16 @@
 
 .searchbar-icon{
     margin-left: 1.5rem;
+}
+
+.profile__initals{
+  margin-right: 1rem;
+  padding: 0.65rem;
+  background-color: violet;
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+border-radius: 50%;
+color: white;
 }
