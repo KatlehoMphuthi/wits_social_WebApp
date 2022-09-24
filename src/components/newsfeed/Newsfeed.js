@@ -16,6 +16,7 @@ function Newsfeed(){
 
   const {currentUser} = useContext(AuthContext);
   const [posts,setPost] = useState([]);
+
   //const PostsArr = useRef([]); // create an empty array to store the posts in
   const postRef = ref(database,'posts/'); 
   useEffect(()=>{
