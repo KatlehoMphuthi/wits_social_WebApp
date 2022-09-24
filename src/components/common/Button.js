@@ -1,6 +1,5 @@
 import React from 'react'
 import { ReactPropTypes } from "react"
-import './Button.css'
 
 function Button({text,color, onClick,type}) {
   return (

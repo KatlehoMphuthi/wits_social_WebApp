@@ -67,6 +67,7 @@ function Posts({username,name,caption,imgUrl,time,postid}) {
 
 
   const [comments,setComments] = useState([]);
+
   const [comment, setComment] = useState("");
   const[showCommentBox, setShowComentBox] = useState(false);
 
@@ -94,6 +95,7 @@ function Posts({username,name,caption,imgUrl,time,postid}) {
 
     //get post id
     const value = event
+
 
     //console.log(prop)}
     
@@ -147,7 +149,9 @@ function Posts({username,name,caption,imgUrl,time,postid}) {
   
 
  
+
     //To be used for post timestamp
+
   let  SECOND_MILLIS = 1000;
   let   MINUTE_MILLIS = 60 * SECOND_MILLIS;
   let  HOUR_MILLIS = 60 * MINUTE_MILLIS;

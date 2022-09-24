@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
-import { loginUser2} from '../../firebase'
+import { useAlert } from 'react-alert'
 import {AuthContext} from '../../AuthProvider'
 import './authentication.css'
 
@@ -15,7 +15,7 @@ export default function Login () {
     formState: { errors, isSubmitting }
     
   } = useForm()
-
+  const alert = useAlert();
 
   //To navigate between the pages
   const navigate = useNavigate()
@@ -30,9 +30,30 @@ export default function Login () {
       password: data.password
     }
 
-    await login(obj.email, obj.password).catch(error => console.log(error));
+    await login(obj.email, obj.password).then(user =>{
+      navigate('/newsfeed',{replace:true})
+    }).catch(error => {console.log(error.code)
+                        if (error.code === "auth/wrong-password"){
+                          alert.show("Your email/password is incorrect",{
+                            type : 'error',
+                            timeout : 2000
+                          });
+                        }
+                         if (error.code === "auth/user-not-found"){
+                          alert.show("You are not registered",{
+                            type : 'error',
+                            timeout : 2000
+                          });
+                         }
+                         else{
+                          alert.show("Oops, an error has occurred!",{
+                            type : 'error',
+                            timeout : 2000
+                          });
+                         }
+                        });
     
-    navigate('/newsfeed',{replace:true})
+    
   }
 
   //Login form component
