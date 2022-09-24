@@ -145,6 +145,8 @@ function Posts({username,caption,imgUrl,name,time,postid}) {
   let   DAY_MILLIS = 24 * HOUR_MILLIS;
 
   useEffect(() => {
+
+   
       // Create event listener
 document.addEventListener('click', (e) =>
 {
