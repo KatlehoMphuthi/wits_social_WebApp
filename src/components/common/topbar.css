@@ -10,7 +10,7 @@
 }
 
 .topbarLeft {
-  flex: 2;
+  flex: 2.2;
 }
 
 .logo {
@@ -106,7 +106,7 @@
 .profile__initals{
   margin-right: 1rem;
   padding: 0.65rem;
-  background-color: violet;
+  background-color: var(--twitter-color);
   font-family: 'Roboto';
 font-style: normal;
 font-weight: 600;

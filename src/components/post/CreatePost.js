@@ -7,6 +7,7 @@ import {database,storage} from '../../firebase';
 import {set,ref, push, onValue} from 'firebase/database';
 import {getDownloadURL, ref as Ref,uploadBytesResumable } from 'firebase/storage';
 import { useAlert,positions,transitions } from 'react-alert';
+import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
 
 
 function CreatePost() {
@@ -178,14 +179,17 @@ function CreatePost() {
           />
         </div>
 
+        {show?
         <div className="tweet__content">
-              {show?<p className='remove-image' onClick={removeImage}>x</p> : null}
+              <p className='remove-image' onClick={removeImage}>x</p> 
               <img className="tweet__image" src={file} />
-            </div>
+            </div>: null}
 
         <div className='action_buttons'>
+          <span className='action__buttons-add-image'>
+            <InsertPhotoRoundedIcon style={{color : '#2C76EE'}}/>
         <input className="custom-file-input" type='file' value="" title=" " accept='image/*' onChange={handleChange} />
-
+        </span>
         <Button text='Post' color='#2C76EE' onClick={post} type='' />
 
         </div>
