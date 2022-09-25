@@ -118,7 +118,6 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   //Get comment made by a user
   const handleCommentTextInput = event => {
     setComment(event.target.value)
-    console.log('value is:', event.target.value)
   }
 
   //Submit comment written on post
@@ -168,6 +167,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
         //Success message
         setShowComentBox(false)
+        setComment('')
         alert('Comment added to post')
         
       }
