@@ -38,7 +38,6 @@
  .tweet__action-buttons{
    display: flex;
    justify-content: space-between;
-   margin-top: 1.5rem;
  }
 
 
@@ -54,6 +53,7 @@
  .tweet__comment-section input:focus{
    border: 2px solid blue;
    background-color: white;
+   color: #0F141A;
  }
 
  .tweet-action__item{
