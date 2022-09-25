@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState, useContext } from 'react'
 import { AuthContext } from '../../AuthProvider'
 import { auth } from '../../firebase'
@@ -15,6 +15,9 @@ function SidebarMenu () {
   const { currentUser } = useContext(AuthContext)
   const navigate = useNavigate()
 
+  const [homeActive, setHomeActive] = useState(true);
+  const [aboutActive, setAboutActive] = useState(false);
+
   const submit = () => {
     if (currentUser) {
       alert('Are you sure want to logout?')
@@ -26,14 +29,20 @@ function SidebarMenu () {
   }
 
   const goToAbout = () => {
+    setAboutActive(true);
+    setHomeActive(false);
     if (currentUser) {
       navigate('/about', { replace: true })
+     
     }
   }
 
   const goToHome = () => {
+      setHomeActive(true)
+      setAboutActive(false);
     if (currentUser) {
       navigate('/newsfeed', { replace: true })
+      
     }
   }
 
@@ -43,12 +52,13 @@ function SidebarMenu () {
         <SidebarOption
           text='Newsfeed'
           Icon={ViewStreamRoundedIcon}
-          active={true}
+          active={homeActive}
           onClick={goToHome}
         />
         <SidebarOption
           text='About'
           Icon={InfoRoundedIcon}
+          active={aboutActive}
           onClick={goToAbout}
         />
       </div>

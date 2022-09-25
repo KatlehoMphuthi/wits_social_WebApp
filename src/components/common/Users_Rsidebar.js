@@ -24,7 +24,7 @@ export default function Users_Rsidebar(){
     //current state for the name and follow status
     const [isActive, setIsActive] = useState(true);
     const[name, setName] = useState("NAME");
-    const [followbtn,setfollowBtn] = useState("FOLLOW");
+    const [followbtn,setfollowBtn] = useState("Follow");
 
     //renders this as long there is a current users
     useEffect(() =>{
@@ -73,7 +73,7 @@ export default function Users_Rsidebar(){
             onValue(followerRef,(DataSnapshot)=>{
                 DataSnapshot.forEach((snapshot) =>{
                     if(snapshot.key === userid.current){
-                        setfollowBtn('FOLLOWING'); // changes the button to following
+                        setfollowBtn('Following'); // changes the button to following
                         setIsActive(false);
                     }
                    
@@ -85,7 +85,7 @@ export default function Users_Rsidebar(){
 
          /***********************************PROMISE ENDS HERE******************************************* */
           }
-    },[]); // renders only if there is a user 
+    },[setfollowBtn]); // renders only if there is a user 
     
    
   //follow and toggle button functionality  

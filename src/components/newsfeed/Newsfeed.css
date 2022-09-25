@@ -72,7 +72,7 @@ p{
 
 .tweet__header {
   display: flex;
-  margin-bottom: 1.5rem;
+  padding: 1rem 0;
 }
 
 .tweet__author-name {
@@ -118,7 +118,7 @@ color: #7890A7;
 .tweet__image {
   width: 100%;
   border-radius: 15px;
-  margin-top: 1rem;
+  margin: 1rem 0rem;
 }
 
 
@@ -128,6 +128,8 @@ font-style: normal;
 font-weight: 400;
 font-size: 16px;
 line-height: 20px;
+padding-bottom: 1rem;
+min-height: fit-content;
 /* or 125% */
 
 /* 00. On Surface / Medium Emphasis */

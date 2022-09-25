@@ -178,10 +178,11 @@ function CreatePost() {
           />
         </div>
 
+        {show?
         <div className="tweet__content">
-              {show?<p className='remove-image' onClick={removeImage}>x</p> : null}
+              <p className='remove-image' onClick={removeImage}>x</p> 
               <img className="tweet__image" src={file} />
-            </div>
+            </div>: null}
 
         <div className='action_buttons'>
         <input className="custom-file-input" type='file' value="" title=" " accept='image/*' onChange={handleChange} />
