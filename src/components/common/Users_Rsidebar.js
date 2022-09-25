@@ -24,7 +24,7 @@ export default function Users_Rsidebar(){
     //current state for the name and follow status
     const [isActive, setIsActive] = useState(true);
     const[name, setName] = useState("NAME");
-    const [followbtn,setfollowBtn] = useState("FOLLOW");
+    const [followbtn,setfollowBtn] = useState("Follow");
 
     //renders this as long there is a current users
     useEffect(() =>{
@@ -73,7 +73,7 @@ export default function Users_Rsidebar(){
             onValue(followerRef,(DataSnapshot)=>{
                 DataSnapshot.forEach((snapshot) =>{
                     if(snapshot.key === userid.current){
-                        setfollowBtn('FOLLOWING'); // changes the button to following
+                        setfollowBtn('Following'); // changes the button to following
                         setIsActive(false);
                     }
                    
@@ -85,21 +85,21 @@ export default function Users_Rsidebar(){
 
          /***********************************PROMISE ENDS HERE******************************************* */
           }
-    },[]); // renders only if there is a user 
+    },[setfollowBtn]); // renders only if there is a user 
     
    
   //follow and toggle button functionality  
   const follow = () =>{
     if(currentUser !== null ){
-        if(followbtn === "FOLLOW"){ // check the follow status
+        if(followbtn === "follow"){ // check the follow status
             // This sets the follow button to following 
             console.log(userid.current);
             const response = followHelper(currentUser.uid,userid.current); //function returns finish status or not failed 
             if( response === "finished"){
-                setfollowBtn("FOLLOWING");
+                setfollowBtn("following");
                 setIsActive(false);
             }else{
-                alert("Following "+ name + " failed!");
+                alert("following "+ name + " failed!");
             }
             }
             else{// status = following user
@@ -127,13 +127,17 @@ export default function Users_Rsidebar(){
                 </div>
 
                 
-                <div className="who-to-follow__button">
-                    <span><Button onClick={follow} 
+                    <div className="followcont">
+                    {currentUser && <p
+                    
+                    className="followbtn"
+                    onClick={follow} 
                     style={{
-                    backgroundColor: isActive ? ' ': 'blue',
+                    backgroundColor: isActive ? ' ': '#2185d0',
                     color: isActive ? '' : 'white',
-                    }}>{currentUser && <p> {followbtn}</p>}</Button></span>
-                </div>      
+                    }}
+                    > {followbtn}</p>}
+</div>
             </div>     
      </div>   
     )

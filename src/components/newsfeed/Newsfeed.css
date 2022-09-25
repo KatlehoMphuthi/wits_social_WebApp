@@ -2,6 +2,12 @@
   max-width: 1300px;
   background-color: #F5F7F9;
   margin: auto;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+p{
+  margin: 0;
 }
 
 .navbar{
@@ -29,11 +35,6 @@
 
 /*-----Code from Siya */
 
-.layout__right-sidebar {
-  position: fixed;
-  width: 300px;
-}
-
 .tweet {
   display: flex;
   margin: 1rem;
@@ -45,8 +46,8 @@
 }
 
 .tweet:hover {
-  background: rgba(0, 0, 0, 0.03);
   cursor: pointer;
+  border: 1px solid lightgrey;
 }
 
 .tweet a {
@@ -71,42 +72,81 @@
 
 .tweet__header {
   display: flex;
+  padding: 1rem 0;
 }
 
 .tweet__author-name {
-  font-size: 15px;
-  font-weight: 700;
-  color: #14171a;
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 16.3125px;
+line-height: 26px;
+/* identical to box height, or 158% */
+
+letter-spacing: 0.203906px;
+
+color: #343E4B;
   margin-right: 5px;
 }
 
 .tweet__author-slug {
-  color: #5b7083;
-  font-size: 15px;
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 16.3125px;
+/* identical to box height, or 158% */
+
+letter-spacing: 0.203906px;
+
+color: #343E4B;
 }
 
 .tweet__publish-time {
   margin-left: 5px;
-  color: #657786;
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: 17px;
+/* or 103% */
+
+letter-spacing: 0.203906px;
+
+color: #7890A7;
 }
 
 .tweet__image {
   width: 100%;
   border-radius: 15px;
-  margin-top: 1rem;
+  margin: 1rem 0rem;
 }
 
-.layout__main{
-  margin-top:0.1rem;
-}
 
 .tweet__content{
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 20px;
+padding-bottom: 1rem;
+min-height: fit-content;
+/* or 125% */
+
+/* 00. On Surface / Medium Emphasis */
+
+color: rgba(0, 0, 0, 0.6);
 }
 
 /*--------------------SIDEBAR MENU---------------------*/
 
 .sidebar-menu {
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 80%;
+  padding-top: 1.5rem;
 }
 
 .sidebar-menu__item {
@@ -141,24 +181,13 @@
 
 /******************RIGHT SIDEBAR*************/
 
-.layout {
-  display: grid;
-  grid-template-columns: 180px auto 300px;
-  margin: 0 auto;
-  max-width: 1200px;
-}
 
-
-.layout__right-sidebar {
-  position: fixed;
-  width: 300px;
-}
 
 /*-----------------WHO TO FOLLOW-------------------*/
 
 .who-to-follow {
-  background: #f5f8fa;
-  border-radius: 15px;
+  border-radius: 8px;
+  padding: 1rem;
 }
 
 
@@ -166,7 +195,10 @@
   padding: 10px 15px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e6ecf0;
+  background: #EEF2F6;
+border-radius: 8px;
+margin: 1rem 0;
+align-items: center;
 }
 
 .who-to-follow__block:last-child {
@@ -174,10 +206,14 @@
 }
 
 .who-to-follow__author-logo {
-  width: 49px;
-  height: 49px;
+  padding: 1rem;
   border-radius: 50px;
   margin-right: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
 }
 
 .who-to-follow__author-slug {
@@ -194,26 +230,96 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+
+  display: flex;
+  align-items: center;
 }
 
 .who-to-follow__heading {
   font-size: 19px;
   font-weight: bold;
   color: #14171a;
+  background: white;
+
+  font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 24px;
+/* identical to box height, or 133% */
+
+letter-spacing: 0.15px;
+
+color: #343E4B;
 }
 
 .who-to-follow__button {
-  border: 1px solid #1da0f2;
-  color: #1da0f2;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 15px;
-  padding: 5px;
-  min-width: 67px;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 24px;
+  gap: 16px;
+  background: #F9FAFC;
+  border-radius: 8px;
 }
+
+.followcont p, .followbtn{
+  padding: 10px;
+  background: #F9FAFC;
+border-radius: 8px;
+min-width: 120px;
+text-align: center;
+cursor: pointer;
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 450;
+font-size: 14px;
+/* identical to box height, or 171% */
+letter-spacing: 0.15px;
+color: #343E4B;
+}
+
+
 
 .who-to-follow__button:hover {
   background: rgba(29, 161, 242, 0.1);
   cursor: pointer;
 }
+
+.layout{
+  display: flex;
+  height: 100vh;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+
+.layout__main{
+  flex: 0.65;
+  min-width: auto;
+  overflow-y: scroll;
+  margin-bottom: 7rem;
+}
+
+.layout__right-sidebar{
+  background-color: white;
+  border-radius: 8px;
+  height: fit-content;
+  margin: 2rem 1rem;
+  flex: 0.35;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.layout__main::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.layout__main {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+

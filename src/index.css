@@ -15,6 +15,20 @@
   -webkit-text-size-adjust: 100%;
 }
 
+body {
+  --twitter-color: #2185d0;
+  --twitter-background: #e6ecf0;
+}
+
+.app {
+  display: flex;
+  height: 50vh;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+
 
 a {
   font-weight: 500;
