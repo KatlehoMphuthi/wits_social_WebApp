@@ -12,6 +12,11 @@ import { database } from '../../firebase'
 import { set, ref, push, onValue } from 'firebase/database'
 import Comment from './Comment'
 
+import ActionButton from './ActionButton'
+import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
+import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+
 /*const LikeButton = () => {
   const [liked, setLiked] = useState(null);
 
@@ -31,6 +36,8 @@ import Comment from './Comment'
   );
 };
 */
+
+
 const LikeButton = () => {
   const [liked, setLiked] = useState(null)
   const [clicked, setClicked] = useState(false)
@@ -69,6 +76,30 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
   const [comment, setComment] = useState('')
   const [showCommentBox, setShowComentBox] = useState(false)
+  const [commentActiveColor, setCommentActiveColor] = useState('')
+  const [commentColor, setCommentColor] = useState('')
+
+
+  //Like Feature
+  const [liked, setLiked] = useState(null)
+  const [clicked, setClicked] = useState(false)
+  const [likeActiveColor, setLikeActiveColor] = useState('')
+  const [likeColor, setlikeColor] = useState('')
+  const count = 0
+
+  const likePost = () =>{
+    setLiked(!liked)
+    setClicked(true)
+    if(likeActiveColor === ''){
+      setLikeActiveColor('#FFE9E9')
+      setlikeColor('#F2383A')
+    }else{
+      setLikeActiveColor('')
+      setlikeColor('')
+    }
+    
+    
+  }
 
   //Toggel comments section
   const toggleComment = () => {
@@ -79,10 +110,14 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     }
   }
 
+  //Share post
+  const showShare = () =>{
+    alert("Share is coming very soon")
+  }
+
   //Get comment made by a user
   const handleCommentTextInput = event => {
     setComment(event.target.value)
-    console.log('value is:', event.target.value)
   }
 
   //Submit comment written on post
@@ -132,7 +167,9 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
         //Success message
         setShowComentBox(false)
+        setComment('')
         alert('Comment added to post')
+        
       }
     }
   }
@@ -147,19 +184,6 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   let DAY_MILLIS = 24 * HOUR_MILLIS
 
   useEffect(() => {
-    // Create event listener
-    document.addEventListener('click', e => {
-      // Retrieve id from clicked element
-      let elementId = e.target.id
-      // If element has id
-      if (elementId !== '') {
-        console.log(elementId)
-      }
-      // If element has no id
-      else {
-        console.log('An element without an id was clicked.')
-      }
-    })
     if (time < 1000000000000) {
       time *= 1000
     }
@@ -191,6 +215,8 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   useEffect(() => {
     setClickedPostId(postid)
 
+    
+
     //Get all comments from database
 
     if (currentUser !== null) {
@@ -210,7 +236,12 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         })
       })
 
+      if(CommentsArr.length !== 0){
+        setCommentActiveColor('#DFF3FF')
+        setCommentColor('#08A0F7')
+      }
       setComments(CommentsArr.reverse())
+      
     }
   }, [showCommentBox])
 
@@ -233,18 +264,27 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
         <div className='tweet__action-buttons'>
 
-       
-     
-      <Button text='comment' onClick={toggleComment} />
- 
+      {/*<LikeButton />*/}
+    
+    <ActionButton
+    text='Comments'
+    Icon = {QuestionAnswerRoundedIcon}
+    activeColor = {commentActiveColor}
+    color = {commentColor}
+    onClick={toggleComment}/>
+    
+    <ActionButton
+    text='Like'
+    Icon = {FavoriteBorderRoundedIcon}
+    active = {clicked}
+    activeColor = {likeActiveColor}
+    color = {likeColor}
+    onClick={likePost}/>
 
-    <LikeButton />
-
- 
-     
-      <Button text='Share' />
- 
-
+  <ActionButton
+    text='Share'
+    Icon = {IosShareRoundedIcon}
+    onClick={showShare}/>
          
        
       
@@ -266,7 +306,8 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
             />
 
             <div>
-              {comments.map(commentToShow => (
+              {
+              comments.map(commentToShow => (
                 <Comment
                   key={commentToShow.postid}
                   username={commentToShow.username}
@@ -278,40 +319,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         ) : null}
       </div>
     </div>
-
-    /*
-    <div className="post">
-        <div className='post_header'>
-            <Avatar
-                className="post_avatar" 
-                alt='Michael'
-                src="/static/images/avatar/1.jpg"
-                
-            />
-             
-              <h3>{username}</h3>
-              <Provider apiKey="acc0dbccce8e557db5ebbe6d605aaa">
-              <LikeButton
-              namespace="testing-react"
-              id="everybody-like-now"
-            />
-              </Provider>
-
-        </div>
-          
-    //{/* header->avatar +username */
   )
 }
-
-//{/* Image */}
-
-//    <img className = "post_image" src={imgUrl}></img>
-
-//      <h4 className='post_text '>
-//        <strong>{username} </strong> {caption}</h4>
-//    {/* Michael + Hey Witsies!!! */}
-
-// )
-//}
 
 export default Posts
