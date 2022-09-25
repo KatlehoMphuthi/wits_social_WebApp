@@ -133,7 +133,7 @@ export default function Users_Rsidebar(){
                     className="followbtn"
                     onClick={follow} 
                     style={{
-                    backgroundColor: isActive ? ' ': 'blue',
+                    backgroundColor: isActive ? ' ': '#2185d0',
                     color: isActive ? '' : 'white',
                     }}
                     > {followbtn}</p>}
