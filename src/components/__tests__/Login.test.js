@@ -2,6 +2,9 @@ import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Login from "../authentication/Login";
+import { AuthProvider} from "../../AuthProvider";
+import { transitions, positions, Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from "react-alert-template-mui";
 
 const mockLogin = jest.fn((email,password ) =>{
     return Promise.resolve(email,password);
@@ -9,9 +12,16 @@ const mockLogin = jest.fn((email,password ) =>{
 
 describe("Login", ()=>{
     beforeEach(() =>{
-        render(<Router>
+        render(
+          <AlertProvider template={AlertTemplate}>
+            <AuthProvider>
+            <Router>
                 <Login login ={ mockLogin}/>
             </Router>
+          </AuthProvider>
+          </AlertProvider>
+          
+              
         );
     });
 
