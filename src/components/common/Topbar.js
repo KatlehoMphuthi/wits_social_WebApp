@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import { AuthContext } from "../../AuthProvider";
 import {onValue,ref, set } from "firebase/database";
 
+
 export default function Topbar() {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
@@ -93,14 +94,15 @@ return fname !== "" ?
               <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
             <input
               onChange={(e) => searchUser(e.target.value)}
-              placeholder="Search for friend!"
+              placeholder="Search for a  friend!"
               className="searchInput"
             />
           </div>
-          {word !== "" && <div style={searchStyle}>
+          {word !== "" && <div /*>style={searchStyle}*/>
           {word !== "" && filtered.map((u) => {
             return <p className="who-to-follow__block"
-              style={{ padding: 10,margin:0, background: "white" }}
+              style={{ padding: 10,margin:10,
+                       background: "white"}}
               onClick={ ()=>goToUserProfile(u)} // go to user profile
             >{u.firstname}</p>
           })}
@@ -122,11 +124,13 @@ return fname !== "" ?
       <div className="topbarCenter">
         <div className="searchbar">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
-          <input
+         
+          {/* <input
           
             placeholder="Search for friend, post or video coming Soon"
             className="searchInput"
-          />
+
+          /> */}
         </div>
       </div>
       <div className="topbarRight">
@@ -137,10 +141,12 @@ return fname !== "" ?
     </div>
   )
  ;
+ 
 }
 
 const searchStyle = {
-  background: "white",
-  padding: 10,
-  // width: 200,
+ background: "white",
+ padding: 10,
+  width: 200,
 }
+
