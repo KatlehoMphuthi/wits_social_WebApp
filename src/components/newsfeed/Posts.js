@@ -72,15 +72,16 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   const [clickedPostId, setClickedPostId] = useState(postid)
   const [timeCreated, setTime] = useState('')
 
-  const [comments, setComments] = useState([])
 
+  //Comments State
+  const [comments, setComments] = useState([])
   const [comment, setComment] = useState('')
   const [showCommentBox, setShowComentBox] = useState(false)
   const [commentActiveColor, setCommentActiveColor] = useState('')
   const [commentColor, setCommentColor] = useState('')
 
 
-  //Like Feature
+  //Like Feature States
   const [liked, setLiked] = useState(null)
   const [clicked, setClicked] = useState(false)
   const [likeActiveColor, setLikeActiveColor] = useState('')
@@ -113,6 +114,9 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   //Share post
   const showShare = () =>{
     alert("Share is coming very soon")
+
+
+    // TODO : Add Share code here
   }
 
   //Get comment made by a user
@@ -123,11 +127,6 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   //Submit comment written on post
   const submitComment = event => {
     //Get comment feilds
-
-    //get post id
-    const value = event
-
-    //console.log(prop)}
 
     //=======================
     if (currentUser) {
@@ -144,9 +143,6 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         const userRef = ref(database, 'users/' + currentUser.uid)
 
         const commentid = push(commentsRef).key
-        console.log(commentid)
-
-        //get clicked post id
 
         //get reference to the post with the id
         const new_commentRef = ref(database, 'comments/' + commentid)
@@ -168,8 +164,6 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         //Success message
         setShowComentBox(false)
         setComment('')
-        alert('Comment added to post')
-        
       }
     }
   }
@@ -214,8 +208,6 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   //Get id of a clicked post
   useEffect(() => {
     setClickedPostId(postid)
-
-    
 
     //Get all comments from database
 
@@ -286,8 +278,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     Icon = {IosShareRoundedIcon}
     onClick={showShare}/>
          
-       
-      
+      {/********** Show comment box ********************/}   
         </div>
 
         {showCommentBox ? (
@@ -305,6 +296,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
               type=''
             />
 
+          {/********* Show comments from all users **********/}
             <div>
               {
               comments.map(commentToShow => (
