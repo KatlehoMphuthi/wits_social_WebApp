@@ -41,10 +41,6 @@ function About(){
         <a href ="https://wa.me/+27628948188">click here to whatsapp us</a>
         
        </div>
-
-       <div className="layout__right-sidebar-container">
-       <RightSideBar />
-       </div>
     </div>
     </div>
         
