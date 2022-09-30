@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import  {useParams} from "react-router-dom";
 import SidebarMenu from '../common/SidebarMenu';
 import Topbar from '../common/Topbar';
@@ -7,21 +7,47 @@ import OtherUserProfile from './OtherUserProfile';
 import CurrentUserProfile from './CurrentUserProfile';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
+import { database } from '../../firebase'
+import { onValue, ref, query } from 'firebase/database'
+import { AuthContext } from '../../AuthProvider'
 
 function UserProfile() {
+  const { currentUser } = useContext(AuthContext)
+
   const location = useLocation()
-  const [postId, setPostId] = useState('')
-  const [postUserid, setPostUserId] = useState('')
+  const postId = location.state.clickedpost
 
+
+  const [postUserId, setPostUserId] = useState('')
+  const [postData, setPostData] = useState([])
+
+  console.log('Post Id', postId)
+
+  //To get user id of the clicked post
   useEffect(()=>{
-    console.log(location.state.clickedpost)
-    setPostId(location.state.clickedpost)
-  },[])
-  //Get userId from cliked profile on the ewsfeed
- // let {userid}  = useParams();
+    let data;
 
+    //Clicked post reference
+    const postRef = ref(database, `posts/${postId}/username`);
+
+    //get clicked post data -> userid
+    onValue(postRef, (snapshot) => {
+      data = snapshot.val();
+
+      //Update user id variable to be used to get user details
+      setPostData(data)
+    });
+  },[])
+
+  //Get user details and update the ui
+
+ console.log(postData)
+
+  
   //
   let isCurrentUserProfile = false;
+
+
 
   return (
     <div className='app-container'>
