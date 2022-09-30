@@ -61,7 +61,16 @@ function SidebarMenu () {
           active={aboutActive}
           onClick={goToAbout}
         />
+
+<SidebarOption
+          text='Profile'
+          Icon={InfoRoundedIcon}
+          active={aboutActive}
+          onClick={goToAbout}
+        />
       </div>
+
+      
       {/* Button -> Logout */}
       <Button
         onClick={submit}
