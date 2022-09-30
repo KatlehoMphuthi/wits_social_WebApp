@@ -3,8 +3,6 @@ import  {useParams} from "react-router-dom";
 import SidebarMenu from '../common/SidebarMenu';
 import Topbar from '../common/Topbar';
 import UserTopbar from '../common/UserTopbar';
-import OtherUserProfile from './OtherUserProfile';
-import CurrentUserProfile from './CurrentUserProfile';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { database } from '../../firebase'
