@@ -2,10 +2,10 @@
 import './Post.css'
 import React, { useEffect, useState, useContext } from 'react'
 import cn from 'classnames'
-import { ReactComponent as Hand } from './hand.svg'
-import { ReactComponent as Heart } from './heart.svg'
 import './likestyle.scss'
 import { AuthContext } from '../../AuthProvider'
+import { useNavigate } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 import Button from '../common/Button'
 import { database } from '../../firebase'
@@ -66,6 +66,17 @@ const LikeButton = () => {
 }
 
 function Posts ({ username, name, caption, imgUrl, time, postid }) {
+
+  const navigate = useNavigate()
+    //===================
+
+  //To be used for post timestamp
+
+  let SECOND_MILLIS = 1000
+  let MINUTE_MILLIS = 60 * SECOND_MILLIS
+  let HOUR_MILLIS = 60 * MINUTE_MILLIS
+  let DAY_MILLIS = 24 * HOUR_MILLIS
+
   const commentsRef = ref(database, 'comments')
 
   const { currentUser } = useContext(AuthContext) //get the current user.
@@ -168,14 +179,6 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     }
   }
 
-  //===================
-
-  //To be used for post timestamp
-
-  let SECOND_MILLIS = 1000
-  let MINUTE_MILLIS = 60 * SECOND_MILLIS
-  let HOUR_MILLIS = 60 * MINUTE_MILLIS
-  let DAY_MILLIS = 24 * HOUR_MILLIS
 
   useEffect(() => {
     if (time < 1000000000000) {
@@ -237,18 +240,25 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     }
   }, [showCommentBox])
 
+
   return (
     <div className='tweet'>
+      <Link to={`/${name}`}>
       <img
         className='tweet__author-logo'
         src='https://source.unsplash.com/random/100*100'
       />
+      </Link>
       <div className='tweet__main'>
         <div className='tweet__header'>
           <div className='tweet__author-name'>{username}</div>
-          <div className='tweet__author-slug'>{name}</div>
+          <div className='tweet__author-slug'>
+            <Link to={`/${name}`} state={{from:'name', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
+            </div>
           <div className='tweet__publish-time'>{timeCreated}</div>
+         
         </div>
+        
         <div className='tweet__content'>
           {caption}
           <img className='tweet__image' src={imgUrl} />
