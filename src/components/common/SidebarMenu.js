@@ -17,6 +17,8 @@ function SidebarMenu () {
 
   const [homeActive, setHomeActive] = useState(true);
   const [aboutActive, setAboutActive] = useState(false);
+  //const [profileActive,setProfileActive] = useState(false);
+  const [exploreActive,setExploreActive] = useState(false);
 
   const submit = () => {
     if (currentUser) {
@@ -46,6 +48,27 @@ function SidebarMenu () {
     }
   }
 
+  const goToProfile = () => {
+    setAboutActive(false);
+    setHomeActive(false);
+    setExploreActive(false);
+    if (currentUser) {
+
+      navigate('/:userId', { replace: true })
+      
+    }
+  }
+
+  const goToExplore = () => {
+    setAboutActive(false);
+    setHomeActive(false);
+    setExploreActive(true);
+    if (currentUser) {
+      navigate('/explore', { replace: true })
+     
+    }
+  }
+
   return (
     <div className='sidebar'>
       <div className='sidebar__top-menu'>
@@ -65,12 +88,17 @@ function SidebarMenu () {
 <SidebarOption
           text='Profile'
           Icon={InfoRoundedIcon}
-          active={aboutActive}
-          onClick={goToAbout}
+          onClick={goToProfile}
+        />
+
+<SidebarOption
+          text='Explore'
+          Icon={InfoRoundedIcon}
+          active={exploreActive}
+          onClick={goToExplore}
         />
       </div>
 
-      
       {/* Button -> Logout */}
       <Button
         onClick={submit}
