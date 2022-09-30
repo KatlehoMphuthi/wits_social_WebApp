@@ -22,7 +22,6 @@ function CreatePost() {
 
    const handlePostTextInput = event => {
     setPostText(event.target.value);
-    console.log('value is:', event.target.value);
   };
 
 
@@ -42,10 +41,12 @@ function CreatePost() {
     const post = () =>{
       if(currentUser){ // check if there is user logged in
         if(!file && postText === ""){
+          alert(currentUser.uid)
           alert.show('Add text or image to post',
                 {type:'error',
                 timeout: 2000, 
                 position: positions.BOTTOM_CENTER });
+                
           
         }else{
           //get reference for posts
@@ -58,6 +59,7 @@ function CreatePost() {
 
           //if there is just a text only 
           if(postText !== ""){
+            
             //get reference to the post with the id
             const new_postsRef = ref(database,'posts/' + postid);
             //retrieving the current user firstname
@@ -67,6 +69,7 @@ function CreatePost() {
                 // stores in the real time database
                 set(new_postsRef,{
                   username: data.firstname,
+                  userId : currentUser.uid,
                   time: Date.now(),
                   postid:postid,
                   text: postText,
@@ -99,6 +102,7 @@ function CreatePost() {
                       // storing the data on firebase 
                       set(new_postsRef,{
                         username: data.firstname,
+                        userId : currentUser.uid,
                         time: Date.now(),
                         postid:postid,
                         text: "",
@@ -134,6 +138,7 @@ function CreatePost() {
                         // storing the data on firebase 
                         set(new_postsRef,{
                           username: data.firstname,
+                          userId : currentUser.uid,
                           time: Date.now(),
                           postid:postid,
                           text: "",

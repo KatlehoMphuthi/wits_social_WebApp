@@ -253,7 +253,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         <div className='tweet__header'>
           <div className='tweet__author-name'>{username}</div>
           <div className='tweet__author-slug'>
-            <Link to={`/${name}`} state={{from:'name', clickedpost:clickedPostId}}>{name}</Link>
+            <Link to={`/${name}`} state={{from:'name', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
             </div>
           <div className='tweet__publish-time'>{timeCreated}</div>
          
