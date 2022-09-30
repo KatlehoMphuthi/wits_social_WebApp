@@ -114,3 +114,7 @@ font-size: 16px;
 border-radius: 50%;
 color: white;
 }
+
+.topbarCenter__backButton{
+  display: flex;
+}

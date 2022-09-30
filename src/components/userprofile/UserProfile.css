@@ -1,0 +1,19 @@
+.userProfile__header{
+    display: flex;
+}
+
+.userProfile__Stats{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.userProfile__posts{
+    margin-top: 1rem;
+}
+
+.displayPicture{
+    padding: 3rem;
+    background-color: gray;
+    margin-right: 1.5rem;
+    border-radius: 50%;
+}
