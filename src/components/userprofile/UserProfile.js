@@ -11,17 +11,26 @@ import { AuthContext } from '../../AuthProvider'
 import ActionButton from '../newsfeed/ActionButton';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import './UserProfile.css'
+import EditProfileModal from './EditProfileModal';
 
 function UserProfile() {
-  const { currentUser } = useContext(AuthContext)
+  //Show and hide edit ptofile Modal
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false)
+
+  const {currentUser} = useContext(AuthContext); //get the current user.
 
   let { name } = useParams();
   const location = useLocation()
   const postId = location.state.clickedpost
 
-
+  const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false)
   const [postUserId, setPostUserId] = useState('')
   const [postData, setPostData] = useState([])
+
+  //Toggle edit profile modal
+  const toggelEditProfile = () =>{
+    setShowEditProfileModal(prevState => !prevState)
+  }
 
   //To get user id of the clicked post
   useEffect(()=>{
@@ -37,6 +46,8 @@ function UserProfile() {
       //Update user id variable to be used to get user details
       setPostUserId(data)
     });
+    
+    
   },[])
 
     //Get user details and update the ui
@@ -47,9 +58,7 @@ function UserProfile() {
     alert('Got to edit profile page')
  }
   
-  //
-  let isCurrentUserProfile = false;
-
+ 
   return (
     <div className='app-container'>
       <UserTopbar className='navbar'/>
@@ -89,12 +98,12 @@ function UserProfile() {
            
            {/* If this is the current user logged in show the edit button */}
 
-           {isCurrentUserProfile ?
+           {currentUser.uid === postUserId ?
             
             <ActionButton
             text='Edit Profile'
             Icon = {EditRoundedIcon}
-            onClick={editProfile}/>
+            onClick={toggelEditProfile}/>
             : null}
           </div>
 
@@ -104,8 +113,11 @@ function UserProfile() {
             <p>Post 2</p>
             <p>Post 3</p>
           </div>
-        </div>
+        </div>  
+        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile}/>
       </div>
+
+      
     </div>
   )
 }
