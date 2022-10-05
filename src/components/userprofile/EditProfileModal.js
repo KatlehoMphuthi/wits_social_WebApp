@@ -6,7 +6,8 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
 
-export default function EditProfileModal({open, onClose}) {
+export default function EditProfileModal({open, onClose, firstname, lasttname, bio}) {
+    console.log("Modal Names", firstname,lasttname )
     let hasProfilePicture = false;
 
     const {
@@ -43,7 +44,7 @@ if(!open) return null
         </div>
 
         <div className='modal-profile-picture'>
-            {hasProfilePicture ? <img alt='user profile picture' /> : <h2 className='modal-profile-picture-placeholder'>WS</h2>}
+            {hasProfilePicture ? <img alt='user profile picture'/> : <h2 className='modal-profile-picture-placeholder'>WS</h2>}
         </div>
 
         <Form className='modal-profile-details' onSubmit={handleSubmit(onSubmit)}>
@@ -54,6 +55,7 @@ if(!open) return null
             <input
               placeholder='First Name'
               type='text'
+              value= {firstname}
               {...register('firstName', { required: true, maxLength: 10 })}
             />
           </Form.Field>
@@ -67,6 +69,7 @@ if(!open) return null
             <input
               placeholder='Last Name'
               type='text'
+              value={lasttname}
               {...register('lastName', { required: true, maxLength: 10 })}
             />
           </Form.Field>

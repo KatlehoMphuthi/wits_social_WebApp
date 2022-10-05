@@ -46,13 +46,29 @@ function UserProfile() {
       //Update user id variable to be used to get user details
       setPostUserId(data)
     });
-    
-    
   },[])
 
-    //Get user details and update the ui
-    //Go to this user datatbase collection and render the details
-    console.log('user id is :' , postUserId)
+   
+
+
+  //===============================================================
+  //Find anither way to reoplace this code
+  let userData ;
+    if (currentUser !== null) {
+  
+    //Current user reference
+    const userRef = ref(database, 'users/' + postUserId);
+    onValue(userRef, (snapshot) => {
+      userData = snapshot.val();
+
+      console.log(userData.firstname,userData.lastName )
+    });
+    }
+
+     //===============================================================
+
+
+    
  
  const editProfile =() =>{
     alert('Got to edit profile page')
@@ -74,8 +90,8 @@ function UserProfile() {
             </div>
 
             <div className='userProfile__userDetails'>
-              <h2>username</h2>
-              <p>This is a very short bio of a user</p>
+              <h2>{userData.firstname} {userData.lastName}</h2>
+              <p>{userData.bio}</p>
               <div className='userProfile__Stats'>
                 <div className='stats'>
                   <h4>0</h4>
@@ -114,7 +130,7 @@ function UserProfile() {
             <p>Post 3</p>
           </div>
         </div>  
-        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile}/>
+        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName}/>
       </div>
 
       
