@@ -17,12 +17,10 @@ export default function EditProfileModal({open, onClose, firstname, lasttname, b
         watch
       } = useForm()
 
-      const onSubmit = (data, e) => {
-        //
-        e.preventDefault()
-    
-    
-      }
+      const onSubmit = data =>{
+        //get form from data and upload to firebase
+        console.log(data);
+      } 
     
 
     function saveChanges(){
@@ -40,7 +38,7 @@ if(!open) return null
                 <CloseRoundedIcon onClick={onClose} />
                 <h3>Edit Profile</h3>
             </div>
-            <button onClick={saveChanges}>Save</button>
+           
         </div>
 
         <div className='modal-profile-picture'>
@@ -55,7 +53,7 @@ if(!open) return null
             <input
               placeholder='First Name'
               type='text'
-              value= {firstname}
+              defaultValue= {firstname}
               {...register('firstName', { required: true, maxLength: 10 })}
             />
           </Form.Field>
@@ -69,11 +67,11 @@ if(!open) return null
             <input
               placeholder='Last Name'
               type='text'
-              value={lasttname}
+              defaultValue={lasttname}
               {...register('lastName', { required: true, maxLength: 10 })}
             />
           </Form.Field>
-          {errors.lasttName && (
+          {errors.lastName && (
             <p className='text-error'>Please check the Last Name</p>
           )}
 
@@ -85,12 +83,11 @@ if(!open) return null
               wrap="hard"
               rows={4}
               type='text'
-              {...register('bio', { required: true, maxLength: 10 })}
+              {...register('bio', { required: false, maxLength: 10 })}
             />
           </Form.Field>
-          {errors.bio && (
-            <p className='text-error'>Please check the Bio</p>
-          )}
+
+            <button type='submit'>Save</button>
         </Form>
      
     </div>
