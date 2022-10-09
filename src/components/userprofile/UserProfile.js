@@ -12,6 +12,8 @@ import ActionButton from '../newsfeed/ActionButton';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import './UserProfile.css'
 import EditProfileModal from './EditProfileModal';
+import Post from '../newsfeed/Posts'
+
 
 function UserProfile() {
   //Show and hide edit ptofile Modal
@@ -23,7 +25,7 @@ function UserProfile() {
   const location = useLocation()
   const postId = location.state.clickedpost
 
- 
+  const [posts, setPost] = useState([])
 
   const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false)
   const [postUserId, setPostUserId] = useState('')
@@ -69,13 +71,38 @@ function UserProfile() {
 
      //===============================================================
 
-
     
- 
- const editProfile =() =>{
-    alert('Got to edit profile page')
- }
-  
+     //Get user Posts
+     const postRef = ref(database, 'posts/')
+     useEffect(() => {
+      let postInfo;
+       if (currentUser !== null) {
+         const PostsArr = []
+   
+         onValue(postRef, Datasnapshot => {
+           Datasnapshot.forEach(child => {
+             const postdata = child.val()
+             const post = {
+               username: '',
+               caption: postdata.caption !== '' ? postdata.caption : postdata.text,
+               imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
+               name: postdata.username,
+               time: postdata.time,
+               id: postdata.postid
+             }
+             
+             if( postdata.userId === postUserId){
+              PostsArr.push(post)
+             }
+              
+             
+             
+           })
+         })
+   
+         setPost(PostsArr.reverse())
+       }
+     }, [currentUser, postRef])
  
   return (
     <div className='app-container'>
@@ -126,10 +153,19 @@ function UserProfile() {
           </div>
 
           <div className='userProfile__posts'>
-            <h4>Show user posts herer</h4>
-            <p>Post 1</p>
-            <p>Post 2</p>
-            <p>Post 3</p>
+          <div className='layout__main'>
+          {posts.map(post => (
+            <Post
+              key={post.id}
+              username={post.username}
+              name={post.name}
+              caption={post.caption}
+              imgUrl={post.imgUrl}
+              time={post.time}
+              postid={post.id}
+            />
+          ))}
+        </div>
           </div>
         </div>  
         <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName} userId={postUserId}/>
