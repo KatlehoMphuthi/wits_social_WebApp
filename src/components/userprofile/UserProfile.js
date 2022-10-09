@@ -6,7 +6,7 @@ import UserTopbar from '../common/UserTopbar';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { database } from '../../firebase'
-import { onValue, ref, query } from 'firebase/database'
+import { onValue, ref, query, update } from 'firebase/database'
 import { AuthContext } from '../../AuthProvider'
 import ActionButton from '../newsfeed/ActionButton';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
@@ -22,6 +22,8 @@ function UserProfile() {
   let { name } = useParams();
   const location = useLocation()
   const postId = location.state.clickedpost
+
+ 
 
   const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false)
   const [postUserId, setPostUserId] = useState('')
@@ -55,9 +57,9 @@ function UserProfile() {
   //Find anither way to reoplace this code
   let userData ;
     if (currentUser !== null) {
-  
     //Current user reference
     const userRef = ref(database, 'users/' + postUserId);
+    
     onValue(userRef, (snapshot) => {
       userData = snapshot.val();
 
@@ -130,7 +132,7 @@ function UserProfile() {
             <p>Post 3</p>
           </div>
         </div>  
-        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName}/>
+        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName} userId={postUserId}/>
       </div>
 
       
