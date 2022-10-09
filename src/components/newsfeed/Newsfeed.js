@@ -11,16 +11,18 @@ import { database } from '../../firebase'
 import { onValue, ref, query } from 'firebase/database'
 import { async } from '@firebase/util'
 import Posts from './Posts'
+import { useMemo } from 'react'
 
 function Newsfeed () {
-  const { currentUser } = useContext(AuthContext)
+  const  {currentUser}  = useContext(AuthContext)
   const [posts, setPost] = useState([])
 
   //const PostsArr = useRef([]); // create an empty array to store the posts in
   const postRef = ref(database, 'posts/')
+  const PostsArr = useRef([]);
   useEffect(() => {
     if (currentUser !== null) {
-      const PostsArr = []
+      PostsArr.current = [];
 
       onValue(postRef, Datasnapshot => {
         Datasnapshot.forEach(child => {
@@ -34,13 +36,15 @@ function Newsfeed () {
             id: postdata.postid
           }
 
-          PostsArr.push(post)
-        })
-      })
-
-      setPost(PostsArr.reverse())
+          PostsArr.current.push(post)
+        });
+      });
+      setPost(PostsArr.current.reverse());
+     
     }
-  }, [currentUser, postRef])
+  }, [currentUser, postRef]);
+
+  
 
   return (
     <div className='app-container'>

@@ -1,6 +1,6 @@
 //import React from 'react'
 import './Post.css'
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext ,useRef} from 'react'
 import cn from 'classnames'
 import './likestyle.scss'
 import { AuthContext } from '../../AuthProvider'
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 import Button from '../common/Button'
 import { database } from '../../firebase'
-import { set, ref, push, onValue } from 'firebase/database'
+import { set, ref, push, onValue, DataSnapshot } from 'firebase/database'
 import Comment from './Comment'
 
 import ActionButton from './ActionButton'
@@ -97,18 +97,39 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   const [clicked, setClicked] = useState(false)
   const [likeActiveColor, setLikeActiveColor] = useState('')
   const [likeColor, setlikeColor] = useState('')
-  const count = 0
+  const count = useRef(0);
 
   const likePost = () =>{
     setLiked(!liked)
     setClicked(true)
-    if(likeActiveColor === ''){
-      setLikeActiveColor('#FFE9E9')
-      setlikeColor('#F2383A')
-    }else{
-      setLikeActiveColor('')
-      setlikeColor('')
+    if(currentUser){
+      //like for each post 
+      let userid = currentUser.uid;
+      set(ref(database,'like/'+ clickedPostId +'/likes/'+ userid),true);
+      //adding posts to what each user liked 
+      set(ref(database,'userLikes/'+userid+'/posts/'+ clickedPostId),true);
+      console.log("user has liked this post:" + clickedPostId);
+      if(likeActiveColor === ''){
+            //like for each post 
+          set(ref(database,'like/'+ clickedPostId +'/likes/'+ userid),true);
+          //adding posts to what each user liked 
+          set(ref(database,'userLikes/'+userid+'/posts/'+ clickedPostId),true);
+     
+            setLikeActiveColor('#FFE9E9')
+            setlikeColor('#F2383A')
+          console.log("user has liked this post:" + clickedPostId);
+      }else{
+             //like for each post 
+            set(ref(database,'like/'+ clickedPostId +'/likes/'+ userid),null);
+            //adding posts to what each user liked 
+            set(ref(database,'userLikes/'+userid+'/posts/'+ clickedPostId),null);
+            setLikeActiveColor('')
+            setlikeColor('')
+            console.log("user has un-liked this post:" + clickedPostId);
+      }
+
     }
+    
     
     
   }
@@ -125,6 +146,13 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   //Share post
   const showShare = () =>{
     alert("Share is coming very soon")
+    /* if(currentUser){// check if currentUser exists 
+     //this tells  Firebase that the current user has shared the post
+     set(ref(database,'share/'+clickedPostId+'/shares/'+ currentUser.uid),true) 
+     //this can't be reversed since we don't keep track of where the user has shared the post
+     
+    } */
+    
 
 
     // TODO : Add Share code here
@@ -238,7 +266,34 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       setComments(CommentsArr.reverse())
       
     }
-  }, [showCommentBox])
+  }, [showCommentBox]);
+
+  //gets the liked content and as well as the number of likes
+  useEffect(() => {
+    if(currentUser){
+      const likeRef = ref(database,'userLikes/'+currentUser.uid+'/posts/'+ clickedPostId);
+      onValue(likeRef,(DataSnapshot) =>{
+        if(DataSnapshot.exists()){
+          setLiked(!liked);
+          setClicked(true);
+          setLikeActiveColor('#FFE9E9');
+          setlikeColor('#F2383A');
+        }
+      });
+      
+      const countLikeRef = ref(database,'like/'+ clickedPostId );
+      onValue(countLikeRef,(DataSnapshot) =>{
+        if(DataSnapshot.exists()){
+           count.current = DataSnapshot.child('likes').size;
+        }else{
+          count.current = 0;
+        }
+        
+      },{onlyOnce:true});
+
+    }
+  },[liked,clicked,likeActiveColor,likeColor,currentUser]);
+
 
 
   return (
@@ -276,7 +331,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     onClick={toggleComment}/>
     
     <ActionButton
-    text='Like'
+    text= {'Like  ' + count.current}
     Icon = {FavoriteBorderRoundedIcon}
     active = {clicked}
     activeColor = {likeActiveColor}

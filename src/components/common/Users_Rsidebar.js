@@ -3,8 +3,6 @@ import { followHelper,database} from "../../firebase";
 import {onValue,ref } from "firebase/database";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser} from '@fortawesome/free-solid-svg-icons';
-import Button from "@mui/material/Button";
-
 import { AuthContext } from "../../AuthProvider";
 
 
@@ -17,7 +15,7 @@ export default function Users_Rsidebar(){
 
     //useRef allows the variables to consistent through each render
 
-    const { currentUser } = useContext(AuthContext); //this gets the current state auth state of the user
+    const {currentUser}  = useContext(AuthContext); //this gets the current state auth state of the user
     const userid = useRef(); // userid for the other users
     const result = useRef([]);
     const currentuserid = useRef();
@@ -28,7 +26,7 @@ export default function Users_Rsidebar(){
 
     //renders this as long there is a current users
     useEffect(() =>{
-        if(currentUser !== null){ //if currentUser is null then user is not logged in on firebase 
+        if(currentUser){ //if currentUser is null then user is not logged in on firebase 
             // get the user id of the current user who has logged in
             currentuserid.current = currentUser.uid; 
         
@@ -68,38 +66,41 @@ export default function Users_Rsidebar(){
               }});
 
             //get reference to users that the current user is following
-            const followerRef = ref(database,'follow/'+ currentuserid.current +'/following');
+            const followerRef = ref(database,'follow/'+currentuserid.current +'/following');
+            let following = [];
             //check if the current user is following the user
             onValue(followerRef,(DataSnapshot)=>{
-                DataSnapshot.forEach((snapshot) =>{
-                    if(snapshot.key === userid.current){
-                        setfollowBtn('Following'); // changes the button to following
-                        setIsActive(false);
-                    }
-                   
-                });
-            }); //Reads only onces
+                const obj = DataSnapshot.hasChild(userid.current); // check if the user is present
+                console.log(obj);
+                if(obj === true){
+                    setfollowBtn("Following");
+                    setIsActive(false);
+                }else{
+                    setfollowBtn("Follow");
+                    setIsActive(true);
+                }
+            },{onlyOnce: true}); //Reads only onces
             
         })
          .catch(error => console.log(error));
 
          /***********************************PROMISE ENDS HERE******************************************* */
           }
-    },[setfollowBtn]); // renders only if there is a user 
+    },[currentUser]); // renders only if there is a user 
     
    
   //follow and toggle button functionality  
   const follow = () =>{
     if(currentUser !== null ){
-        if(followbtn === "follow"){ // check the follow status
+        if(followbtn === "Follow"){ // check the follow status
             // This sets the follow button to following 
-            console.log(userid.current);
+            console.log("Current user has just followed " + name);
             const response = followHelper(currentUser.uid,userid.current); //function returns finish status or not failed 
             if( response === "finished"){
-                setfollowBtn("following");
+                setfollowBtn("Following");
                 setIsActive(false);
             }else{
-                alert("following "+ name + " failed!");
+                alert("Following "+ name + " failed!");
             }
             }
             else{// status = following user
