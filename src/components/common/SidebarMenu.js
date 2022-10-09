@@ -12,7 +12,7 @@ import { Button } from '@material-ui/core'
 import './SidebarMenu.css'
 
 function SidebarMenu () {
-  const { currentUser } = useContext(AuthContext)
+  const currentUser  = useContext(AuthContext)
   const navigate = useNavigate()
 
   const [homeActive, setHomeActive] = useState(true);
@@ -22,9 +22,10 @@ function SidebarMenu () {
 
   const submit = () => {
     if (currentUser) {
-      alert('Are you sure want to logout?')
-      signOut(auth)
-      navigate('/', { replace: true })
+      alert('Are you sure want to logout?');
+      signOut(auth);
+      localStorage.clear();
+      navigate('/', { replace: true });
     } else {
       alert('An error has occured')
     }
