@@ -9,6 +9,7 @@ import { AuthContext } from "../../AuthProvider";
 import {onValue,ref, set } from "firebase/database";
 
 
+
 export default function Topbar() {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
@@ -17,6 +18,7 @@ const navigate = useNavigate();
 const [filtered, setFiltered] = useState([]);
 const [word, setWord] = useState("");
 const [users, setUsers] = useState([]);
+
 
 ///----------------------------------Start firebase testing-------------
 const fetchUsers = () => {
@@ -43,6 +45,8 @@ const fetchUsers = () => {
 
   )
 }
+
+
 
 
 ///----------------------------------End testing-------------
