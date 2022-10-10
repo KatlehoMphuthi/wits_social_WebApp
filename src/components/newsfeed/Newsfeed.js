@@ -9,9 +9,7 @@ import { AuthContext } from '../../AuthProvider'
 import SidebarMenu from '../common/SidebarMenu'
 import { database } from '../../firebase'
 import { onValue, ref, query } from 'firebase/database'
-import { async } from '@firebase/util'
-import Posts from './Posts'
-import { useMemo } from 'react'
+
 
 function Newsfeed () {
   const  {currentUser}  = useContext(AuthContext)
