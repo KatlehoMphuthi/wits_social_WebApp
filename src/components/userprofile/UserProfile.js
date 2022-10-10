@@ -4,6 +4,8 @@ import SidebarMenu from '../common/SidebarMenu';
 import Topbar from '../common/Topbar';
 import UserTopbar from '../common/UserTopbar';
 import { useLocation } from 'react-router-dom';
+import {getUsername} from '../../firebase'
+import {getUserId} from '../../firebase'
 import { useState } from 'react';
 import { database } from '../../firebase'
 import { onValue, ref, query, update } from 'firebase/database'
@@ -73,7 +75,9 @@ function UserProfile() {
 
     
      //Get user Posts
+     
      const postRef = ref(database, 'posts/')
+     
      useEffect(() => {
       let postInfo;
        if (currentUser !== null) {
@@ -86,23 +90,20 @@ function UserProfile() {
                username: '',
                caption: postdata.caption !== '' ? postdata.caption : postdata.text,
                imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
-               name: postdata.username,
+               name: getUsername(postdata.userId),
                time: postdata.time,
                id: postdata.postid
              }
              
-             if( postdata.userId === postUserId){
+             if(postdata.userId === postUserId){
               PostsArr.push(post)
-             }
-              
-             
-             
+            }
            })
          })
    
          setPost(PostsArr.reverse())
        }
-     }, [currentUser, postRef])
+     },[currentUser,postRef,setPost])
  
   return (
     <div className='app-container'>

@@ -37,11 +37,15 @@
 
 .modal-profile-picture-placeholder{
     padding: 2rem;
-    background-color: blue;
+    background-color: var(--twitter-color);
     max-width: 112px;
     max-height: 112px;
     margin: 2rem auto;
     border-radius: 50%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    color: white;
 }
 
 .modal-profile-details{

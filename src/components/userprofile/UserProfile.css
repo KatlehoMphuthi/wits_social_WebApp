@@ -12,8 +12,13 @@
 }
 
 .displayPicture{
-    padding: 3rem;
-    background-color: gray;
+    padding: 2.5rem;
+    background-color: var(--twitter-color);
     margin-right: 1.5rem;
     border-radius: 50%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    color: white;
+    font-size: 24px;
 }

@@ -42,7 +42,7 @@ export default function EditProfileModal({open, onClose, firstname, lasttname, b
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isSubmitSuccessful },
         watch
       } = useForm()
 
@@ -57,9 +57,12 @@ export default function EditProfileModal({open, onClose, firstname, lasttname, b
         firstname : data.firstName,
         lastName : data.lastName,
         bio : data.bio
-        });
-        console.log('updated')
-        
+        });  
+
+        console.log("isSubmitSuccessful : ", isSubmitSuccessful);
+
+        //Close the modal
+        onClose()
       } 
     
 
@@ -82,7 +85,7 @@ if(!open) return null
         </div>
 
         <div className='modal-profile-picture' onChange={handleChange}>
-            {hasProfilePicture ? <img alt='user profile picture' src={file} /> : <h2 className='modal-profile-picture-placeholder'>WS</h2>}
+            {hasProfilePicture ? <img alt='user profile picture' src={file} /> : <h2 className='modal-profile-picture-placeholder'>{firstname[0]}{lasttname[0]}</h2>}
         </div>
 
         <Form className='modal-profile-details' onSubmit={handleSubmit(onSubmit)}>
