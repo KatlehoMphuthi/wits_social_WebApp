@@ -106,7 +106,7 @@ return fname !== "" ?
             />
           </div>
           {word !== "" && <div id="result" /*>style={searchStyle}*/>
-          {word !== "" && filtered.map((u) => {
+          {word !== "" &&  filtered.map((u) => {
             return <p className="who-to-follow__block"
               style={{ padding: 10,margin:10,
                        background: "white"}}
