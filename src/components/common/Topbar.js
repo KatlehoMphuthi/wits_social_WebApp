@@ -90,17 +90,24 @@ return fname !== "" ?
           <span className="logo"><img src="/svg/WS_Logo.svg" alt="" width={65}/></span>
         </div>
         <div className="topbarCenter">
-          <span className="searchbar">
+          <div id="searchbar" className="searchbar" role={'textbox'}
+            data-testid = "sInput"
+          >
               <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
             <input
+              
               onChange={(e) => searchUser(e.target.value)}
               placeholder="Search for a  friend!"
               className="searchInput"
+              name="Searchbar"
+              id="search_input"
+              aria-label="search"
+              role='textbox'   
             />
-          </span>
-          {word !== "" && <div /*>style={searchStyle}*/>
+          </div>
+          {word !== "" && <div id="result" /*>style={searchStyle}*/>
           {word !== "" && filtered.map((u) => {
-            return <p data-testid="results" className="who-to-follow__block" 
+            return <p className="who-to-follow__block"
               style={{ padding: 10,margin:10,
                        background: "white"}}
               onClick={ ()=>goToUserProfile(u)} // go to user profile
@@ -125,12 +132,12 @@ return fname !== "" ?
         <div className="searchbar">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
          
-          { <input
+          {/* <input
           
-            placeholder="Search for friend!"
+            placeholder="Search for friend, post or video coming Soon"
             className="searchInput"
 
-          />}
+          /> */}
         </div>
       </div>
       <div className="topbarRight">
