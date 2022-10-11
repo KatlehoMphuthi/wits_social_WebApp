@@ -95,14 +95,15 @@ return fname !== "" ?
           >
               <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
             <input
-              
+              value={word}
               onChange={(e) => searchUser(e.target.value)}
               placeholder="Search for a  friend!"
               className="searchInput"
               name="Searchbar"
               id="search_input"
               aria-label="search"
-              role='textbox'   
+              role='textbox'
+              data-testid = "sInput"   
             />
           </div>
           {word !== "" && <div id="result" /*>style={searchStyle}*/>
