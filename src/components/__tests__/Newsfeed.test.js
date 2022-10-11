@@ -1,6 +1,6 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
-import { render, waitFor} from "@testing-library/react";
+import { render, waitFor,screen} from "@testing-library/react";
 import { AuthProvider} from "../../AuthProvider";
 import {  Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from "react-alert-template-mui";
@@ -90,5 +90,16 @@ test('Should click on the users', () => {
   const result = container.querySelector("#result > p:nth-child(1)")
   waitFor(() => {
     expect(result).toHaveDisplayValue(/kgotso/i);
+  });
+});
+
+test('Should show logo', () => {
+  const providerProps = {
+  login: {email: "test01@mail.com", password: "Password123"}
+  }
+   userRender(<Topbar />, {providerProps});
+
+  waitFor(() => {
+    expect(screen.getByRole('img',{hidden: true})).toBeInTheDocument();
   });
 });
