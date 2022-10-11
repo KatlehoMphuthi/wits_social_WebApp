@@ -78,3 +78,17 @@ test('Should show when users with that letter in their names', () => {
     expect(result).toHaveDisplayValue(/k/i);
   });
 });
+
+test('Should click on the users', () => {
+  const providerProps = {
+  login: {email: "test01@mail.com", password: "Password123"}
+  }
+  const {container} = userRender(<Topbar />, {providerProps});
+
+  const text = container.querySelector("#searchbar");
+  userEvent.type(text,"k");
+  const result = container.querySelector("#result > p:nth-child(1)")
+  waitFor(() => {
+    expect(result).toHaveDisplayValue(/kgotso/i);
+  });
+});
