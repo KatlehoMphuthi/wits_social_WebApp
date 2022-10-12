@@ -142,3 +142,11 @@ color: white;
 .searchbar__result:hover{
   background-color: lightgray !important;
 }
+
+.topbar__backButton{
+  cursor: pointer;
+}
+
+.topbarCenter--userprofile:hover{
+  background-color: white !important;
+}

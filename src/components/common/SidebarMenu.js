@@ -93,12 +93,13 @@ function SidebarMenu ({userid}) {
           onClick={goToExplore}
         />
 
+{/** 
 <SidebarOption
           text='Profile'
           Icon={PersonRoundedIcon}
           onClick={goToProfile}
         />
-
+*/}
       <SidebarOption
           text='About'
           Icon={InfoRoundedIcon}

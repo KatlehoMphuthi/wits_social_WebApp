@@ -112,8 +112,10 @@ return fname !== "" ?
         </div>
         <div className="topbarRight">
           <div className="topbarLinks">
-          {/*<span> <p> <span className="profile__initals">{fname[0]}{lname[0]}</span>{fname} {lname}</p></span>*/}
-          <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname}</Link>
+          {<span> <p> <span className="profile__initals">{fname[0]}{lname[0]}</span>
+            <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
+          </p></span>}
+          
           </div>
         </div>
       </div>
