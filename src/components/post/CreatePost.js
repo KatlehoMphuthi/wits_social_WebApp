@@ -1,5 +1,6 @@
 import { toUnitless } from '@mui/material/styles/cssUtils';
 import React , {useState,useContext, useRef}from 'react';
+import Explore from '../explore/Explore';
 import Button from '../common/Button';
 import './CreatePost.css';
 import {AuthContext} from '../../AuthProvider';

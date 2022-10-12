@@ -1,17 +1,15 @@
-// import React from 'react'
-import './Post.css'
+import '../newsfeed/Post.css';
 import React, { useEffect, useState, useContext } from 'react'
 import cn from 'classnames'
-import './likestyle.scss'
+import '../newsfeed/likestyle.scss'
 import { AuthContext } from '../../AuthProvider'
 import { useNavigate } from 'react-router-dom'
 import { Link } from "react-router-dom";
-// import Explore from '../components/newsfeed'
 import Button from '../common/Button'
 import { database } from '../../firebase'
 import { set, ref, push, onValue } from 'firebase/database'
-import Comment from './Comment'
-import ActionButton from './ActionButton'
+import Comment from '../newsfeed/Comment'
+import ActionButton from '../newsfeed/ActionButton'
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
@@ -44,7 +42,7 @@ const LikeButton = () => {
   )
 }
 
-function Posts ({ username, name, caption, imgUrl, time, postid }) {
+function PostsExplore({ username, name, caption, imgUrl, time, postid }) {
 
   const navigate = useNavigate()
     //===================
@@ -78,7 +76,8 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   const [likeColor, setlikeColor] = useState('')
   const count = 0
 
-  const likePost = () =>{
+  const likePost = () =>
+   {
     setLiked(!liked)
     setClicked(true)
     if(likeActiveColor === ''){
@@ -87,13 +86,13 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     }else{
       setLikeActiveColor('')
       setlikeColor('')
-    }
-    
+    }  
     
   }
 
   //Toggel comments section
-  const toggleComment = () => {
+  const toggleComment = () => 
+  {
     if (showCommentBox == true) {
       setShowComentBox(false)
     } else {
@@ -115,7 +114,8 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   }
 
   //Submit comment written on post
-  const submitComment = event => {
+  const submitComment = event => 
+  {
     //Get comment feilds
 
     //=======================
@@ -157,9 +157,9 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       }
     }
   }
-
-
-  useEffect(() => {
+  
+  useEffect(() => 
+  {
     if (time < 1000000000000) {
       time *= 1000
     }
@@ -188,7 +188,8 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   }, [timeCreated])
 
   //Get id of a clicked post
-  useEffect(() => {
+  useEffect(() => 
+  {
     setClickedPostId(postid)
 
     //Get all comments from database
@@ -220,34 +221,45 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   }, [showCommentBox])
 
 
+ /* const image = () =>{
+    
+    <img className='tweet__image' src={imgUrl} />
+
+    if(imgUrl !==' '){
+          
+    }
+  } */
+
+
   return (
     <div className='tweet'>
-      <Link to={`/${name}`}>
+      {/* <Link to={`/${name}`}>
       <img
         className='tweet__author-logo'
         src='https://source.unsplash.com/random/100*100'
       />
-      </Link>
+      </Link> */}
       <div className='tweet__main'>
         <div className='tweet__header'>
-          <div className='tweet__author-name'>{username}</div>
+          {/* <div className='tweet__author-name'>{username}</div> */}
           <div className='tweet__author-slug'>
-            <Link to={`/${name}`} state={{from:'name', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
+            {/* <Link to={`/${name}`} state={{from:'name', clickedpost:clickedPostId, username:{name}}}>{name}</Link> */}
             </div>
-          <div className='tweet__publish-time'>{timeCreated}</div>
+          {/* <div className='tweet__publish-time'>{timeCreated}</div> */}
          
         </div>
         
-        <div className='tweet__content'>
-          {caption}
-          <img className='tweet__image' src={imgUrl} />
-        </div>
-
+        {/* <div className='tweet__content'>
+           {caption} 
+        </div> */}
+        
+        <img className='tweet__image' src={imgUrl} />
+        
         <div className='tweet__action-buttons'>
 
       {/*<LikeButton />*/}
     
-    <ActionButton
+    {/* <ActionButton
     text='Comments'
     Icon = {QuestionAnswerRoundedIcon}
     activeColor = {commentActiveColor}
@@ -265,9 +277,11 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   <ActionButton
     text='Share'
     Icon = {IosShareRoundedIcon}
-    onClick={showShare}/>
+    onClick={showShare}/> */}
          
       {/********** Show comment box ********************/}   
+
+
         </div>
 
         {showCommentBox ? (
@@ -303,4 +317,4 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   )
 }
 
-export default Posts
+export default PostsExplore
