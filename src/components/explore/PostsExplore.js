@@ -233,85 +233,9 @@ function PostsExplore({ username, name, caption, imgUrl, time, postid }) {
 
   return (
     <div className='tweet'>
-      {/* <Link to={`/${name}`}>
-      <img
-        className='tweet__author-logo'
-        src='https://source.unsplash.com/random/100*100'
-      />
-      </Link> */}
       <div className='tweet__main'>
-        <div className='tweet__header'>
-          {/* <div className='tweet__author-name'>{username}</div> */}
-          <div className='tweet__author-slug'>
-            {/* <Link to={`/${name}`} state={{from:'name', clickedpost:clickedPostId, username:{name}}}>{name}</Link> */}
-            </div>
-          {/* <div className='tweet__publish-time'>{timeCreated}</div> */}
-         
-        </div>
-        
-        {/* <div className='tweet__content'>
-           {caption} 
-        </div> */}
-        
         <img className='tweet__image' src={imgUrl} />
-        
-        <div className='tweet__action-buttons'>
 
-      {/*<LikeButton />*/}
-    
-    {/* <ActionButton
-    text='Comments'
-    Icon = {QuestionAnswerRoundedIcon}
-    activeColor = {commentActiveColor}
-    color = {commentColor}
-    onClick={toggleComment}/>
-    
-    <ActionButton
-    text='Like'
-    Icon = {FavoriteBorderRoundedIcon}
-    active = {clicked}
-    activeColor = {likeActiveColor}
-    color = {likeColor}
-    onClick={likePost}/>
-
-  <ActionButton
-    text='Share'
-    Icon = {IosShareRoundedIcon}
-    onClick={showShare}/> */}
-         
-      {/********** Show comment box ********************/}   
-
-
-        </div>
-
-        {showCommentBox ? (
-          <div className='tweet__comment-section'>
-            <input
-              placeholder='Add comment...'
-              className='searchInput'
-              onChange={handleCommentTextInput}
-              value={comment}
-            />
-            <Button
-              text='Send'
-              color='#2C76EE'
-              onClick={submitComment}
-              type=''
-            />
-
-          {/********* Show comments from all users **********/}
-            <div>
-              {
-              comments.map(commentToShow => (
-                <Comment
-                  key={commentToShow.postid}
-                  username={commentToShow.username}
-                  comment={commentToShow.commentFromUser}
-                />
-              ))}
-            </div>
-          </div>
-        ) : null}
       </div>
     </div>
   )
