@@ -21,9 +21,7 @@ function About(){
         <h1 style= {{color: 'blue'}}>WHO ARE WE </h1>
       <text>
        We are a group of final year  computer science students at Wits university.<br/>
-                                                                                  <br/>
        This project ought to help students communicate with each other. <br/>
-                                                                                  <br/>
        Current features are that you can :<br/>
        -See other users post<br/>
        -comment on post<br/>

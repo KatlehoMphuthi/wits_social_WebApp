@@ -1,73 +1,41 @@
-//import React from 'react'
+// import React from 'react'
 import './Post.css'
-import React, { useEffect, useState, useContext } from 'react'
-import cn from 'classnames'
-import './likestyle.scss'
-import { AuthContext } from '../../AuthProvider'
-import { useNavigate } from 'react-router-dom'
-import { Link } from "react-router-dom";
 
+import React, { useEffect, useState, useContext ,useRef} from 'react'
+import cn from 'classnames'
+
+import './likestyle.scss'
+//Authprovider import
+import { AuthContext } from '../../AuthProvider'
+
+//navigation import
+import { Link } from "react-router-dom";
+// import Explore from '../components/newsfeed'
 import Button from '../common/Button'
+//Firebase imports
 import { database } from '../../firebase'
-import { set, ref, push, onValue } from 'firebase/database'
+
+//comment import
+import { set, ref, push, onValue, DataSnapshot } from 'firebase/database'
+
 import Comment from './Comment'
 
-import ActionButton from './ActionButton'
+//style and functionality of the button
+import ActionButton from './ActionButton' 
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FacebookIcon from '@mui/icons-material/Facebook';
 
-/*const LikeButton = () => {
-  const [liked, setLiked] = useState(null);
-
-  return (
-    <button
-      onClick={() => setLiked(!liked)}
-      onAnimationEnd={() => setClicked(false)}
-      className={cn("like-button-wrapper", {
-        liked,
-      })}
-    >
-      <div className="like-button">
-        <Hand />
-        <span>Like</span>
-      </div>
-    </button>
-  );
-};
-*/
-
-
-const LikeButton = () => {
-  const [liked, setLiked] = useState(null)
-  const [clicked, setClicked] = useState(false)
-  const count = 0
-  return (
-    <button
-      onClick={() => {
-        setLiked(!liked)
-        setClicked(true)
-        //count++;
-        console.log(count)
-      }}
-      onAnimationEnd={() => setClicked(false)}
-      className={cn('like-button-wrapper', {
-        liked,
-        clicked
-      })}
-    >
-      <div className='like-button'>
-      
-        <span>Like</span>
-        <span className={cn('suffix', { liked })}>d</span>
-      </div>
-    </button>
-  )
-}
+//FacebookIcon,TwitterIcon,WhatsappIcon
+//Share buttons
+import { FacebookShareButton, WhatsappShareButton, TwitterShareButton,
+           } from 'react-share';
 
 function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
-  const navigate = useNavigate()
     //===================
 
   //To be used for post timestamp
@@ -80,8 +48,8 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   const commentsRef = ref(database, 'comments')
 
   const { currentUser } = useContext(AuthContext) //get the current user.
-  const [clickedPostId, setClickedPostId] = useState(postid)
-  const [timeCreated, setTime] = useState('')
+  const [clickedPostId, setClickedPostId] = useState(postid) //get the current post
+  const [timeCreated, setTime] = useState('') // time the post was created
 
 
   //Comments State
@@ -90,30 +58,58 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   const [showCommentBox, setShowComentBox] = useState(false)
   const [commentActiveColor, setCommentActiveColor] = useState('')
   const [commentColor, setCommentColor] = useState('')
-
+  
+  //Share state
+  const [showShareBox, setShareBox] = useState(false)
+  const [shareCount, setshareCount] = useState(0)
+  const [shareActiveColor, setShareActiveColor] = useState('')
+  const [shareColor, setShareColor] = useState('')
 
   //Like Feature States
   const [liked, setLiked] = useState(null)
   const [clicked, setClicked] = useState(false)
   const [likeActiveColor, setLikeActiveColor] = useState('')
   const [likeColor, setlikeColor] = useState('')
-  const count = 0
+  const count = useRef(0);
 
+  // Toggle the like state
   const likePost = () =>{
     setLiked(!liked)
     setClicked(true)
-    if(likeActiveColor === ''){
-      setLikeActiveColor('#FFE9E9')
-      setlikeColor('#F2383A')
-    }else{
-      setLikeActiveColor('')
-      setlikeColor('')
+    if(currentUser){
+      //like for each post 
+      let userid = currentUser.uid;
+      set(ref(database,'like/'+ clickedPostId +'/likes/'+ userid),true);
+      //adding posts to what each user liked 
+      set(ref(database,'userLikes/'+userid+'/posts/'+ clickedPostId),true);
+      console.log("user has liked this post:" + clickedPostId);
+      if(likeActiveColor === ''){
+            //like for each post 
+          set(ref(database,'like/'+ clickedPostId +'/likes/'+ userid),true);
+          //adding posts to what each user liked 
+          set(ref(database,'userLikes/'+userid+'/posts/'+ clickedPostId),true);
+     
+            setLikeActiveColor('#FFE9E9')
+            setlikeColor('#F2383A')
+          console.log("user has liked this post:" + clickedPostId);
+      }else{
+             //like for each post 
+            set(ref(database,'like/'+ clickedPostId +'/likes/'+ userid),null);
+            //adding posts to what each user liked 
+            set(ref(database,'userLikes/'+userid+'/posts/'+ clickedPostId),null);
+            setLikeActiveColor('')
+            setlikeColor('')
+            console.log("user has un-liked this post:" + clickedPostId);
+      }
+
     }
+    
+    
     
     
   }
 
-  //Toggel comments section
+  //Toggle comments section
   const toggleComment = () => {
     if (showCommentBox == true) {
       setShowComentBox(false)
@@ -122,12 +118,24 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     }
   }
 
+  //Toggle share section
+  const toggleshare = () => {
+    if (showShareBox == true) {
+      setShareBox(false)
+    } else {
+      setShareBox(true)
+    }
+  }
   //Share post
   const showShare = () =>{
-    alert("Share is coming very soon")
-
-
     // TODO : Add Share code here
+    if(currentUser){
+      //shared post
+      set(ref(database,`share/${clickedPostId}/sharedby/${currentUser.uid}`),true);
+      //keep track of what the user shared
+      set(ref(database,`userShares/${currentUser.uid}/posts/${clickedPostId}`),true);
+    }
+
   }
 
   //Get comment made by a user
@@ -179,7 +187,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     }
   }
 
-
+//converting the time 
   useEffect(() => {
     if (time < 1000000000000) {
       time *= 1000
@@ -238,13 +246,59 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       setComments(CommentsArr.reverse())
       
     }
-  }, [showCommentBox])
+  }, [showCommentBox]);
+
+
+  useEffect(() =>{
+    // to get the count for share reference
+    setClickedPostId(postid);
+    const shareRef = ref(database,`share/${clickedPostId}/sharedby`);
+
+    onValue(shareRef,(DataSnapshot) =>{
+      if(DataSnapshot.exists()){
+        let count = DataSnapshot.size;
+         setshareCount(count);
+         setShareActiveColor('#EFEBFE')
+        setShareColor('#8166E5')
+
+      }
+    });
+  },[shareCount]);
+
+  //gets the liked content and as well as the number of likes
+  useEffect(() => {
+    if(currentUser){
+      const likeRef = ref(database,'userLikes/'+currentUser.uid+'/posts/'+ clickedPostId);
+      onValue(likeRef,(DataSnapshot) =>{
+        if(DataSnapshot.exists()){
+          setLiked(!liked);
+          setClicked(true);
+          setLikeActiveColor('#FFE9E9');
+          setlikeColor('#F2383A');
+        }
+      });
+      
+      const countLikeRef = ref(database,'like/'+ clickedPostId );
+      onValue(countLikeRef,(DataSnapshot) =>{
+        if(DataSnapshot.exists()){
+           count.current = DataSnapshot.child('likes').size;
+        }else{
+          count.current = 0;
+        }
+        
+      },{onlyOnce:true});
+
+    }
+  },[liked,clicked,likeActiveColor,likeColor,currentUser]);
+
+
 
 
   return (
     <div className='tweet'>
+      
       <Link to={`/${name}`}>
-      <img
+      <img 
         className='tweet__author-logo'
         src='https://source.unsplash.com/random/100*100'
       />
@@ -253,7 +307,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         <div className='tweet__header'>
           <div className='tweet__author-name'>{username}</div>
           <div className='tweet__author-slug'>
-            <Link to={`/${name}`} state={{from:'name', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
+            <Link to={`/${name}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
             </div>
           <div className='tweet__publish-time'>{timeCreated}</div>
          
@@ -262,8 +316,9 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         <div className='tweet__content'>
           {caption}
           <img className='tweet__image' src={imgUrl} />
+          <Link to ={`/newsfeed/post/${clickedPostId}`} state ={{from:'post',clickedpost:clickedPostId}}></Link> 
         </div>
-
+        
         <div className='tweet__action-buttons'>
 
       {/*<LikeButton />*/}
@@ -276,17 +331,19 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     onClick={toggleComment}/>
     
     <ActionButton
-    text='Like'
+    text= {'Like  ' + count.current}
     Icon = {FavoriteBorderRoundedIcon}
     active = {clicked}
     activeColor = {likeActiveColor}
     color = {likeColor}
     onClick={likePost}/>
 
-  <ActionButton
-    text='Share'
+    <ActionButton
+    text={`Share  ${shareCount}`}
     Icon = {IosShareRoundedIcon}
-    onClick={showShare}/>
+    activeColor = {shareActiveColor}
+    color = {shareColor}
+    onClick={toggleshare}/>  
          
       {/********** Show comment box ********************/}   
         </div>
@@ -319,9 +376,44 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
             </div>
           </div>
         ) : null}
+        
+        {showShareBox ? (
+          <div className='tweet__share-section'>
+            
+              <FacebookShareButton
+                  url = {window.location.href + `/post/${clickedPostId}`}
+                  title= {`${username} has shared the following with you! `}
+                  separator=":: "
+                  hashtag="#camperstribe">
+                  <FacebookIcon size={25} />
+              </FacebookShareButton>
+            
+
+            
+              <TwitterShareButton
+                  url = {window.location.href + `/post/${clickedPostId}`}
+                  title= {`${username} has shared the following with you! `}
+                  separator=":: "
+                  hashtag="#camperstribe">
+                  <TwitterIcon size={25} />
+              </TwitterShareButton>
+            
+
+            
+              <WhatsappShareButton
+              onClick={showShare}
+                  url = {window.location.href + `/post/${clickedPostId}`}
+                  title= {`${username} has shared the following with you! `}
+                  separator=":: ">
+                  <WhatsAppIcon size={25} />
+              </WhatsappShareButton>
+            
+
+          </div>
+        ):null}
       </div>
     </div>
   )
 }
 
-export default Posts
+export default Posts;

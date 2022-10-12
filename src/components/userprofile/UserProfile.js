@@ -4,16 +4,17 @@ import SidebarMenu from '../common/SidebarMenu';
 import Topbar from '../common/Topbar';
 import UserTopbar from '../common/UserTopbar';
 import { useLocation } from 'react-router-dom';
+import {getUsername} from '../../firebase'
+import {getUserId} from '../../firebase'
 import { useState } from 'react';
 import { database } from '../../firebase'
-import { onValue, ref, query } from 'firebase/database'
+import { onValue, ref, query, update } from 'firebase/database'
 import { AuthContext } from '../../AuthProvider'
 import ActionButton from '../newsfeed/ActionButton';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import './UserProfile.css'
 import EditProfileModal from './EditProfileModal';
-import styled from "styled-components";
-import otheruser from "./otherUser.js"
+
 import Post from '../newsfeed/Posts'
 
 
@@ -31,6 +32,10 @@ function UserProfile() {
   const location = useLocation()
   const postId = location.state.clickedpost
 
+
+
+  const [posts, setPost] = useState([])
+
   const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false)
   const [postUserId, setPostUserId] = useState('')
   const [postData, setPostData] = useState([])
@@ -41,21 +46,40 @@ function UserProfile() {
     setShowEditProfileModal(prevState => !prevState)
   }
 
+  
+
+  //if clicled post id = ' ' 
+  //run use effect
+  //else set post to current user id
+
+
   //To get user id of the clicked post
-  useEffect(() => {
-    let data;
-    fetchUser()
-    //Clicked post reference
-    const postRef = ref(database, `posts/${postId}/userId`);
+  useEffect(()=>{
 
-    //get clicked post data -> userid
-    onValue(postRef, (snapshot) => {
-      data = snapshot.val();
+    if(location.state.from === 'topbar' || location.state.from === 'menu'){
+      setPostUserId(currentUser.uid )
+    }else if(location.state.from === 'search'){
+      setPostUserId(postId)
+    }else{
+      let data;
 
-      //Update user id variable to be used to get user details
-      setPostUserId(data)
-    });
-  }, [])
+
+      //Clicked post reference
+      const postRef = ref(database, `posts/${postId}/userId`);
+  
+      //get clicked post data -> userid
+      onValue(postRef, (snapshot) => {
+        data = snapshot.val();
+  
+        //Update user id variable to be used to get user details
+        setPostUserId(data)
+      });
+    }
+
+
+   
+  },[])
+
 
   const fetchUser = () => {
     const arr = [];
@@ -89,28 +113,82 @@ function UserProfile() {
   }
 
   //===============================================================
-  
+
   //Find anither way to reoplace this code
-  let userData;
-  if (currentUser !== null) {
+  let userData ;
+  let profileInitals;
+    if (currentUser !== null) {
 
     //Current user reference
 console.log("here postUserId clicked on, user Id : ",postUserId)
     const userRef = ref(database, 'users/' + postUserId);
+    
     onValue(userRef, (snapshot) => {
       userData = snapshot.val();
 
-      console.log(userData.firstname, userData.lastName)
+      console.log(userData.firstname,userData.lastName )
+
     });
   }
 
-  //===============================================================
+
+    
+     //===============================================================
+
+    
+     //Get user Posts
+     
+     const postRef = ref(database, 'posts/')
+     
+     useEffect(() => {
+      let postInfo;
+       if (currentUser !== null) {
+         const PostsArr = []
+   
+         onValue(postRef, Datasnapshot => {
+           Datasnapshot.forEach(child => {
+             const postdata = child.val()
+             const post = {
+               username: '',
+               caption: postdata.caption !== '' ? postdata.caption : postdata.text,
+               imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
+               name: getUsername(postdata.userId),
+               time: postdata.time,
+               id: postdata.postid
+             }
+             
+             if(postdata.userId === postUserId){
+              PostsArr.push(post)
+            }
+           })
+         })
+   
+         setPost(PostsArr.reverse())
+       }
+     },[currentUser, postRef,setPost])
+    
+
+     //followers + following
+     //get reference to users that the current user is following
+     let numOfFollowers = 0;
+     let numOfFollowing = 0;
+      const followingRef = ref(database,'follow/'+postUserId+'/following');
+      const followersRef = ref(database,'follow/'+postUserId+'/followers');
+
+     onValue(followingRef,(snapshot) =>{
+      numOfFollowing = snapshot.size
+      console.log(numOfFollowing);
+     })
 
 
+     //followers
+     onValue(followersRef,(snapshot) =>{
+      numOfFollowers = snapshot.size
+      console.log(numOfFollowers);
+     })
 
-  const editProfile = () => {
-    alert('Got to edit profile page')
-  }
+
+ 
 
 
   return (
@@ -124,7 +202,9 @@ console.log("here postUserId clicked on, user Id : ",postUserId)
           <div className='userProfile__header'>
 
             <div className='userProfile__displayPicture'>
-              <p className='displayPicture'>dp</p>
+
+             <p className='displayPicture'></p>
+
             </div>
 
             <div className='userProfile__userDetails'>
@@ -132,18 +212,19 @@ console.log("here postUserId clicked on, user Id : ",postUserId)
               <p>{userData.bio}</p>
               <div className='userProfile__Stats'>
                 <div className='stats'>
-                  <p>
-                    0
-                  </p>
+
+                  <h4>{posts.length}</h4>
+                  <p>Posts</p>
+
                 </div>
 
                 <div className='stats'>
-                  <h4>0</h4>
+                  <h4>{numOfFollowers}</h4>
                   <p>Followers</p>
                 </div>
 
                 <div className='stats'>
-                  <h4>0</h4>
+                  <h4>{numOfFollowers}</h4>
                   <p>Following</p>
                 </div>
               </div>
@@ -151,37 +232,37 @@ console.log("here postUserId clicked on, user Id : ",postUserId)
 
             </div>
 
-            {/* If this is the current user logged in show the edit button */}
+           
+           {/* If this is the current user logged in show the edit button */}
 
-            {currentUser.uid === postUserId ?
-
-              <ActionButton
-                text='Edit Profile'
-                Icon={EditRoundedIcon}
-                onClick={toggelEditProfile} />
-              : null}
+            
+           {currentUser.uid === postUserId ?
+            
+            <ActionButton
+            text='Edit Profile'
+            Icon = {EditRoundedIcon}
+            onClick={toggelEditProfile}/>
+            : null}
           </div>
 
-          <div className='userProfile__posts' style={{marginBottom: 50}}>
-            <h4>Show user posts herer</h4>
-            {posts.map((userPost, idx) => (
-                <div key={idx} style={{marginBottom: 50}}> 
-                <Post
-                    key={idx}
-                    username={userPost.username}
-                    name={userPost.text}
-                    caption={userPost.caption}
-                    imgUrl={userPost.imageUrl}
-                    time={userPost.time}
-                    postid={userPost.postid}
-                  />
-                </div>
-              ))
-            }
-
-          </div>
+          <div className='userProfile__posts'>
+          <div className='layout__main'>
+          {posts.map(post => (
+            <Post
+              key={post.id}
+              username={post.username}
+              name={post.name}
+              caption={post.caption}
+              imgUrl={post.imgUrl}
+              time={post.time}
+              postid={post.id}
+            />
+          ))}
         </div>
-        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName} />
+          </div>
+        </div>  
+        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName} userId={postUserId}/>
+
       </div>
 
 
