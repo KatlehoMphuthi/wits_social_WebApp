@@ -2,7 +2,6 @@
 import './Post.css'
 
 import React, { useEffect, useState, useContext ,useRef} from 'react'
-import cn from 'classnames'
 
 import './likestyle.scss'
 //Authprovider import

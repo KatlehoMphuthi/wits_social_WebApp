@@ -5,7 +5,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState, } from 'react';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { AuthContext } from "../../AuthProvider";
+import { AuthContext}  from "../../AuthProvider";
 import {onValue,ref, set } from "firebase/database";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,7 @@ export default function Topbar() {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
 const [lname, setlname] = useState("");
-const navigate = useNavigate();
+//const navigate = useNavigate();
 const [filtered, setFiltered] = useState([]);
 const [word, setWord] = useState("");
 const [users, setUsers] = useState([]);
@@ -89,20 +89,29 @@ const goToUserProfile=(u)=>{
   // how to pass data to another page in  navigation 
 }
 
-return fname !== "" ? 
+return currentUser !== null ? 
   (
       <div className="topbarContainer">
         <div className="topbarLeft">
           <span className="logo"><img src="/svg/WS_Logo.svg" alt="" width={65}/></span>
         </div>
         <div className="topbarCenter">
-          <span className="searchbar">
+          <div id="searchbar" className="searchbar" role={'textbox'}
+            
+          >
               <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
             <input
+              value={word}
               onChange={(e) => searchUser(e.target.value)}
               placeholder="Search for a  friend!"
               className="searchInput"
+              name="Searchbar"
+              id="search_input"
+              aria-label="search"
+              role='textbox'
+              data-testid = "sInput"   
             />
+
           </span>
           {word !== "" && <div className="searchbar__results"/*>style={searchStyle}*/>
           {word !== "" && filtered.map((u) => {
@@ -134,12 +143,12 @@ return fname !== "" ?
         <div className="searchbar">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
          
-          { <input
+          {/* <input
           
-            placeholder="Search for friend!"
+            placeholder="Search for friend, post or video coming Soon"
             className="searchInput"
 
-          />}
+          /> */}
         </div>
       </div>
       <div className="topbarRight">
