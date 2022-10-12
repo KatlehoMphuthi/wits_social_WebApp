@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react'
-import { useParams } from "react-router-dom";
+import  {useParams} from "react-router-dom";
 import SidebarMenu from '../common/SidebarMenu';
 import Topbar from '../common/Topbar';
 import UserTopbar from '../common/UserTopbar';
@@ -14,19 +14,14 @@ import ActionButton from '../newsfeed/ActionButton';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import './UserProfile.css'
 import EditProfileModal from './EditProfileModal';
-
 import Post from '../newsfeed/Posts'
 
 
-
 function UserProfile() {
-  //---------------------------fetch user post------------------------------
-
-
   //Show and hide edit ptofile Modal
   const [showEditProfileModal, setShowEditProfileModal] = useState(false)
 
-  const { currentUser } = useContext(AuthContext); //get the current user.
+  const {currentUser} = useContext(AuthContext); //get the current user.
 
   let { name } = useParams();
   const location = useLocation()
@@ -39,10 +34,9 @@ function UserProfile() {
   const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false)
   const [postUserId, setPostUserId] = useState('')
   const [postData, setPostData] = useState([])
-  const [posts, setPosts] = useState([]);
 
   //Toggle edit profile modal
-  const toggelEditProfile = () => {
+  const toggelEditProfile = () =>{
     setShowEditProfileModal(prevState => !prevState)
   }
 
@@ -63,7 +57,6 @@ function UserProfile() {
     }else{
       let data;
 
-
       //Clicked post reference
       const postRef = ref(database, `posts/${postId}/userId`);
   
@@ -76,61 +69,25 @@ function UserProfile() {
       });
     }
 
-
    
   },[])
 
+   
 
-  const fetchUser = () => {
-    const arr = [];
-    const userRef = ref(database, 'posts/')
-    let ID;
- 
-
-    onValue(userRef, (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        console.log("here postUserID is my ID: ",postUserId)
-        console.log("current.uid: ", currentUser.uid)
-        if (childSnapshot.val().userId == currentUser.uid) { // here since I used the currently logged in user it will show the posts of the cureent user in every user profile
-          const user_data = {
-            // get the post object
-            caption: childSnapshot.val().caption,
-            imageUrl: childSnapshot.val().imageUrl,
-            postid: childSnapshot.val().postid,
-            text: childSnapshot.val().text,
-            time: childSnapshot.val().time,
-            userId: childSnapshot.val().userId,
-            username: childSnapshot.val().username,
-          }
-          // console.log("user date: ", user_data);
-
-          arr.push(user_data);
-        }
-      });
-      setPosts(arr);
-      console.log('user Posts: ', arr)
-    })
-  }
 
   //===============================================================
-
   //Find anither way to reoplace this code
   let userData ;
   let profileInitals;
     if (currentUser !== null) {
-
     //Current user reference
-console.log("here postUserId clicked on, user Id : ",postUserId)
     const userRef = ref(database, 'users/' + postUserId);
     
     onValue(userRef, (snapshot) => {
       userData = snapshot.val();
-
       console.log(userData.firstname,userData.lastName )
-
     });
-  }
-
+    }
 
     
      //===============================================================
@@ -189,22 +146,18 @@ console.log("here postUserId clicked on, user Id : ",postUserId)
 
 
  
-
-
   return (
     <div className='app-container'>
-      <UserTopbar className='navbar' />
+      <UserTopbar className='navbar'/>
 
       <div className='layout'>
-        <SidebarMenu />
+          <SidebarMenu />
         <div className='layout__main'>
 
           <div className='userProfile__header'>
-
+            
             <div className='userProfile__displayPicture'>
-
              <p className='displayPicture'></p>
-
             </div>
 
             <div className='userProfile__userDetails'>
@@ -212,10 +165,8 @@ console.log("here postUserId clicked on, user Id : ",postUserId)
               <p>{userData.bio}</p>
               <div className='userProfile__Stats'>
                 <div className='stats'>
-
                   <h4>{posts.length}</h4>
                   <p>Posts</p>
-
                 </div>
 
                 <div className='stats'>
@@ -228,10 +179,9 @@ console.log("here postUserId clicked on, user Id : ",postUserId)
                   <p>Following</p>
                 </div>
               </div>
-
-
+            
+            
             </div>
-
            
            {/* If this is the current user logged in show the edit button */}
 
@@ -262,11 +212,11 @@ console.log("here postUserId clicked on, user Id : ",postUserId)
           </div>
         </div>  
         <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName} userId={postUserId}/>
-
       </div>
 
-
+      
     </div>
   )
 }
+
 export default UserProfile
