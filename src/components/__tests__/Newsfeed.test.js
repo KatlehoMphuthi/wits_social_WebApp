@@ -1,19 +1,13 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
-import { render, waitFor,screen, fireEvent} from "@testing-library/react";
-import { AuthProvider} from "../../AuthProvider";
+import { waitFor,screen, fireEvent,act} from "@testing-library/react";
+import {AuthContext,AuthProvider} from "../../AuthProvider";
 import {  Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from "react-alert-template-mui";
 import Topbar from "../common/Topbar";
+import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client'
 import userEvent from "@testing-library/user-event";
-
-const userRender = (ui, {providerProps, ...renderOptions}) => {
-  return render(<AlertProvider template={AlertTemplate}>
-                  <AuthProvider {...providerProps}><Router>{ui}</Router></AuthProvider>
-          </AlertProvider>,
-    renderOptions,
-  )
-}
 
 const Props = {
   currentUser:{
@@ -40,57 +34,103 @@ const Props = {
     "lastLoginAt": "1665479466701",
     "apiKey": "AIzaSyD-2UqL8da9mbNb0UUziNXc0vBekUq7L-o",
     "appName": "[DEFAULT]"
-}
+},login: {email:"test01@mail.com",password:"Password123"}
   }
 
-test('Should show  search bar', () => {
-  userRender(<Topbar />, {...Props,});
-  const searchBox = waitFor(()=>{screen.getByRole('textbox')});
-  waitFor(() =>{expect(searchBox).toBeInTheDocument()});
-});
+  //const currentUser = {uid: "dSLFBHzO1ub2y08A6QJuwGmFHki2"}
 
-test('Should show nothing if typed nothing in search bar', () => {
+// test('Should show  search bar', () => {
+//   userRender(<Topbar />, {...Props,});
+//   const searchBox = waitFor(()=>{screen.getByRole('textbox')});
+//   waitFor(() =>{expect(searchBox).toBeInTheDocument()});
+// });
 
-  userRender(<Topbar />, {...Props,});
+// test('Should show nothing if typed nothing in search bar', () => {
+
+//   userRender(<Topbar />, {...Props,});
   
-  const text =  waitFor(()=>{screen.getByRole('textbox')});
-  userEvent.type(text,"");
+//   const text =  waitFor(()=>{screen.getByRole('textbox')});
+//   userEvent.type(text,"");
 
-  waitFor(()=>{
-     expect(text).toBe("");
-  });
-});
+//   waitFor(()=>{
+//      expect(text).toBe("");
+//   });
+// });
 
-test('Should show when no users with that letter in their names', () => {
-  const {container} = userRender(<Topbar />, {... Props});
+// test('Should show when no users with that letter in their names', () => {
+//   const {container} = userRender(<Topbar />, {... Props});
  
-  const text = container.querySelector("#searchbar");
-  userEvent.type(text,"j");
+//   const text = container.querySelector("#searchbar");
+//   userEvent.type(text,"j");
 
-  const result = container.querySelector('#result');
-  expect(result).not.toBeInTheDocument();
-});
+//   const result = container.querySelector('#result');
+//   expect(result).not.toBeInTheDocument();
+// });
 
- test('Should show when users available', () => {
-  const {container} = userRender(<Topbar />, {...Props,});
+//  test('Should show when users available', () => {
+//   const {container} = userRender(<Topbar />, {...Props,});
 
-  const text = waitFor(()=>{screen.getByRole('textbox')});
-  userEvent.type(text,"k");
-  const result = container.querySelector("#result")
-  waitFor(() => {
-    expect(result).toBeInTheDocument()
+//   const text = waitFor(()=>{screen.getByRole('textbox')});
+//   userEvent.type(text,"k");
+//   const result = container.querySelector("#result")
+//   waitFor(() => {
+//     expect(result).toBeInTheDocument()
+//   });
+// });
+
+describe("Testing Topbar", () => {
+
+  let container
+  beforeEach(() =>{
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    
+    act(() =>{
+      ReactDOM.render((
+        <AuthContext.Provider value = {{...Props}}>
+          <Topbar />
+        </AuthContext.Provider>
+      ),container);
+    });
   });
-});
 
-test('Should show when users with that letter in their names', () => {
-  
-  const {container} = userRender(<Topbar />, {...Props});
+  afterEach(() =>{
+    document.body.removeChild(container);
 
-  const text = waitFor(()=>{screen.getByTestId('sInput')});;
-  userEvent.type(text, {target: {value: 'k'}});
-  const result = container.querySelector("#result")
-  waitFor(() => {
-    expect(result).toHaveDisplayValue(/k/i);
+    container = null;
+  })
+
+  it('Should show search bar', () =>{
+    expect(screen.getByTestId('sInput')).toBeInTheDocument();
   });
+
+  it('Should show nothing if typed nothing in search bar',() =>{
+
+   
+    fireEvent.input(screen.getByLabelText(/search/i),{target: {value:""}});
+
+    expect(screen.getByTestId(/sInput/i)).toHaveDisplayValue("");
+
+   });
+
+  it('Should show when users with that letter in their names', async () => {
+    
+    fireEvent.input(screen.getByTestId('sInput'),{target: {value:"k"}});
+
+    expect(screen.getByTestId(/childResults/i)).toBeInTheDocument();
+
+  });
+
+  // it('Should show name of someone', async () => {
+    
+  //   fireEvent.input(screen.getByTestId('sInput'),{target: {value:"k"}});
+
+  //    expect(screen.getByTestId(/chil/i)).toBeInTheDocument();
+
+  // });
+
 });
+
+
+
 

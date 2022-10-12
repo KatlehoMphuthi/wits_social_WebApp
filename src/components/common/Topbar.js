@@ -5,7 +5,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState, } from 'react';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { AuthContext } from "../../AuthProvider";
+import { AuthContext}  from "../../AuthProvider";
 import {onValue,ref, set } from "firebase/database";
 
 
@@ -13,7 +13,7 @@ export default function Topbar() {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
 const [lname, setlname] = useState("");
-const navigate = useNavigate();
+//const navigate = useNavigate();
 const [filtered, setFiltered] = useState([]);
 const [word, setWord] = useState("");
 const [users, setUsers] = useState([]);
@@ -83,7 +83,7 @@ const goToUserProfile=(u)=>{
   // how to pass data to another page in  navigation 
 }
 
-return fname !== "" ? 
+return currentUser !== null ? 
   (
       <div className="topbarContainer">
         <div className="topbarLeft">
@@ -91,7 +91,7 @@ return fname !== "" ?
         </div>
         <div className="topbarCenter">
           <div id="searchbar" className="searchbar" role={'textbox'}
-            data-testid = "sInput"
+            
           >
               <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
             <input
@@ -106,9 +106,9 @@ return fname !== "" ?
               data-testid = "sInput"   
             />
           </div>
-          {word !== "" && <div id="result" /*>style={searchStyle}*/>
+          {word !== "" && <div id="result" data-testid ="childResults"/*>style={searchStyle}*/>
           {word !== "" &&  filtered.map((u) => {
-            return <p className="who-to-follow__block"
+            return <p className="who-to-follow__block" data-testid = "child"
               style={{ padding: 10,margin:10,
                        background: "white"}}
               onClick={ ()=>goToUserProfile(u)} // go to user profile
