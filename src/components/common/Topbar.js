@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../../AuthProvider";
 import {onValue,ref, set } from "firebase/database";
+import { Link } from "react-router-dom";
 
 
 export default function Topbar() {
@@ -68,6 +69,7 @@ useEffect(()=>{
 const searchUser = (val) => {
   setWord(val)
   const filt = users.filter(v => {
+    console.log(v)
     return v.firstname.toLowerCase().includes(val.toLowerCase());
 
   })
@@ -98,19 +100,20 @@ return fname !== "" ?
               className="searchInput"
             />
           </span>
-          {word !== "" && <div /*>style={searchStyle}*/>
+          {word !== "" && <div className="searchbar__results"/*>style={searchStyle}*/>
           {word !== "" && filtered.map((u) => {
-            return <p data-testid="results" className="who-to-follow__block" 
+            return <p data-testid="results" className="searchbar__result" 
               style={{ padding: 10,margin:10,
                        background: "white"}}
-              onClick={ ()=>goToUserProfile(u)} // go to user profile
-            >{u.firstname}</p>
+              //onClick={ ()=>goToUserProfile(u)} // go to user profile
+            > <Link to={`/${u.firstname}`}  state={{from:'search', clickedpost:u.userid, username:u.firstname}}   >{u.firstname}</Link></p>
           })}
         </div>}
         </div>
         <div className="topbarRight">
           <div className="topbarLinks">
-          <span> <p> <span className="profile__initals">{fname[0]}{lname[0]}</span>{fname} {lname}</p></span>
+          {/*<span> <p> <span className="profile__initals">{fname[0]}{lname[0]}</span>{fname} {lname}</p></span>*/}
+          <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname}</Link>
           </div>
         </div>
       </div>

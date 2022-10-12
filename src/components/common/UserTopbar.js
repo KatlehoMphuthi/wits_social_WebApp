@@ -14,12 +14,12 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 function UserTopbar({username}) {
   return (
     <div className="topbarContainer">
-        <div className="topbarLeft">
+        <div className="topbarLeft topbarleft--userprofile">
         <span className="logo"><img src="/svg/WS_Logo.svg" alt="" width={65}/></span>
       </div>
 
-      <div className="topbarCenter">          
-        <h2>{username}</h2>
+      <div className="topbarCenter topbarCenter--userprofile">
+        <p> <span><ArrowBackRoundedIcon />  </span>  Back</p>
       </div>
     </div>
   )

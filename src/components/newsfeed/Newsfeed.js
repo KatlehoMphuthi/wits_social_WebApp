@@ -59,7 +59,7 @@ function Newsfeed () {
       setPost(PostsArr.current.reverse());
      
     }
-  },[currentUser,setPost]);
+  },[currentUser,postRef,setPost]);
 
   
 
@@ -68,7 +68,7 @@ function Newsfeed () {
       <Topbar className='navbar' />
 
       <div className='layout'>
-          <SidebarMenu />
+          <SidebarMenu userid='kgotso'/>
         <div className='layout__main'>
           <CreatePost />
           {posts.map(post => (

@@ -27,6 +27,8 @@ function UserProfile() {
   const location = useLocation()
   const postId = location.state.clickedpost
 
+  console.log('current user id : ', currentUser.uid )
+
   const [posts, setPost] = useState([])
 
   const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false)
@@ -38,20 +40,36 @@ function UserProfile() {
     setShowEditProfileModal(prevState => !prevState)
   }
 
+  
+
+  //if clicled post id = ' ' 
+  //run use effect
+  //else set post to current user id
+
+
   //To get user id of the clicked post
   useEffect(()=>{
-    let data;
 
-    //Clicked post reference
-    const postRef = ref(database, `posts/${postId}/userId`);
+    if(location.state.from === 'topbar' || location.state.from === 'menu'){
+      setPostUserId(currentUser.uid )
+    }else if(location.state.from === 'search'){
+      setPostUserId(postId)
+    }else{
+      let data;
 
-    //get clicked post data -> userid
-    onValue(postRef, (snapshot) => {
-      data = snapshot.val();
+      //Clicked post reference
+      const postRef = ref(database, `posts/${postId}/userId`);
+  
+      //get clicked post data -> userid
+      onValue(postRef, (snapshot) => {
+        data = snapshot.val();
+  
+        //Update user id variable to be used to get user details
+        setPostUserId(data)
+      });
+    }
 
-      //Update user id variable to be used to get user details
-      setPostUserId(data)
-    });
+   
   },[])
 
    
@@ -124,7 +142,7 @@ function UserProfile() {
               <p>{userData.bio}</p>
               <div className='userProfile__Stats'>
                 <div className='stats'>
-                  <h4>0</h4>
+                  <h4>{posts.length}</h4>
                   <p>Posts</p>
                 </div>
 

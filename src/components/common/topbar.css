@@ -1,5 +1,5 @@
 .topbarContainer {
-  padding: 1.5rem;
+  padding:0 1.5rem 0.5rem 1.5rem;
   width: 100%;
   display: flex;
   align-items: center;
@@ -24,6 +24,12 @@
 .topbarCenter {
   flex: 5;
 }
+
+.topbarleft--userprofile{
+  flex: 1.29 !important;
+}
+
+
 
 .searchbar {
   width: 100%;
@@ -117,4 +123,22 @@ color: white;
 
 .topbarCenter__backButton{
   display: flex;
+}
+
+.searchbar__results{
+  position: absolute;
+  top: 3.8rem;
+  width: 43%;
+  background-color: #ECEEF2;
+  border-radius: 0 0 8px 8px;
+}
+
+.searchbar__result{
+ padding: 1.5rem !important;
+ border-radius: 8px;
+ cursor: pointer;
+}
+
+.searchbar__result:hover{
+  background-color: lightgray !important;
 }
