@@ -279,6 +279,38 @@ export const logout = () => {
 };
 
 
+//get Username
+export function getUsername(userId){
+  let userData;
+
+    //Current user reference
+    const userRef = ref(database, 'users/' + userId);
+    
+    onValue(userRef, (snapshot) => {
+      userData = snapshot.val();
+      
+    });
+    
+
+    return userData.firstname
+}
+
+//get Username
+export function getUserId(userId){
+  let userData;
+
+    //Current user reference
+    const userRef = ref(database, 'users/' + userId);
+    
+    onValue(userRef, (snapshot) => {
+      userData = snapshot.val();
+      
+    });
+    
+
+    return userData.userid
+}
+
 
 
 

@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../../AuthProvider";
 import {onValue,ref, set } from "firebase/database";
+import { Link } from "react-router-dom";
+
 
 
 export default function Topbar() {
@@ -17,6 +19,7 @@ const navigate = useNavigate();
 const [filtered, setFiltered] = useState([]);
 const [word, setWord] = useState("");
 const [users, setUsers] = useState([]);
+
 
 ///----------------------------------Start firebase testing-------------
 const fetchUsers = () => {
@@ -45,6 +48,8 @@ const fetchUsers = () => {
 }
 
 
+
+
 ///----------------------------------End testing-------------
 
 useEffect(()=>{
@@ -68,6 +73,7 @@ useEffect(()=>{
 const searchUser = (val) => {
   setWord(val)
   const filt = users.filter(v => {
+    console.log(v)
     return v.firstname.toLowerCase().includes(val.toLowerCase());
 
   })
@@ -90,27 +96,30 @@ return fname !== "" ?
           <span className="logo"><img src="/svg/WS_Logo.svg" alt="" width={65}/></span>
         </div>
         <div className="topbarCenter">
-          <div className="searchbar">
+          <span className="searchbar">
               <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
             <input
               onChange={(e) => searchUser(e.target.value)}
               placeholder="Search for a  friend!"
               className="searchInput"
             />
-          </div>
-          {word !== "" && <div /*>style={searchStyle}*/>
+          </span>
+          {word !== "" && <div className="searchbar__results"/*>style={searchStyle}*/>
           {word !== "" && filtered.map((u) => {
-            return <p className="who-to-follow__block"
+            return <p data-testid="results" className="searchbar__result" 
               style={{ padding: 10,margin:10,
                        background: "white"}}
-              onClick={ ()=>goToUserProfile(u)} // go to user profile
-            >{u.firstname}</p>
+              //onClick={ ()=>goToUserProfile(u)} // go to user profile
+            > <Link to={`/${u.firstname}`}  state={{from:'search', clickedpost:u.userid, username:u.firstname}}   >{u.firstname}</Link></p>
           })}
         </div>}
         </div>
         <div className="topbarRight">
           <div className="topbarLinks">
-          <span> <p> <span className="profile__initals">{fname[0]}{lname[0]}</span>{fname} {lname}</p></span>
+          {<span> <p> <span className="profile__initals">{fname[0]}{lname[0]}</span>
+            <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
+          </p></span>}
+          
           </div>
         </div>
       </div>
@@ -125,12 +134,12 @@ return fname !== "" ?
         <div className="searchbar">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
          
-          {/* <input
+          { <input
           
-            placeholder="Search for friend, post or video coming Soon"
+            placeholder="Search for friend!"
             className="searchInput"
 
-          /> */}
+          />}
         </div>
       </div>
       <div className="topbarRight">
