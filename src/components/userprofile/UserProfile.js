@@ -27,7 +27,7 @@ function UserProfile() {
   const location = useLocation()
   const postId = location.state.clickedpost
 
-  console.log('current user id : ', currentUser.uid )
+
 
   const [posts, setPost] = useState([])
 
@@ -78,17 +78,18 @@ function UserProfile() {
   //===============================================================
   //Find anither way to reoplace this code
   let userData ;
+  let profileInitals;
     if (currentUser !== null) {
     //Current user reference
     const userRef = ref(database, 'users/' + postUserId);
     
     onValue(userRef, (snapshot) => {
       userData = snapshot.val();
-
       console.log(userData.firstname,userData.lastName )
     });
     }
 
+    
      //===============================================================
 
     
@@ -121,7 +122,29 @@ function UserProfile() {
    
          setPost(PostsArr.reverse())
        }
-     },[currentUser,postRef,setPost])
+     },[setPost])
+    
+
+     //followers + following
+     //get reference to users that the current user is following
+     let numOfFollowers = 0;
+     let numOfFollowing = 0;
+      const followingRef = ref(database,'follow/'+postUserId+'/following');
+      const followersRef = ref(database,'follow/'+postUserId+'/followers');
+
+     onValue(followingRef,(snapshot) =>{
+      numOfFollowing = snapshot.size
+      console.log(numOfFollowing);
+     })
+
+
+     //followers
+     onValue(followersRef,(snapshot) =>{
+      numOfFollowers = snapshot.size
+      console.log(numOfFollowers);
+     })
+
+
  
   return (
     <div className='app-container'>
@@ -134,7 +157,7 @@ function UserProfile() {
           <div className='userProfile__header'>
             
             <div className='userProfile__displayPicture'>
-             <p className='displayPicture'>dp</p>
+             <img className='displayPicture'  src='https://source.unsplash.com/random/500*500'/>
             </div>
 
             <div className='userProfile__userDetails'>
@@ -147,12 +170,12 @@ function UserProfile() {
                 </div>
 
                 <div className='stats'>
-                  <h4>0</h4>
+                  <h4>{numOfFollowers}</h4>
                   <p>Followers</p>
                 </div>
 
                 <div className='stats'>
-                  <h4>0</h4>
+                  <h4>{numOfFollowers}</h4>
                   <p>Following</p>
                 </div>
               </div>
@@ -162,6 +185,7 @@ function UserProfile() {
            
            {/* If this is the current user logged in show the edit button */}
 
+            
            {currentUser.uid === postUserId ?
             
             <ActionButton

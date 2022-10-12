@@ -5,10 +5,10 @@
     align-items: center;
     padding: 10px 30px;
     gap: 15px;
-    
     background: #F8F8F8;
     border-radius: 8px;
     cursor: pointer;
+    max-height: 44px;
 }
  
 

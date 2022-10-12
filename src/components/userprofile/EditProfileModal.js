@@ -49,6 +49,7 @@ export default function EditProfileModal({open, onClose, firstname, lasttname, b
 
 
       const onSubmit = data =>{
+        alert('hello')
         //get form from data and upload to firebase
         console.log(data.firstName, data.lastName);
    
@@ -126,7 +127,7 @@ if(!open) return null
               wrap="hard"
               rows={4}
               type='text'
-              {...register('bio', { required: false, maxLength: 10 })}
+              {...register('bio', { required: false, maxLength: 500 })}
             />
           </Form.Field>
 
