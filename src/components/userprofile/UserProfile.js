@@ -122,7 +122,7 @@ function UserProfile() {
    
          setPost(PostsArr.reverse())
        }
-     },[setPost])
+     },[currentUser, postRef,setPost])
     
 
      //followers + following
@@ -157,7 +157,7 @@ function UserProfile() {
           <div className='userProfile__header'>
             
             <div className='userProfile__displayPicture'>
-             <img className='displayPicture'  src='https://source.unsplash.com/random/500*500'/>
+             <p className='displayPicture'></p>
             </div>
 
             <div className='userProfile__userDetails'>

@@ -38,9 +38,13 @@
 }*/
 
 .userProfile__displayPicture{
-    width: 120px !important;
+    width: 180px !important;
     height: 120px !important;
+    margin-right: 1rem;
+    border-radius: 50% !important; 
+    background-image: url(https://source.unsplash.com/random/200*200);
 }
+
 .userProfile__displayPicture img{
     border-radius: 50%;
 }
