@@ -1,4 +1,4 @@
-//import React from 'react'
+// import React from 'react'
 import './Post.css'
 
 import React, { useEffect, useState, useContext ,useRef} from 'react'
@@ -10,7 +10,7 @@ import { AuthContext } from '../../AuthProvider'
 
 //navigation import
 import { Link } from "react-router-dom";
-
+// import Explore from '../components/newsfeed'
 import Button from '../common/Button'
 //Firebase imports
 import { database } from '../../firebase'
@@ -103,6 +103,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       }
 
     }
+    
     
     
     

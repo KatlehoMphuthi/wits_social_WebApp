@@ -1,8 +1,9 @@
 {
   "name": "wits-social",
   "version": "0.1.0",
-  "lockfileVersion": 2,
+  "lockfileVersion": 1,
   "requires": true,
+<<<<<<< HEAD
   "packages": {
     "": {
       "name": "wits-social",
@@ -19975,6 +19976,8 @@
       }
     }
   },
+=======
+>>>>>>> 5dc421bd73889802a915e01aafdbb8cdb448dce3
   "dependencies": {
     "@adobe/css-tools": {
       "version": "4.0.1",
@@ -33182,14 +33185,6 @@
       "resolved": "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz",
       "integrity": "sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ=="
     },
-    "string_decoder": {
-      "version": "1.1.1",
-      "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz",
-      "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==",
-      "requires": {
-        "safe-buffer": "~5.1.0"
-      }
-    },
     "string-length": {
       "version": "4.0.2",
       "resolved": "https://registry.npmjs.org/string-length/-/string-length-4.0.2.tgz",
@@ -33254,6 +33249,14 @@
         "call-bind": "^1.0.2",
         "define-properties": "^1.1.4",
         "es-abstract": "^1.19.5"
+      }
+    },
+    "string_decoder": {
+      "version": "1.1.1",
+      "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz",
+      "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==",
+      "requires": {
+        "safe-buffer": "~5.1.0"
       }
     },
     "stringify-object": {

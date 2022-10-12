@@ -12,9 +12,7 @@ class Buttons extends React.Component {
   setDislike() {
     this.setState({
       dislikeActive: !this.state.dislikeActive,
-      dislike: this.state.dislikeActive
-        ? this.state.dislike - 1
-        : this.state.dislike + 1
+      dislike: this.state.dislikeActive ? this.state.dislike - 1 : this.state.dislike + 1
     });
   }
   setLike() {
