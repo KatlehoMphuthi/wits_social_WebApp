@@ -7,6 +7,7 @@ import { AuthProvider } from "./AuthProvider";
 import About from "./components/about/About";
 import UserProfile from "./components/userprofile/UserProfile";
 import Explore from "./components/explore/Explore";
+import SharedPost from "./components/newsfeed/SharedPost";
 
 //App components and paths
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/about" element ={<About />} />
           <Route exact path="/:userId" element ={<UserProfile />} />
           <Route exact path="/explore" element ={<Explore />} />
+          <Route exact path= "/newsfeed/post/:postid" element = {<SharedPost />}/>
         </Routes>
       </Router>
     </div>

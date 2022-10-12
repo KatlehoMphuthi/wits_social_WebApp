@@ -1,3 +1,9 @@
+.navbar{
+  position: static;
+  top: 0;
+  z-index: 100;
+}
+ 
  .post{
     /* size of pic */
     background-color: #ffffff;
@@ -73,3 +79,18 @@
    width: 24px;
    height: 24px;
  }
+
+ .tweet__share-section{
+  margin-top: 1.5rem;
+}
+
+.tweet__share-section input{
+  border-radius: 8px;
+  margin-right: 1rem;
+}
+
+.tweet__share-section input:focus{
+  border: 2px solid blue;
+  background-color: white;
+  color: #0F141A;
+}
