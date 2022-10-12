@@ -7,11 +7,14 @@ import { signOut } from 'firebase/auth'
 import ViewStreamRoundedIcon from '@mui/icons-material/ViewStreamRounded'
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded'
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import SidebarOption from './SidebarOption'
+import ViewComfyRoundedIcon from '@mui/icons-material/ViewComfyRounded';
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import { Button } from '@material-ui/core'
 import './SidebarMenu.css'
 
-function SidebarMenu () {
+function SidebarMenu ({userid}) {
   const currentUser  = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -53,9 +56,11 @@ function SidebarMenu () {
     setAboutActive(false);
     setHomeActive(false);
     setExploreActive(false);
+
+    console.log(currentUser)
     if (currentUser) {
 
-      navigate('/:userId', { replace: true })
+      navigate(`/:${userid}`, { replace: true })
       
     }
   }
@@ -79,26 +84,32 @@ function SidebarMenu () {
           active={homeActive}
           onClick={goToHome}
         />
-        <SidebarOption
+
+        
+<SidebarOption
+          text='Explore'
+          Icon={GridViewRoundedIcon}
+          active={exploreActive}
+          onClick={goToExplore}
+        />
+
+{/** 
+<SidebarOption
+          text='Profile'
+          Icon={PersonRoundedIcon}
+          onClick={goToProfile}
+        />
+*/}
+      <SidebarOption
           text='About'
           Icon={InfoRoundedIcon}
           active={aboutActive}
           onClick={goToAbout}
         />
-
-<SidebarOption
-          text='Profile'
-          Icon={InfoRoundedIcon}
-          onClick={goToProfile}
-        />
-
-<SidebarOption
-          text='Explore'
-          Icon={InfoRoundedIcon}
-          active={exploreActive}
-          onClick={goToExplore}
-        />
       </div>
+  
+
+
 
       {/* Button -> Logout */}
       <Button

@@ -82,11 +82,12 @@
 
  .tweet__share-section{
   margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-around;
 }
 
 .tweet__share-section input{
   border-radius: 8px;
-  margin-right: 1rem;
 }
 
 .tweet__share-section input:focus{

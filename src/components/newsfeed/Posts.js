@@ -1,4 +1,4 @@
-//import React from 'react'
+// import React from 'react'
 import './Post.css'
 
 import React, { useEffect, useState, useContext ,useRef} from 'react'
@@ -9,7 +9,7 @@ import { AuthContext } from '../../AuthProvider'
 
 //navigation import
 import { Link } from "react-router-dom";
-
+// import Explore from '../components/newsfeed'
 import Button from '../common/Button'
 //Firebase imports
 import { database } from '../../firebase'
@@ -24,10 +24,14 @@ import ActionButton from './ActionButton'
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FacebookIcon from '@mui/icons-material/Facebook';
 
+//FacebookIcon,TwitterIcon,WhatsappIcon
 //Share buttons
 import { FacebookShareButton, WhatsappShareButton, TwitterShareButton,
-          FacebookIcon,TwitterIcon,WhatsappIcon } from 'react-share';
+           } from 'react-share';
 
 function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
@@ -57,7 +61,8 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   //Share state
   const [showShareBox, setShareBox] = useState(false)
   const [shareCount, setshareCount] = useState(0)
-  
+  const [shareActiveColor, setShareActiveColor] = useState('')
+  const [shareColor, setShareColor] = useState('')
 
   //Like Feature States
   const [liked, setLiked] = useState(null)
@@ -97,6 +102,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       }
 
     }
+    
     
     
     
@@ -251,6 +257,9 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       if(DataSnapshot.exists()){
         let count = DataSnapshot.size;
          setshareCount(count);
+         setShareActiveColor('#EFEBFE')
+        setShareColor('#8166E5')
+
       }
     });
   },[shareCount]);
@@ -297,7 +306,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         <div className='tweet__header'>
           <div className='tweet__author-name'>{username}</div>
           <div className='tweet__author-slug'>
-            <Link to={`/${name}`} state={{from:'name', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
+            <Link to={`/${name}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
             </div>
           <div className='tweet__publish-time'>{timeCreated}</div>
          
@@ -331,6 +340,8 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     <ActionButton
     text={`Share  ${shareCount}`}
     Icon = {IosShareRoundedIcon}
+    activeColor = {shareActiveColor}
+    color = {shareColor}
     onClick={toggleshare}/>  
          
       {/********** Show comment box ********************/}   
@@ -367,7 +378,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         
         {showShareBox ? (
           <div className='tweet__share-section'>
-            <li>
+            
               <FacebookShareButton
                   url = {window.location.href + `/post/${clickedPostId}`}
                   title= {`${username} has shared the following with you! `}
@@ -375,9 +386,9 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
                   hashtag="#camperstribe">
                   <FacebookIcon size={25} />
               </FacebookShareButton>
-            </li>
+            
 
-            <li>
+            
               <TwitterShareButton
                   url = {window.location.href + `/post/${clickedPostId}`}
                   title= {`${username} has shared the following with you! `}
@@ -385,16 +396,17 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
                   hashtag="#camperstribe">
                   <TwitterIcon size={25} />
               </TwitterShareButton>
-            </li>
+            
 
-            <li onClick={showShare}>
+            
               <WhatsappShareButton
+              onClick={showShare}
                   url = {window.location.href + `/post/${clickedPostId}`}
                   title= {`${username} has shared the following with you! `}
                   separator=":: ">
-                  <WhatsappIcon size={25} />
+                  <WhatsAppIcon size={25} />
               </WhatsappShareButton>
-            </li>
+            
 
           </div>
         ):null}

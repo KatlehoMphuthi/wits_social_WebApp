@@ -1,14 +1,16 @@
 import React from 'react'
 import { useState, useContext, useEffect, useRef } from 'react'
 import Post from '../newsfeed/Posts'
-import CreatePost from '../post/CreatePost'
+// import CreatePost from '../post/CreatePost'
 import '../newsfeed/Newsfeed.css'
 import Topbar from '../common/Topbar'
-import RightSideBar from '../common/RightSideBar'
+import RightsidebarExplore from '../common/RightsidebarExplore'
 import { AuthContext } from '../../AuthProvider'
 import SidebarMenu from '../common/SidebarMenu'
 import { database } from '../../firebase'
 import { onValue, ref, query } from 'firebase/database'
+import PostsExplore from './PostsExplore'
+import './explore.css'
 
 function Explore() {
   const { currentUser } = useContext(AuthContext)
@@ -22,6 +24,7 @@ function Explore() {
       onValue(postRef, Datasnapshot => {
         Datasnapshot.forEach(child => {
           const postdata = child.val()
+          
           const post = {
             username: '',
             caption: postdata.caption !== '' ? postdata.caption : postdata.text,
@@ -31,7 +34,10 @@ function Explore() {
             id: postdata.postid
           }
 
-          PostsArr.push(post)
+          if(!(postdata.imageUrl === '' )){
+            PostsArr.push(post)
+          }
+          
         })
       })
 
@@ -45,21 +51,15 @@ function Explore() {
 
       <div className='layout'>
           <SidebarMenu />
-        <div className='layout__main'>
-          <CreatePost />
+        <div className='explore__main'>
+          {/* <CreatePost /> */}
           {posts.map(post => (
-            <Post
+            <PostsExplore
               key={post.id}
-              username={post.username}
-              name={post.name}
-              caption={post.caption}
               imgUrl={post.imgUrl}
-              time={post.time}
-              postid={post.id}
             />
           ))}
         </div>
-          <RightSideBar />
       </div>
     </div>
   )

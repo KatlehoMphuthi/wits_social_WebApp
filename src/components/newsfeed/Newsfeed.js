@@ -14,6 +14,21 @@ function Newsfeed () {
   const  {currentUser}  = useContext(AuthContext)
   const [posts, setPost] = useState([])
 
+  function getUsername(userId){
+    let userData;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        userData = snapshot.val();
+        
+      });
+      }
+
+      return userData.firstname
+  }
+
   //const PostsArr = useRef([]); // create an empty array to store the posts in
   const postRef = ref(database, 'posts/')
   const PostsArr = useRef([]);
@@ -28,10 +43,12 @@ function Newsfeed () {
             username: '',
             caption: postdata.caption !== '' ? postdata.caption : postdata.text,
             imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
-            name: postdata.username,
+            name: getUsername(postdata.userId),
             time: postdata.time,
             id: postdata.postid
           }
+
+          console.log('username :', getUsername(postdata.userId))
 
           PostsArr.current.push(post)
         });
@@ -39,7 +56,7 @@ function Newsfeed () {
       setPost(PostsArr.current.reverse());
      
     }
-  }, [currentUser, postRef]);
+  },[currentUser,postRef,setPost]);
 
   
 
@@ -48,7 +65,7 @@ function Newsfeed () {
       <Topbar className='navbar' />
 
       <div className='layout'>
-          <SidebarMenu />
+          <SidebarMenu userid='kgotso'/>
         <div className='layout__main'>
           <CreatePost />
           {posts.map(post => (

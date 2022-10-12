@@ -26,3 +26,9 @@
   .sidebarOption--active {
     color: var(--twitter-color);
   }
+
+  .sidebarOption--backButton:hover{
+    background-color:#e6ecf0 !important;
+    color: black !important;
+    border-radius: 0;
+  }
