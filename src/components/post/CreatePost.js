@@ -19,9 +19,9 @@ function CreatePost() {
    const [show, setShow] = useState(false); //Shoe and hide remove image cross
 
    const image = useRef(null);
-   const  alert = useAlert();
+   const  alert2 = useAlert();
 
-   const handlePostTextInput = event => {
+   const handlePostTextInput = (event) => {
     setPostText(event.target.value);
   };
 
@@ -42,8 +42,7 @@ function CreatePost() {
     const post = () =>{
       if(currentUser){ // check if there is user logged in
         if(!file && postText === ""){
-          alert(currentUser.uid)
-          alert.show('Add text or image to post',
+          alert2.show('Add text or image to post',
                 {type:'error',
                 timeout: 2000, 
                 position: positions.BOTTOM_CENTER });
@@ -115,7 +114,8 @@ function CreatePost() {
                 }).catch((error) =>{
                   console.log(error);
                 });
-              });            
+              }); 
+              removeImage();         
           }
           // this is for when there is a caption with an image
           if(file && postText !== ""){
@@ -151,13 +151,9 @@ function CreatePost() {
                   }
                 );
               }); 
+              removeImage();
             }
-            alert.show("Posted successfully",{
-              type: 'success',
-              position: 'bottom right',
-              timeout: 2000,
-              transition: transitions.SCALE
-            });
+            alert("Posted successfully");
           }
       }
         
@@ -176,12 +172,14 @@ function CreatePost() {
         <img className="tweet__author-logo" src="https://source.unsplash.com/random/100*100" />
         <div className="create-post__main">
 
-        <div className="postTextInput">
+        <div className="postTextInput" id='postId'>
           <input
             placeholder="Write someting Amazing!"
             className="searchInput"
             onChange={handlePostTextInput}
             value={postText}
+            data-testid = "postInput"
+            id = "pInput"
           />
         </div>
 

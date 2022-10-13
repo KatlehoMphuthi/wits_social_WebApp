@@ -51,7 +51,7 @@ function Explore() {
 
       <div className='layout'>
           <SidebarMenu />
-        <div className='explore__main'>
+        <div className='explore__main' id="resultExplore">
           {/* <CreatePost /> */}
           {posts.map(post => (
             <PostsExplore
