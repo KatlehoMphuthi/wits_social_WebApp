@@ -12,6 +12,7 @@ ignore:
   - "src/components/newsfeed/Comment.js"
   - "src/components/newsfeed/SharedPost.js"
   - "src/components/newsfeed/SharedTopBar.js"
+  - "src/components/newsfeed/Posts.js"
   - "src/components/common/Buttons.js"
   - "src/components/common/UserTopbar.js"
   - "src/components/common/RightSideBar.js"
