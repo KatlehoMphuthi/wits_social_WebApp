@@ -19,3 +19,4 @@ ignore:
   - "src/components/common/RightSideBar.js"
   - "src/components/common/Users_Rsidebar.js"
   - "src/components/common/RightsidebarExplore.js"
+  - "src/components/common/SidebarMenu.js"
