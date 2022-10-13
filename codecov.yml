@@ -21,3 +21,4 @@ ignore:
   - "src/components/common/RightsidebarExplore.js"
   - "src/components/common"
   - "src/components/common/SidebarMenu.js"
+  - "src/components/authentication/Login.js"
