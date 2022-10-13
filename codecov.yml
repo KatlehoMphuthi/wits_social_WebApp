@@ -6,3 +6,5 @@ ignore:
   - "src/firebase.js"
   - "src/components/about"
   - "src/components/newsfeed/Newsfeed.js"
+  - "src/components/features"
+  - "src/components/userprofile"
