@@ -9,6 +9,7 @@ ignore:
   - "src/components/features"
   - "src/components/userprofile"
   - "src/components/explore"
+  - "src/components/post"
   - "src/components/newsfeed/Comment.js"
   - "src/components/newsfeed/SharedPost.js"
   - "src/components/newsfeed/SharedTopBar.js"
