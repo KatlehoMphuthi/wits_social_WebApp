@@ -8,3 +8,4 @@ ignore:
   - "src/components/newsfeed/Newsfeed.js"
   - "src/components/features"
   - "src/components/userprofile"
+  - "src/components/explore"
