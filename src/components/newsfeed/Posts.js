@@ -294,7 +294,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
 
   return (
-    <div className='tweet'>
+    <div className='tweet' data-testid="post">
       
       <Link to={`/${name}`}>
       <img 
@@ -345,10 +345,10 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     onClick={toggleshare}/>  
          
       {/********** Show comment box ********************/}   
-        </div>
+        </div >
 
         {showCommentBox ? (
-          <div className='tweet__comment-section'>
+          <div className='tweet__comment-section' data-testid = "commentBox">
             <input
               placeholder='Add comment...'
               className='searchInput'
@@ -377,13 +377,13 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         ) : null}
         
         {showShareBox ? (
-          <div className='tweet__share-section'>
+          <div className='tweet__share-section' data-testid = "shareBox">
             
               <FacebookShareButton
                   url = {window.location.href + `/post/${clickedPostId}`}
-                  title= {`${username} has shared the following with you! `}
+                  title= {`${name} has shared the following with you! `}
                   separator=":: "
-                  hashtag="#camperstribe">
+                  hashtag="#wits_social">
                   <FacebookIcon size={25} />
               </FacebookShareButton>
             
@@ -391,9 +391,9 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
             
               <TwitterShareButton
                   url = {window.location.href + `/post/${clickedPostId}`}
-                  title= {`${username} has shared the following with you! `}
+                  title= {`${name} has shared the following with you! `}
                   separator=":: "
-                  hashtag="#camperstribe">
+                  hashtag="#wits_social">
                   <TwitterIcon size={25} />
               </TwitterShareButton>
             
@@ -402,7 +402,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
               <WhatsappShareButton
               onClick={showShare}
                   url = {window.location.href + `/post/${clickedPostId}`}
-                  title= {`${username} has shared the following with you! `}
+                  title= {`${name} has shared the following with you! `}
                   separator=":: ">
                   <WhatsAppIcon size={25} />
               </WhatsappShareButton>
