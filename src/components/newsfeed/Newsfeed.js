@@ -29,9 +29,10 @@ function Newsfeed () {
       return  userData;
   }
 
-  //const PostsArr = useRef([]); // create an empty array to store the posts in
-  const postRef = ref(database, 'posts/')
+  
   const PostsArr = useRef([]);
+    //const PostsArr = useRef([]); // create an empty array to store the posts in
+    const postRef = ref(database, 'posts/') 
   useEffect(() => {
     if (currentUser !== null) {
       PostsArr.current = [];
@@ -53,10 +54,12 @@ function Newsfeed () {
           PostsArr.current.push(post)
         });
       });
+
       setPost(PostsArr.current.reverse());
-     
+      
     }
-  },[currentUser,postRef]);
+
+  },[currentUser,postRef,setPost]);
 
   
 

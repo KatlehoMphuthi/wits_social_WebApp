@@ -33,6 +33,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "react-share": "^4.4.0",
+    "react-textarea-autosize": "^8.3.4",
     "react-test-renderer": "^18.2.0",
     "reactjs-popup": "^2.0.5",
     "semantic-ui-css": "^2.4.1",
