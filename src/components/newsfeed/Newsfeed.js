@@ -49,7 +49,7 @@ function Newsfeed () {
             id: postdata.postid
           }
 
-          console.log('username :', getUsername(postdata.userId))
+          //console.log('username :', getUsername(postdata.userId))
 
           PostsArr.current.push(post)
         });
@@ -61,7 +61,7 @@ function Newsfeed () {
     
   },[currentUser,postRef]);
 
-  console.log(PostsArr)
+ // console.log(PostsArr)
 
   return (
     <div className='app-container'>

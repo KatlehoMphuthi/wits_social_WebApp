@@ -1,5 +1,6 @@
 import { toUnitless } from '@mui/material/styles/cssUtils';
 import React , {useState,useContext, useRef}from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
 import Explore from '../explore/Explore';
 import Button from '../common/Button';
 import './CreatePost.css';
@@ -18,11 +19,14 @@ function CreatePost() {
    const [postText, setPostText] = useState("");
    const [show, setShow] = useState(false); //Show and hide remove image cross
 
+   const [textareaheight, setTextareaheight] = useState(1); 
+
    const image = useRef(null);
    const  alert = useAlert();
 
    const handlePostTextInput = event => {
     setPostText(event.target.value);
+    console.log(event.target.rows," | height : ", event.target.height)
   };
 
 
@@ -181,6 +185,13 @@ function CreatePost() {
       setFile('')
     }
 
+    function handleKeyDown(e) {
+      e.target.style.height = 'inherit';
+      e.target.style.height = `${e.target.scrollHeight}px`; 
+      // In case you have a limitation
+      // e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`;
+    }
+
 
   return (
     <div className="tweet">
@@ -188,7 +199,7 @@ function CreatePost() {
         <div className="create-post__main">
 
         <div className="postTextInput">
-          <input
+          <TextareaAutosize
             placeholder="Write someting Amazing!"
             className="searchInput"
             onChange={handlePostTextInput}

@@ -18,7 +18,7 @@
     width: 100%;
 }
 
-.postTextInput input{
+.postTextInput textarea{
     width: 100%;
     font-family: Roboto;
 font-size: 16px;
@@ -30,6 +30,8 @@ text-align: left;
 color:#00000099;
 background: white;
 border-radius: 8px;
+overflow: hidden;
+resize: none;
 }
 
 /*
