@@ -6,11 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { NavLink } from 'react-router-dom'
 import ViewStreamRoundedIcon from '@mui/icons-material/ViewStreamRounded'
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded'
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import SidebarOption from './SidebarOption'
-import ViewComfyRoundedIcon from '@mui/icons-material/ViewComfyRounded';
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import { Button } from '@material-ui/core'
 import './SidebarMenu.css'

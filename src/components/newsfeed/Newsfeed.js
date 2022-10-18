@@ -59,7 +59,7 @@ function Newsfeed () {
 
     setPost(PostsArr.current.reverse())
     
-  },[database]);
+  },[currentUser,postRef]);
 
   console.log(PostsArr)
 

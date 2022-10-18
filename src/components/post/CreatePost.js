@@ -16,7 +16,7 @@ function CreatePost() {
   const {currentUser} = useContext(AuthContext); //get the current user.
    const [file, setFile] = useState("");
    const [postText, setPostText] = useState("");
-   const [show, setShow] = useState(false); //Shoe and hide remove image cross
+   const [show, setShow] = useState(false); //Show and hide remove image cross
 
    const image = useRef(null);
    const  alert = useAlert();
@@ -82,6 +82,7 @@ function CreatePost() {
             setPostText("");  
             
           } 
+
           // image only 
           if(file && postText === ""){
             const new_postsRef = ref(database,'posts/' + postid);
@@ -115,8 +116,12 @@ function CreatePost() {
                 }).catch((error) =>{
                   console.log(error);
                 });
-              });            
+              });
+              
+              //Remove and hide image section
+              removeImage()
           }
+
           // this is for when there is a caption with an image
           if(file && postText !== ""){
               console.log("we are here now");
@@ -151,7 +156,13 @@ function CreatePost() {
                   }
                 );
               }); 
+            
+            //Remove and hide image section
+            removeImage()
+            
             }
+
+
             alert.show("Posted successfully",{
               type: 'success',
               position: 'bottom right',
@@ -186,9 +197,11 @@ function CreatePost() {
         </div>
 
         {show?
-        <div className="tweet__content">
+        <div className="create_post__content">
+          
               <p className='remove-image' onClick={removeImage}>x</p> 
               <img className="tweet__image" src={file} />
+              
             </div>: null}
 
         <div className='action_buttons'>
