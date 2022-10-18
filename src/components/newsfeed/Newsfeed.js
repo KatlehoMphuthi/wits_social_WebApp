@@ -54,9 +54,12 @@ function Newsfeed () {
           PostsArr.current.push(post)
         });
       });
+
+      setPost(PostsArr.current.reverse());
       
     }
-  },[currentUser,postRef]);
+
+  },[currentUser,postRef,setPost]);
 
   
 
