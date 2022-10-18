@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { getDatabase,set, ref,onValue } from "firebase/database"
+import { getDatabase,set, ref,onValue, } from "firebase/database"
 
 import { initializeApp } from "firebase/app";
 
@@ -34,6 +34,23 @@ const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
+
+// simulate real firebase module for testing
+export function onValue2(ref, callback) {
+  const snapshot = {
+    val() {
+      return 'real implementation';
+    },
+  };
+  callback(snapshot);
+  return function unsubscribe() {};
+}
+
+export function ref2(db, name) {
+  return {};
+}
+
+export const db2 = {};
 
 /******************************************************************************************************************************/ 
 //create a function to store users in the database

@@ -22,9 +22,9 @@ function CreatePost() {
    const [textareaheight, setTextareaheight] = useState(1); 
 
    const image = useRef(null);
-   const  alert = useAlert();
+   const  alert2 = useAlert();
 
-   const handlePostTextInput = event => {
+   const handlePostTextInput = (event) => {
     setPostText(event.target.value);
     console.log(event.target.rows," | height : ", event.target.height)
   };
@@ -46,8 +46,7 @@ function CreatePost() {
     const post = () =>{
       if(currentUser){ // check if there is user logged in
         if(!file && postText === ""){
-          alert(currentUser.uid)
-          alert.show('Add text or image to post',
+          alert2.show('Add text or image to post',
                 {type:'error',
                 timeout: 2000, 
                 position: positions.BOTTOM_CENTER });
@@ -204,6 +203,8 @@ function CreatePost() {
             className="searchInput"
             onChange={handlePostTextInput}
             value={postText}
+            data-testid = "postInput"
+            id = "pInput"
           />
         </div>
 

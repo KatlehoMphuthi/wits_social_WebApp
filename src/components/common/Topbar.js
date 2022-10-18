@@ -5,7 +5,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState, } from 'react';
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { AuthContext } from "../../AuthProvider";
+import { AuthContext}  from "../../AuthProvider";
 import {onValue,ref, set } from "firebase/database";
 import { Link } from "react-router-dom";
 
@@ -15,7 +15,7 @@ export default function Topbar() {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
 const [lname, setlname] = useState("");
-const navigate = useNavigate();
+//const navigate = useNavigate();
 const [filtered, setFiltered] = useState([]);
 const [word, setWord] = useState("");
 const [users, setUsers] = useState([]);
@@ -55,13 +55,10 @@ const fetchUsers = () => {
 useEffect(()=>{
   if(currentUser){
     //setting the username 
-    onValue(ref(database,'users/'+ currentUser.uid),(DataSnapshot)=>{
-      if(DataSnapshot.exists()){
+    onValue(ref(database,`users/${currentUser.uid}`),(DataSnapshot)=>{
         const data = DataSnapshot.val();
         setfname(data.firstname);
-        setlname(data.lastName);
-      }
-                   
+        setlname(data.lastName);               
     });
   fetchUsers();
 
@@ -81,48 +78,43 @@ const searchUser = (val) => {
   setFiltered(filt);
 }
 
-const goToUserProfile=(u)=>{
-  console.log(u.email)
-  // for navigation, pass the user u,  use a function navigate
-  //navigate('userprofile',user:u) 
-
-  // how to pass data to another page in  navigation 
-}
-
-return fname !== "" ? 
+return currentUser !== null ? 
   (
-      <div className="topbarContainer">
-        <div className="topbarLeft">
-          <span className="logo"><img src="/svg/WS_Logo.svg" alt="" width={65}/></span>
-        </div>
-        <div className="topbarCenter">
-          <span className="searchbar">
-              <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
-            <input
-              onChange={(e) => searchUser(e.target.value)}
-              placeholder="Search for a  friend!"
-              className="searchInput"
-            />
-          </span>
-          {word !== "" && <div className="searchbar__results"/*>style={searchStyle}*/>
-          {word !== "" && filtered.map((u) => {
-            return <p data-testid="results" className="searchbar__result" 
-              style={{ padding: 10,margin:10,
-                       background: "white"}}
-              //onClick={ ()=>goToUserProfile(u)} // go to user profile
-            > <Link to={`/${u.firstname}`}  state={{from:'search', clickedpost:u.userid, username:u.firstname}}   >{u.firstname}</Link></p>
-          })}
-        </div>}
-        </div>
-        <div className="topbarRight">
-          <div className="topbarLinks">
-          {<span> <p> <span className="profile__initals">{fname[0]}{lname[0]}</span>
-            <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
-          </p></span>}
-          
-          </div>
-        </div>
+    <div className="topbarContainer">
+    <div className="topbarLeft">
+      <span className="logo"><img src="/svg/WS_Logo.svg" alt="" width={65}/></span>
+    </div>
+    <div className="topbarCenter">
+      <span className="searchbar">
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
+        <input
+          onChange={(e) => searchUser(e.target.value)}
+          placeholder="Search for a  friend!"
+          className="searchInput"
+          aria-label = "search"
+          data-testid = "sInput"
+          value = {word}
+        />
+      </span>
+      {word !== "" && <div className="searchbar__results" data-testid="results"  id="child">
+      {word !== "" && filtered.map((u) => {
+        return <span data-testid ="please"><p  className="searchbar__result" aria-label="child2"
+          style={{ padding: 10,margin:10,
+                   background: "white"}}
+          //onClick={ ()=>goToUserProfile(u)} // go to user profile
+        > <Link to={`/${u.firstname}`}  state={{from:'search', clickedpost:u.userid, username:u.firstname}}   >{u.firstname}</Link></p>
+      </span> })}
+    </div>}
+    </div>
+    <div className="topbarRight">
+      <div className="topbarLinks" data-testid = "user">
+      {<span> <p> <span className="profile__initals" >{fname[0]}{lname[0]} </span>
+        <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
+      </p></span>}
+      
       </div>
+    </div>
+  </div>
   )
   :
   (
@@ -134,12 +126,12 @@ return fname !== "" ?
         <div className="searchbar">
             <FontAwesomeIcon icon={faMagnifyingGlass} className="searchbar-icon"/>
          
-          { <input
+          {/* <input
           
-            placeholder="Search for friend!"
+            placeholder="Search for friend, post or video coming Soon"
             className="searchInput"
 
-          />}
+          /> */}
         </div>
       </div>
       <div className="topbarRight">

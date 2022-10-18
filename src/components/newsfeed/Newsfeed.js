@@ -8,25 +8,25 @@ import RightSideBar from '../common/RightSideBar'
 import { AuthContext } from '../../AuthProvider'
 import SidebarMenu from '../common/SidebarMenu'
 import { database } from '../../firebase'
-import { onValue, ref, query } from 'firebase/database'
+import { onValue, ref } from 'firebase/database'
 
 function Newsfeed () {
   const  {currentUser}  = useContext(AuthContext)
   const [posts, setPost] = useState([])
 
-  function getUsername(userId){
+  const getUsername =(userId) =>{
     let userData;
     if (currentUser !== null) {
       //Current user reference
       const userRef = ref(database, 'users/' + userId);
       
       onValue(userRef, (snapshot) => {
-        userData = snapshot.val();
-        
+        const name = snapshot.val();
+        userData=name.firstname;
       });
       }
 
-      return userData.firstname
+      return  userData;
   }
 
   
@@ -56,12 +56,9 @@ function Newsfeed () {
       });
       
     }
-
-    setPost(PostsArr.current.reverse())
-    
   },[currentUser,postRef]);
 
- // console.log(PostsArr)
+  
 
   return (
     <div className='app-container'>
