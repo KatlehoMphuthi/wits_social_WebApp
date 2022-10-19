@@ -156,43 +156,47 @@ function UserProfile() {
 
           <div className='userProfile__header'>
             
-            <div className='userProfile__displayPicture'>
-             <p className='displayPicture'></p>
-            </div>
-
-            <div className='userProfile__userDetails'>
-              <h2>{userData.firstname} {userData.lastName}</h2>
-              <p>{userData.bio}</p>
-              <div className='userProfile__Stats'>
-                <div className='stats'>
-                  <h4>{posts.length}</h4>
-                  <p>Posts</p>
-                </div>
-
-                <div className='stats'>
-                  <h4>{numOfFollowers}</h4>
-                  <p>Followers</p>
-                </div>
-
-                <div className='stats'>
-                  <h4>{numOfFollowers}</h4>
-                  <p>Following</p>
-                </div>
+            <div className='user_details_wrapper'>
+              <div className='userProfile__displayPicture'>
+              <p className='displayPicture'>dp</p>
               </div>
-            
-            
+
+              <div className='userProfile__userDetails'>
+                <h2>{userData.firstname} {userData.lastName}</h2>
+                <p>{userData.bio}</p>
+                <div className='userProfile__Stats'>
+                  <div className='stats'>
+                    <h4>{posts.length}</h4>
+                    <p>Posts</p>
+                  </div>
+
+                  <div className='stats'>
+                    <h4>{numOfFollowers}</h4>
+                    <p>Followers</p>
+                  </div>
+
+                  <div className='stats'>
+                    <h4>{numOfFollowers}</h4>
+                    <p>Following</p>
+                  </div>
+                </div>
+              
+              
+              </div>
             </div>
-           
            {/* If this is the current user logged in show the edit button */}
 
             
+            <div className='userProfile__editButton'>
            {currentUser.uid === postUserId ?
             
             <ActionButton
-            text='Edit Profile'
+            text='Edit'
             Icon = {EditRoundedIcon}
             onClick={toggelEditProfile}/>
             : null}
+
+</div>
           </div>
 
           <div className='userProfile__posts'>
