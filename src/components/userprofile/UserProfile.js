@@ -15,9 +15,18 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import './UserProfile.css'
 import EditProfileModal from './EditProfileModal';
 import Post from '../newsfeed/Posts'
+import {Tabs,Tab} from  '@mui/material';
 
 
 function UserProfile() {
+
+  const [value, setValue] = React.useState('Posts');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+
   //Show and hide edit ptofile Modal
   const [showEditProfileModal, setShowEditProfileModal] = useState(false)
 
@@ -171,6 +180,11 @@ function UserProfile() {
                   </div>
 
                   <div className='stats'>
+                    <h4>{posts.length}</h4>
+                    <p>Likes</p>
+                  </div>
+
+                  <div className='stats'>
                     <h4>{numOfFollowers}</h4>
                     <p>Followers</p>
                   </div>
@@ -199,9 +213,32 @@ function UserProfile() {
 </div>
           </div>
 
+          {/*********Testing Tabs************* */}
+
+          <Tabs
+  value={value}
+  onChange={handleChange}
+  textColor="secondary"
+  indicatorColor="secondary"
+  aria-label="secondary tabs example"
+>
+  <Tab value="Posts" label="Posts" />
+  <Tab value="Likes" label="Likes" />
+  <Tab value="Followers" label="Followers" />
+  <Tab value="Following" label="Following" />
+</Tabs>
+
+
+{/*********Display Posts************ */}
+
+           {/*********End of Testing Tabs************* */}
+
           <div className='userProfile__posts'>
           <div className='layout__main'>
-          {posts.map(post => (
+          {value === 'Posts' && <>
+
+
+{posts.map(post => (
             <Post
               key={post.id}
               username={post.username}
@@ -212,10 +249,27 @@ function UserProfile() {
               postid={post.id}
             />
           ))}
+
+</>}
+
+
+
+{/*********Display Linked Posts************ */}
+{value === 'Likes' && <p>Likes tab</p>}
+
+
+{/*********Display  Followers************ */}
+{value === 'Followers' && <p>Followers tab</p>}
+
+
+{/*********Display  Following************ */}
+{value === 'Following' && <p>Following tab</p>}
         </div>
           </div>
+
+
         </div>  
-        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName} userId={postUserId}/>
+        <EditProfileModal open={showEditProfileModal} onClose={toggelEditProfile} firstname={userData.firstname} lasttname={userData.lastName} userId={postUserId} bio={userData.bio}/>
       </div>
 
       
