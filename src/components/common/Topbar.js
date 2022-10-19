@@ -63,9 +63,9 @@ useEffect(()=>{
   fetchUsers();
 
   }
-
-  
 }, [currentUser,fname]);
+
+
 
 const searchUser = (val) => {
   setWord(val)

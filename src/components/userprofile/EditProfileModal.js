@@ -9,9 +9,10 @@ import {AuthContext} from '../../AuthProvider';
 import { Form, Button } from 'semantic-ui-react'
 import {set,ref, push, onValue,child, update} from 'firebase/database';
 import { FirebaseError } from 'firebase/app';
+import { useAlert,positions,transitions } from 'react-alert';
 
 export default function EditProfileModal({open, onClose, firstname, lasttname, bio,userId}) {
-    console.log("Modal Names", firstname,lasttname )
+    console.log("Modal Names", firstname,lasttname, bio )
     const {currentUser} = useContext(AuthContext);
 
     //check if the user has set a profile picture
@@ -49,7 +50,6 @@ export default function EditProfileModal({open, onClose, firstname, lasttname, b
 
 
       const onSubmit = data =>{
-        alert('hello')
         //get form from data and upload to firebase
         console.log(data.firstName, data.lastName);
    
@@ -64,6 +64,13 @@ export default function EditProfileModal({open, onClose, firstname, lasttname, b
 
         //Close the modal
         onClose()
+
+        alert.show("Profile Updated Successfully",{
+          type: 'success',
+          position: 'bottom right',
+          timeout: 2000,
+          transition: transitions.SCALE
+        });
       } 
     
 
@@ -127,6 +134,7 @@ if(!open) return null
               wrap="hard"
               rows={4}
               type='text'
+              defaultValue={bio}
               {...register('bio', { required: false, maxLength: 500 })}
             />
           </Form.Field>
