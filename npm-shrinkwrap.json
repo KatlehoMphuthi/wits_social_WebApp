@@ -17727,22 +17727,6 @@
         "react": "^16.3.0 || ^17"
       }
     },
-    "node_modules/react-textarea-autosize": {
-      "version": "8.3.4",
-      "resolved": "https://registry.npmjs.org/react-textarea-autosize/-/react-textarea-autosize-8.3.4.tgz",
-      "integrity": "sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ==",
-      "dependencies": {
-        "@babel/runtime": "^7.10.2",
-        "use-composed-ref": "^1.3.0",
-        "use-latest": "^1.2.1"
-      },
-      "engines": {
-        "node": ">=10"
-      },
-      "peerDependencies": {
-        "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
-      }
-    },
     "node_modules/react-test-renderer": {
       "version": "18.2.0",
       "resolved": "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-18.2.0.tgz",
@@ -17760,6 +17744,22 @@
       "version": "18.2.0",
       "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz",
       "integrity": "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="
+    },
+    "node_modules/react-textarea-autosize": {
+      "version": "8.3.4",
+      "resolved": "https://registry.npmjs.org/react-textarea-autosize/-/react-textarea-autosize-8.3.4.tgz",
+      "integrity": "sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ==",
+      "dependencies": {
+        "@babel/runtime": "^7.10.2",
+        "use-composed-ref": "^1.3.0",
+        "use-latest": "^1.2.1"
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+      }
     },
     "node_modules/react-tile-map": {
       "version": "0.3.3",
@@ -33685,16 +33685,6 @@
         "jsonp": "^0.2.1"
       }
     },
-    "react-textarea-autosize": {
-      "version": "8.3.4",
-      "resolved": "https://registry.npmjs.org/react-textarea-autosize/-/react-textarea-autosize-8.3.4.tgz",
-      "integrity": "sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ==",
-      "requires": {
-        "@babel/runtime": "^7.10.2",
-        "use-composed-ref": "^1.3.0",
-        "use-latest": "^1.2.1"
-      }
-    },
     "react-test-renderer": {
       "version": "18.2.0",
       "resolved": "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-18.2.0.tgz",
@@ -33710,6 +33700,16 @@
           "resolved": "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz",
           "integrity": "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="
         }
+      }
+    },
+    "react-textarea-autosize": {
+      "version": "8.3.4",
+      "resolved": "https://registry.npmjs.org/react-textarea-autosize/-/react-textarea-autosize-8.3.4.tgz",
+      "integrity": "sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ==",
+      "requires": {
+        "@babel/runtime": "^7.10.2",
+        "use-composed-ref": "^1.3.0",
+        "use-latest": "^1.2.1"
       }
     },
     "react-tile-map": {
