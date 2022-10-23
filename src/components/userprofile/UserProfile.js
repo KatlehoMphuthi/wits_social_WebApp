@@ -16,16 +16,24 @@ import './UserProfile.css'
 import EditProfileModal from './EditProfileModal'
 import Post from '../newsfeed/Posts'
 import { Tabs, Tab } from '@mui/material'
+import axios from 'axios'
 
 function UserProfile () {
+
+  const POSTS_URL = "https://sdpwits-social-default-rtdb.firebaseio.com/posts.json"
+  
+
+
   //Global
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
+  const [postsTest, setPostTest] = useState(null)
 
   //Get clicked post id
   const location = useLocation()
   const postId = location.state.clickedpost
   const [postUserId, setPostUserId] = useState('')
+
   //To get user id of the clicked post
   useEffect(() => {
     if (location.state.from === 'topbar' || location.state.from === 'menu') {
@@ -61,47 +69,39 @@ function UserProfile () {
   //===============================================================
   //Find anither way to reoplace this code
   let userData
-  let profileInitals
+
+  const [profileInitals, setProfileInitals] = useState('')
+
   if (currentUser !== null) {
     //Current user reference
     const userRef = ref(database, 'users/' + postUserId)
 
     onValue(userRef, snapshot => {
       userData = snapshot.val()
-      console.log(userData.firstname, userData.lastName)
     })
   }
   //===============================================================
 
-  //Get user Posts
-  const postRef = ref(database, 'posts/')
+  const USER_POST_URL = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${postUserId}.json`
+  useEffect(()=>{
+    console.log("user posts")
+    axios.get(USER_POST_URL).then((response)=>{
+      setProfileInitals(response.data.firstname)
+    }).catch(console.error)
 
-  useEffect(() => {
-    let postInfo
-    if (currentUser !== null) {
-      const PostsArr = []
+    console.log("hi")
+  },[profileInitals])
 
-      onValue(postRef, Datasnapshot => {
-        Datasnapshot.forEach(child => {
-          const postdata = child.val()
-          const post = {
-            username: '',
-            caption: postdata.caption !== '' ? postdata.caption : postdata.text,
-            imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
-            name: getUsername(postdata.userId),
-            time: postdata.time,
-            id: postdata.postid
-          }
+  useEffect(() =>{
+    console.log("axios start")
+    axios.get(POSTS_URL).then((response) =>{
+      console.log(response.data)
+      setPost(Object.values(response.data))
+      console.log(posts)
+    })
 
-          if (postdata.userId === postUserId) {
-            PostsArr.push(post)
-          }
-        })
-      })
-
-      setPost(PostsArr.reverse())
-    }
-  }, [currentUser, postRef, setPost])
+    console.log("axios done")
+  },[])
 
   //followers + following
   //get reference to users that the current user is following
@@ -112,13 +112,13 @@ function UserProfile () {
 
   onValue(followingRef, snapshot => {
     numOfFollowing = snapshot.size
-    console.log(numOfFollowing)
+  //  console.log(numOfFollowing)
   })
 
   //followers
   onValue(followersRef, snapshot => {
     numOfFollowers = snapshot.size
-    console.log(numOfFollowers)
+   // console.log(numOfFollowers)
   })
 
   /*
@@ -143,14 +143,14 @@ function UserProfile () {
           <div className='userProfile__header'>
             <div className='user_details_wrapper'>
               <div className='userProfile__displayPicture'>
-                <p className='displayPicture'>dp</p>
+                <p className='displayPicture'>{profileInitals}</p>
               </div>
 
               <div className='userProfile__userDetails'>
                 <h2>
-                  {userData.firstname} {userData.lastName}
+                  {profileInitals}
                 </h2>
-                <p>{userData.bio}</p>
+                <p></p>
                 <div className='userProfile__Stats'>
                   <div className='stats'>
                     <h4>{posts.length}</h4>
@@ -177,7 +177,7 @@ function UserProfile () {
             {/* If this is the current user logged in show the edit button */}
 
             <div className='userProfile__editButton'>
-              {currentUser.uid === postUserId ? (
+              {false ? (
                 <ActionButton
                   text='Edit'
                   Icon={EditRoundedIcon}
@@ -212,13 +212,13 @@ function UserProfile () {
                 <>
                   {posts.map(post => (
                     <Post
-                      key={post.id}
+                      key={post.postid}
                       username={post.username}
                       name={post.name}
-                      caption={post.caption}
-                      imgUrl={post.imgUrl}
+                      caption={post.caption === '' ? post.text : post.caption }
+                      imgUrl={post.imageUrl}
                       time={post.time}
-                      postid={post.id}
+                      postid={post.postid}
                     />
                   ))}
                 </>
@@ -261,10 +261,8 @@ function UserProfile () {
         <EditProfileModal
           open={showEditProfileModal}
           onClose={toggelEditProfile}
-          firstname={userData.firstname}
-          lasttname={userData.lastName}
           userId={postUserId}
-          bio={userData.bio}
+          bio=""
         />
       </div>
     </div>
