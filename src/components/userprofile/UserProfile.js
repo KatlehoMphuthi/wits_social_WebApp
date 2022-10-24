@@ -16,16 +16,24 @@ import './UserProfile.css'
 import EditProfileModal from './EditProfileModal'
 import Post from '../newsfeed/Posts'
 import { Tabs, Tab } from '@mui/material'
+import axios from 'axios'
 
 function UserProfile () {
   //Global
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
+  const [followers, setFollowers] = useState([])
 
   //Get clicked post id
   const location = useLocation()
   const postId = location.state.clickedpost
   const [postUserId, setPostUserId] = useState('')
+
+  //Get clicked follow id
+  const locationf = useLocation()
+  const followId = locationf.state.clickedpost
+  const [followUserId, setFollowerId] = useState('')
+
   //To get user id of the clicked post
   useEffect(() => {
     if (location.state.from === 'topbar' || location.state.from === 'menu') {
@@ -47,6 +55,30 @@ function UserProfile () {
       })
     }
   }, [])
+  
+
+   //To get user id of the clicked follow
+  useEffect(() => {
+    if (location.state.from === 'topbar' || location.state.from === 'menu') {
+      setFollowerId(currentUser.uid)
+    } else if (location.state.from === 'search') {
+      setFollowerId(followId)
+    } else {
+      let data
+
+      //Clicked follow reference
+      const followereRef = ref(database, `follow/${followId}/userId`)
+
+      //get clicked follow data -> userid
+      onValue(followereRef, snapshot => {
+        data = snapshot.val()
+
+        //Update user id variable to be used to get user details
+        setFollowerId(data)
+      })
+    }
+  }, [])
+
 
   /*
    *Edit Profile functionality
@@ -68,7 +100,7 @@ function UserProfile () {
 
     onValue(userRef, snapshot => {
       userData = snapshot.val()
-      console.log(userData.firstname, userData.lastName)
+      //console.log(userData.firstname, userData.lastName)
     })
   }
   //===============================================================
@@ -103,22 +135,47 @@ function UserProfile () {
     }
   }, [currentUser, postRef, setPost])
 
+   
   //followers + following
+  
+  
+  
   //get reference to users that the current user is following
   let numOfFollowers = 0
   let numOfFollowing = 0
   const followingRef = ref(database, 'follow/' + postUserId + '/following')
   const followersRef = ref(database, 'follow/' + postUserId + '/followers')
 
+  const followers_url = `https://sdpwits-social-default-rtdb.firebaseio.com/follow/${postUserId}/followers`;
+
+  useEffect(() =>{
+    let followers = [];
+    onValue(followersRef,(snapshot) =>{
+      snapshot.forEach( child =>{
+        followers.push(child.key)
+      })
+    });
+
+    console.log(followers)
+
+    for(let i = 0; i<followers.length;i++){
+      // onValue(ref(database,`users/${followers[i]}`),(snap) =>{
+      //   console.log(snap.val());
+      // })
+      console.log(followers[i])
+    }
+
+  })
+
   onValue(followingRef, snapshot => {
     numOfFollowing = snapshot.size
-    console.log(numOfFollowing)
+    //console.log(numOfFollowing)
   })
 
   //followers
   onValue(followersRef, snapshot => {
     numOfFollowers = snapshot.size
-    console.log(numOfFollowers)
+    //console.log(numOfFollowers)
   })
 
   /*
@@ -198,7 +255,7 @@ function UserProfile () {
           >
             <Tab value='Posts' label='Posts' />
             <Tab value='Likes' label='Likes' />
-            <Tab value='Followers' label='Followers' />
+            <Tab value='Followers' label='Follow' />
             <Tab value='Following' label='Following' />
           </Tabs>
 
@@ -237,17 +294,15 @@ function UserProfile () {
 
               {/*********Display Linked Posts************ */}
               {value === 'Likes' && <p>Likes tab</p>}
+              
 
 
 
 
 
               {/*********Display  Followers************ */}
-              {value === 'Followers' && <p>Followers tab</p>}
-
-
-
-
+              {/* {value === 'Followers' && <p>Followers tab</p>} */}
+           
 
 
 
