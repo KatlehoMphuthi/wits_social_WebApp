@@ -17,6 +17,7 @@ import EditProfileModal from './EditProfileModal'
 import Post from '../newsfeed/Posts'
 import { Tabs, Tab } from '@mui/material'
 import axios from 'axios'
+import Followers from './Followers'
 
 function UserProfile () {
   //Global
@@ -33,6 +34,8 @@ function UserProfile () {
   const locationf = useLocation()
   const followId = locationf.state.clickedpost
   const [followUserId, setFollowerId] = useState('')
+  const [follow_name, setFollow_name] = useState('')
+  const [follow_lname, setFollow_lname] = useState('')
 
   //To get user id of the clicked post
   useEffect(() => {
@@ -150,22 +153,37 @@ function UserProfile () {
 
   useEffect(() =>{
     let followers = [];
+    let followerArr =[];
     onValue(followersRef,(snapshot) =>{
       snapshot.forEach( child =>{
         followers.push(child.key)
       })
     });
 
-    console.log(followers)
+    //console.log(followers)
 
     for(let i = 0; i<followers.length;i++){
-      // onValue(ref(database,`users/${followers[i]}`),(snap) =>{
-      //   console.log(snap.val());
-      // })
-      console.log(followers[i])
+      onValue(ref(database,`users/${followers[i]}`),(snap) =>{
+        const data =  snap.val()
+        setFollow_name(data.firstname)
+        setFollow_lname(data.lastName)
+  
+        const follow = {
+          firstname:data.firstname,
+          lastname: data.lastName
+        }
+
+        followerArr.push(follow)
+      })
+
+      
     }
 
-  })
+    //console.log(followerArr);
+
+    setFollowers(followerArr);
+
+  },[followersRef,setFollowers]);
 
   onValue(followingRef, snapshot => {
     numOfFollowing = snapshot.size
@@ -301,13 +319,22 @@ function UserProfile () {
 
 
               {/*********Display  Followers************ */}
-              {/* {value === 'Followers' && <p>Followers tab</p>} */}
+              {/* {value === 'Following' && <p>Followers tab</p>} */}
            
 
 
 
               {/*********Display  Following************ */}
-              {value === 'Following' && <><p>Following tab</p></>}
+              {value === 'Followers' && (
+                <>
+                  {followers.map(follow => (
+                    <Followers
+                      fname = {follow.firstname}
+                      lname = {follow.lastname}
+                    />
+                  ))}
+                </>
+              )}
 
 
             </div>
