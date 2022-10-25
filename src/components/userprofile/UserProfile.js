@@ -22,6 +22,7 @@ function UserProfile () {
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
   const [Likedposts, setLikedPost] = useState([])
+  const [Final_Likedposts, setFinalLikedPost] = useState([])
 
   //Get clicked post id
   const location = useLocation()
@@ -123,12 +124,48 @@ function UserProfile () {
       setLikedPost(LikedPostsArr)
 
     }
-    
+
   }, [currentUser, LikedRef, setLikedPost])
 
 // ----------------------------- end of posts liked by user
 
-  console.log("size of likedPosts 2 : ", Likedposts.length)
+
+  console.log("size of likedPosts 2 : ", Likedposts)
+//========= now loop ID of user liked  posts, if ID found in posts then store in a array of liked posts========
+  const LikedpostRef = ref(database, 'posts/')
+
+  useEffect(() => {
+    let postInfo
+    if (currentUser !== null) {
+      const LikedPostsArr = []
+
+      onValue(LikedpostRef, Datasnapshot => {
+        Datasnapshot.forEach(child => {
+          const postdata = child.val()
+          const post = {
+            username: '',
+            caption: postdata.caption !== '' ? postdata.caption : postdata.text,
+            imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
+            name: getUsername(postdata.userId),
+            time: postdata.time,
+            id: postdata.postid
+          }
+
+          for (let i = 0; i < Likedposts.length; i++) {
+            if (Likedposts[i] == postdata.postid )
+            {
+              LikedPostsArr.push(post)
+            }
+          }
+
+        })
+      })
+
+      setFinalLikedPost(LikedPostsArr.reverse())
+    }
+  }, [currentUser, LikedpostRef, setFinalLikedPost])
+
+//====================================end of 
   //followers + following
   //get reference to users that the current user is following
   let numOfFollowers = 0
@@ -262,11 +299,23 @@ function UserProfile () {
                */}
 
               {/*********Display Linked Posts************ */}
-              {value === 'Likes' && <p>Likes tab</p>}
 
-
-
-
+               {value === 'Likes'  && (
+                <>
+                  {Final_Likedposts.map(post => (
+                    <Post
+                      key={post.id}
+                      username={post.username}
+                      name={post.name}
+                      caption={post.caption}
+                      imgUrl={post.imgUrl}
+                      time={post.time}
+                      postid={post.id}
+                    />
+                  ))}
+                </>
+              )}
+              
 
               {/*********Display  Followers************ */}
               {value === 'Followers' && <p>Followers tab</p>}
