@@ -21,6 +21,7 @@ function UserProfile () {
   //Global
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
+  const [Likedposts, setLikedPost] = useState([])
 
   //Get clicked post id
   const location = useLocation()
@@ -102,6 +103,29 @@ function UserProfile () {
       setPost(PostsArr.reverse())
     }
   }, [currentUser, postRef, setPost])
+
+  //-----  fetch posts liked by user 
+
+  const LikedRef = ref(database, `userLikes/${postUserId}/posts`)
+
+  useEffect(() => {
+    
+    if (currentUser !== null) {
+      const LikedPostsArr = []
+
+      onValue(LikedRef, Datasnapshot => {
+        Datasnapshot.forEach(child => {
+          const LikedPosts_data = child.key
+            LikedPostsArr.push(LikedPosts_data) 
+        })
+      })
+      console.log("hey array of liked posts: ", LikedPostsArr)
+      setLikedPost(Likedposts.reverse())
+
+    }
+  }, [currentUser, LikedRef, setLikedPost])
+
+// ----------------------------- end of posts liked by user
 
   //followers + following
   //get reference to users that the current user is following
