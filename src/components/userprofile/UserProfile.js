@@ -17,6 +17,7 @@ import EditProfileModal from './EditProfileModal'
 import Post from '../newsfeed/Posts'
 import { Tabs, Tab } from '@mui/material'
 import axios from 'axios'
+import ProfilePicture from './ProfilePicture'
 
 function UserProfile () {
 
@@ -70,7 +71,7 @@ function UserProfile () {
   //Find anither way to reoplace this code
   let userData
 
-  const [profileInitals, setProfileInitals] = useState('')
+  const [userDetails, setUserDetails] = useState({})
 
   if (currentUser !== null) {
     //Current user reference
@@ -86,11 +87,16 @@ function UserProfile () {
   useEffect(()=>{
     console.log("user posts")
     axios.get(USER_POST_URL).then((response)=>{
-      setProfileInitals(response.data.firstname)
+      setUserDetails(response.data.firstname)
+      setUserDetails({...userDetails,
+        firstname : response.data.firstname,
+        lastname : response.data.lastName,
+        profilePicture :  response.data.profilePictureUrl
+      })
     }).catch(console.error)
 
     console.log("hi")
-  },[profileInitals])
+  },[userDetails])
 
   useEffect(() =>{
     console.log("axios start")
@@ -143,12 +149,12 @@ function UserProfile () {
           <div className='userProfile__header'>
             <div className='user_details_wrapper'>
               <div className='userProfile__displayPicture'>
-                <p className='displayPicture'>{profileInitals}</p>
+                {/*<p className='displayPicture'>{userDetails}</p>*/}
               </div>
 
               <div className='userProfile__userDetails'>
                 <h2>
-                  {profileInitals}
+                  {userDetails.firstname} {userDetails.lastname}
                 </h2>
                 <p></p>
                 <div className='userProfile__Stats'>
@@ -177,7 +183,7 @@ function UserProfile () {
             {/* If this is the current user logged in show the edit button */}
 
             <div className='userProfile__editButton'>
-              {false ? (
+              {currentUser.uid === postUserId ? (
                 <ActionButton
                   text='Edit'
                   Icon={EditRoundedIcon}
