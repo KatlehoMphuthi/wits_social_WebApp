@@ -120,13 +120,15 @@ function UserProfile () {
         })
       })
       console.log("hey array of liked posts: ", LikedPostsArr)
-      setLikedPost(Likedposts.reverse())
+      setLikedPost(LikedPostsArr)
 
     }
+    
   }, [currentUser, LikedRef, setLikedPost])
 
 // ----------------------------- end of posts liked by user
 
+  console.log("size of likedPosts 2 : ", Likedposts.length)
   //followers + following
   //get reference to users that the current user is following
   let numOfFollowers = 0
@@ -136,13 +138,13 @@ function UserProfile () {
 
   onValue(followingRef, snapshot => {
     numOfFollowing = snapshot.size
-    console.log(numOfFollowing)
+    // console.log(numOfFollowing)
   })
 
   //followers
   onValue(followersRef, snapshot => {
     numOfFollowers = snapshot.size
-    console.log(numOfFollowers)
+    // console.log(numOfFollowers)
   })
 
   /*
