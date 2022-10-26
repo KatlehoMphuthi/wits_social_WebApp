@@ -30,6 +30,8 @@ function UserProfile () {
   //Global
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
+  const [Likedposts, setLikedPost] = useState([])
+  const [Final_Likedposts, setFinalLikedPost] = useState([])
 
   const [followers, setFollowers] = useState([])
 
@@ -145,7 +147,69 @@ function UserProfile () {
     console.log("axios done")
   },[])
 
-   
+
+  //-----  fetch posts liked by user 
+
+  const LikedRef = ref(database, `userLikes/${postUserId}/posts`)
+
+  useEffect(() => {
+    
+    if (currentUser !== null) {
+      const LikedPostsArr = []
+
+      onValue(LikedRef, Datasnapshot => {
+        Datasnapshot.forEach(child => {
+          const LikedPosts_data = child.key
+            LikedPostsArr.push(LikedPosts_data) 
+        })
+      })
+      console.log("hey array of liked posts: ", LikedPostsArr)
+      setLikedPost(LikedPostsArr)
+
+    }
+
+  }, [currentUser, LikedRef, setLikedPost])
+
+// ----------------------------- end of posts liked by user
+
+
+  console.log("size of likedPosts 2 : ", Likedposts)
+//========= now loop ID of user liked  posts, if ID found in posts then store in a array of liked posts========
+  const LikedpostRef = ref(database, 'posts/')
+
+  useEffect(() => {
+    let postInfo
+    if (currentUser !== null) {
+      const LikedPostsArr = []
+
+      onValue(LikedpostRef, Datasnapshot => {
+        Datasnapshot.forEach(child => {
+          const postdata = child.val()
+          const post = {
+            username: '',
+            caption: postdata.caption !== '' ? postdata.caption : postdata.text,
+            imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
+            name: getUsername(postdata.userId),
+            time: postdata.time,
+            id: postdata.postid
+          }
+
+          for (let i = 0; i < Likedposts.length; i++) {
+            if (Likedposts[i] == postdata.postid )
+            {
+              LikedPostsArr.push(post)
+            }
+          }
+
+        })
+      })
+
+      setFinalLikedPost(LikedPostsArr.reverse())
+    }
+  }, [currentUser, LikedpostRef, setFinalLikedPost])
+
+//====================================end of 
+
   //followers + following
   
   
@@ -194,8 +258,9 @@ function UserProfile () {
 
   onValue(followingRef, snapshot => {
     numOfFollowing = snapshot.size
+    // console.log(numOfFollowing)
 
-    //console.log(numOfFollowing)
+
 
   })
 
@@ -203,7 +268,7 @@ function UserProfile () {
   onValue(followersRef, snapshot => {
     numOfFollowers = snapshot.size
 
-    //console.log(numOfFollowers)
+    // console.log(numOfFollowers)
 
   })
 
@@ -322,12 +387,23 @@ function UserProfile () {
                */}
 
               {/*********Display Linked Posts************ */}
-              {value === 'Likes' && <p>Likes tab</p>}
+
+               {value === 'Likes'  && (
+                <>
+                  {Final_Likedposts.map(post => (
+                    <Post
+                      key={post.id}
+                      username={post.username}
+                      name={post.name}
+                      caption={post.caption}
+                      imgUrl={post.imgUrl}
+                      time={post.time}
+                      postid={post.id}
+                    />
+                  ))}
+                </>
+              )}
               
-
-
-
-
 
               {/*********Display  Followers************ */}
               {/* {value === 'Following' && <p>Followers tab</p>} */}
