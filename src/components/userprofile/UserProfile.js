@@ -57,6 +57,9 @@ function UserProfile () {
     }
   }, [])
 
+  //Profile picture
+  const [hasProfilePicture, setHasProfilePicture] = useState(false);
+
   /*
    *Edit Profile functionality
    */
@@ -71,7 +74,11 @@ function UserProfile () {
   //Find anither way to reoplace this code
   let userData
 
-  const [userDetails, setUserDetails] = useState({})
+  const [userDetails, setUserDetails] = useState({ firstname: "", lastname: "", profilePicture: ""})
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [bio, setBio] = useState('');
 
   if (currentUser !== null) {
     //Current user reference
@@ -85,18 +92,20 @@ function UserProfile () {
 
   const USER_POST_URL = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${postUserId}.json`
   useEffect(()=>{
-    console.log("user posts")
+    console.log("user posts start")
     axios.get(USER_POST_URL).then((response)=>{
-      setUserDetails(response.data.firstname)
-      setUserDetails({...userDetails,
-        firstname : response.data.firstname,
-        lastname : response.data.lastName,
-        profilePicture :  response.data.profilePictureUrl
-      })
+     
+    setFirstname(response.data.firstname)
+    setLastname(response.data.lastName)
+    setProfileImage(response.data.profilePictureUrl)
+    setBio(response.data.bio)
+
+    console.log("response : " , response.data.firstname)
     }).catch(console.error)
 
-    console.log("hi")
-  },[userDetails])
+    
+    //console.log("profile pic",userDetails.profilePicture, "Has Profile Picture ",hasProfilePicture )
+  },[firstname,lastname, profileImage, toggelEditProfile])
 
   useEffect(() =>{
     console.log("axios start")
@@ -106,8 +115,15 @@ function UserProfile () {
       console.log(posts)
     })
 
+    
     console.log("axios done")
   },[])
+
+/*
+  if(!(userDetails.profilePicture === "")){
+    setHasProfilePicture(prevState => !prevState)
+  }
+ */
 
   //followers + following
   //get reference to users that the current user is following
@@ -138,6 +154,7 @@ function UserProfile () {
   }
 
   //Add tabs code here
+  
 
   return (
     <div className='app-container'>
@@ -149,14 +166,14 @@ function UserProfile () {
           <div className='userProfile__header'>
             <div className='user_details_wrapper'>
               <div className='userProfile__displayPicture'>
-                {/*<p className='displayPicture'>{userDetails}</p>*/}
+                {!(profileImage === " ") ? <img alt='' src={profileImage} className="displayPicture__image"/> : <p className='displayPicture'> pp </p>}
               </div>
 
               <div className='userProfile__userDetails'>
                 <h2>
-                  {userDetails.firstname} {userDetails.lastname}
+                  {firstname} {lastname}
                 </h2>
-                <p></p>
+                <p>{bio}</p>
                 <div className='userProfile__Stats'>
                   <div className='stats'>
                     <h4>{posts.length}</h4>
@@ -216,7 +233,9 @@ function UserProfile () {
             <div className='layout__main'>
               {value === 'Posts' && (
                 <>
-                  {posts.map(post => (
+                  {
+                  posts.reverse()
+                  .map(post => (
                     <Post
                       key={post.postid}
                       username={post.username}
@@ -268,7 +287,10 @@ function UserProfile () {
           open={showEditProfileModal}
           onClose={toggelEditProfile}
           userId={postUserId}
-          bio=""
+          firstname={firstname}
+          lastname={lastname}
+          profilePictureUrl={profileImage}
+          bio={bio}
         />
       </div>
     </div>

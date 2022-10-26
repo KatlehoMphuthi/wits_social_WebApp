@@ -13,14 +13,14 @@ import { FirebaseError } from 'firebase/app';
 import { useAlert,positions,transitions } from 'react-alert';
 import ProfilePicture from './ProfilePicture';
 
-export default function EditProfileModal({open, onClose, firstname, lasttname, bio,userId}) {
+export default function EditProfileModal({open, onClose, firstname, lastname, bio,userId, profilePictureUrl}) {
  //   console.log("Modal Names", firstname,lasttname, bio )
     const {currentUser} = useContext(AuthContext);
 
     //check if the user has set a profile picture
    // let hasProfilePicture = false;
    const userRef = ref(database, 'users/' + userId);
-
+   const  alert2 = useAlert();
     //Profile picture States
     //const [file, setFile] = useState("");
     //const [hasProfilePicture, setHasProfilePicture] = useState(false); //Shoe and hide remove image cross
@@ -29,6 +29,7 @@ export default function EditProfileModal({open, onClose, firstname, lasttname, b
     //Profile Picture
     const [percent, setPercent] = useState(0)
     const uploadedImage= useRef(null);
+
     const imageUploader = useRef(null);
     const [imageFile, setImageFile] = useState("");
 
@@ -115,11 +116,12 @@ export default function EditProfileModal({open, onClose, firstname, lasttname, b
         });  
 
         console.log("isSubmitSuccessful : ", isSubmitSuccessful);
+        console.log("bio : ", data.bio);
 
         //Close the modal
         onClose()
 
-        alert.show("Profile Updated Successfully",{
+        alert2.show("Profile Updated Successfully",{
           type: 'success',
           position: 'bottom right',
           timeout: 2000,
@@ -171,8 +173,9 @@ if(!open) return null
               />
               <div
                 style={{
-                  height: "60px",
-                  width: "60px",
+                  height: "120px",
+                  width: "120px",
+                  borderRadius : "50%",
                   border: "1px dashed black"
                 }}
                 onClick={() => imageUploader.current.click()}
@@ -180,9 +183,11 @@ if(!open) return null
                 <img
                   alt =''
                   ref={uploadedImage}
+                  src = {!(profilePictureUrl === " ") ? profilePictureUrl : " "}
                   style={{
                     width: "100%",
                     height: "100%",
+                    borderRadius : "50%",
                     position: "acsolute"
                   }}
                 />
@@ -214,7 +219,7 @@ if(!open) return null
             <input
               placeholder='Last Name'
               type='text'
-              defaultValue={lasttname}
+              defaultValue={lastname}
               {...register('lastName', { required: true, maxLength: 10 })}
             />
           </Form.Field>

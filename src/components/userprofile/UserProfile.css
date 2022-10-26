@@ -105,6 +105,12 @@ margin-bottom: 0.5rem;
     background-color: blueviolet;
 }
 
+.displayPicture__image{
+    width: 150px !important;
+    height: 150px !important;
+    border-radius: 50%;
+}
+
 .userProfile__editButton{
     flex: 1;
 }
