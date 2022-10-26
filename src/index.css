@@ -3,7 +3,10 @@
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
 
-  color: rgba(255, 255, 255, 0.87);
+  /* background-color: rgb(228, 211, 211); */
+   --background: white;
+  --text-primary: black;
+
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -49,6 +52,8 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  /* background-color: rgb(231, 224, 224); */
+  background-color: var(--background);
 }
 
 /* A elements that don't have a class get default styles */
@@ -90,6 +95,7 @@ select {
 body {
   --twitter-color: #2185d0;
   --twitter-background: #e6ecf0;
+
 }
 
 .app {
@@ -99,6 +105,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding: 0 10px;
+  
 }
 
 .active{
@@ -123,9 +130,4 @@ body {
 h1 {
   font-size: 2em;
   line-height: 0.5;
-}
-
-
-body{
-  background-color: #F5F7F9;
 }

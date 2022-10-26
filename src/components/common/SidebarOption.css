@@ -14,6 +14,7 @@
   
   .sidebarOption > .MuiSvgIcon-root {
     margin-right: 1rem;
+    color: var(--twitter-color);
   }
   
   .sidebarOption > h2 {
@@ -21,6 +22,7 @@
     font-size: 20px;
     margin-right: 20px;
     margin-top: 0px;
+    color: var(--twitter-color);
   }
   
   .sidebarOption--active {
@@ -29,6 +31,6 @@
 
   .sidebarOption--backButton:hover{
     background-color:#F5F7F9 !important;
-    color: black !important;
+    color: rgb(184, 201, 218) !important;
     border-radius: 0;
   }

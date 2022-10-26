@@ -1,9 +1,24 @@
-.app-container{
+.app-container-dark{
   max-width: 1300px;
-  background-color: #F5F7F9;
+  background-color: #030303;
   margin: auto;
   height: 100vh;
   overflow-y: hidden;
+}
+
+.app-container{
+  max-width: 1300px;
+  background-color: #FFF;
+  margin: auto;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+[data-theme='dark'] {
+  --background: rgb(19, 14, 14);
+  --text-primary: white;
+  --text-secondary: grey;
+  --accent: darkred;
 }
 
 p{

@@ -9,10 +9,21 @@ import { AuthContext } from '../../AuthProvider'
 import SidebarMenu from '../common/SidebarMenu'
 import { database } from '../../firebase'
 import { onValue, ref } from 'firebase/database'
+import useLocalStorage from 'use-local-storage'
+
 
 function Newsfeed () {
   const  {currentUser}  = useContext(AuthContext)
   const [posts, setPost] = useState([])
+
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+
+  const switchTheme = () =>{
+    // const newTheme = theme === 'light' ? 'dark' : 'light';
+    const newTheme = theme === 'app-container' ? 'app-container-dark' : 'app-container';
+    setTheme(newTheme);
+  }
 
   const getUsername =(userId) =>{
     let userData;
@@ -61,11 +72,12 @@ function Newsfeed () {
 
   },[currentUser,postRef,setPost]);
 
-  
 
   return (
-    <div className='app-container'>
-      <Topbar className='navbar' />
+    <div className={theme}>
+      <button onClick={switchTheme}> 
+      Switch to {theme == 'app-container' ? 'Dark' :'Light'}</button> 
+      <Topbar className = 'navbar' />
 
       <div className='layout'>
           <SidebarMenu userid='kgotso'/>
