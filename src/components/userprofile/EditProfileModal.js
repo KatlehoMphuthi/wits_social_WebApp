@@ -12,7 +12,7 @@ import { FirebaseError } from 'firebase/app';
 import { useAlert,positions,transitions } from 'react-alert';
 
 export default function EditProfileModal({open, onClose, firstname, lasttname, bio,userId}) {
-    console.log("Modal Names", firstname,lasttname, bio )
+ //   console.log("Modal Names", firstname,lasttname, bio )
     const {currentUser} = useContext(AuthContext);
 
     //check if the user has set a profile picture
