@@ -58,6 +58,8 @@ function UserProfile () {
     }
   }, [])
 
+  const USER_POST_URL = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${postUserId}.json`;
+
   //Profile picture
   const [hasProfilePicture, setHasProfilePicture] = useState(false);
 
@@ -68,6 +70,9 @@ function UserProfile () {
   const [showEditProfileModal, setShowEditProfileModal] = useState(false)
   //Toggle edit profile modal
   const toggelEditProfile = () => {
+    axios.get(USER_POST_URL).then((response)=>{
+      setProfileImage(response.data.profilePictureUrl)
+    }).catch(console.error)
     setShowEditProfileModal(prevState => !prevState)
   }
 
@@ -92,15 +97,15 @@ function UserProfile () {
   }
   //===============================================================
 
-  const USER_POST_URL = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${postUserId}.json`
+
   useEffect(()=>{
     console.log("user posts start")
     axios.get(USER_POST_URL).then((response)=>{
      
-    setFirstname(response.data.firstname)
-    setLastname(response.data.lastName)
-    setProfileImage(response.data.profilePictureUrl)
-    setBio(response.data.bio)
+      setFirstname(response.data.firstname)
+      setLastname(response.data.lastName)
+      setProfileImage(response.data.profilePictureUrl)
+      setBio(response.data.bio)
 
     console.log("response : " , response.data.firstname)
     }).catch(console.error)
