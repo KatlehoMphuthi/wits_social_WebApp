@@ -28,7 +28,8 @@ function UserProfile () {
   //Global
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
-  const [postsTest, setPostTest] = useState(null)
+  const [postsTest, setPostTest] = useState([])
+  
 
   //Get clicked post id
   const location = useLocation()
@@ -79,6 +80,7 @@ function UserProfile () {
   const [lastname, setLastname] = useState('');
   const [profileImage, setProfileImage] = useState('');
   const [bio, setBio] = useState('');
+  const [initals, setInitals] = useState('')
 
   if (currentUser !== null) {
     //Current user reference
@@ -103,28 +105,44 @@ function UserProfile () {
     console.log("response : " , response.data.firstname)
     }).catch(console.error)
 
+
     
     //console.log("profile pic",userDetails.profilePicture, "Has Profile Picture ",hasProfilePicture )
-  },[firstname,lastname, profileImage, toggelEditProfile])
+  },[firstname,lastname, profileImage, showEditProfileModal])
+
+
+
+
 
   useEffect(() =>{
     console.log("axios start")
-    axios.get(POSTS_URL).then((response) =>{
-      console.log(response.data)
-      setPost(Object.values(response.data))
-      console.log(posts)
-    })
+    async function getPosts() {
+      try {
+        const response = await axios.get(POSTS_URL);
+        
+        let data = Object.values(response.data)
+        data.forEach(d=>{
+          if(d.userId === postUserId){
+            setPostTest(prevArray => [...prevArray, d])
+          }
+        
+     })
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
+    getPosts();
     
     console.log("axios done")
-  },[])
+  },[postUserId])
+
 
 /*
   if(!(userDetails.profilePicture === "")){
     setHasProfilePicture(prevState => !prevState)
   }
  */
-
   //followers + following
   //get reference to users that the current user is following
   let numOfFollowers = 0
@@ -166,7 +184,7 @@ function UserProfile () {
           <div className='userProfile__header'>
             <div className='user_details_wrapper'>
               <div className='userProfile__displayPicture'>
-                {!(profileImage === " ") ? <img alt='' src={profileImage} className="displayPicture__image"/> : <p className='displayPicture'> pp </p>}
+                {!(profileImage === " ") ? <img alt='' src={profileImage} className="displayPicture__image"/> : <p className='displayPicture'> {firstname[0]}{lastname[0]}</p>}
               </div>
 
               <div className='userProfile__userDetails'>
@@ -176,7 +194,7 @@ function UserProfile () {
                 <p>{bio}</p>
                 <div className='userProfile__Stats'>
                   <div className='stats'>
-                    <h4>{posts.length}</h4>
+                    <h4>{postsTest.length}</h4>
                     <p>Posts</p>
                   </div>
 
@@ -234,10 +252,10 @@ function UserProfile () {
               {value === 'Posts' && (
                 <>
                   {
-                  posts.reverse()
+                  postsTest.slice(0)
+                  .reverse()
                   .map(post => (
                     <Post
-                      key={post.postid}
                       username={post.username}
                       name={post.name}
                       caption={post.caption === '' ? post.text : post.caption }
@@ -245,7 +263,7 @@ function UserProfile () {
                       time={post.time}
                       postid={post.postid}
                     />
-                  ))}
+))}   
                 </>
               )}
 

@@ -67,6 +67,8 @@ export default function EditProfileModal({open, onClose, firstname, lastname, bi
 
 
       function updateProfilePicture(){
+
+        let result;
         const storageRef = Ref(storage,`/profile_images/${imageFile.name}`);
        // const storageRef = ref(storage, `/profile_images/${imageFile.name}`)
         const uploadTask = uploadBytesResumable(storageRef, imageFile);
@@ -88,17 +90,23 @@ export default function EditProfileModal({open, onClose, firstname, lastname, bi
               console.log(url)
 
               //add to user object
+              
               update(userRef,{
                 profilePictureUrl : url 
               });
 
+              //result = url;
+
             });
           }
         );
+
+        return result;
       }
 
 
       const onSubmit = data =>{
+       
         //get form from data and upload to firebase
 
         //only upload to firebase if a new file was added
@@ -112,7 +120,7 @@ export default function EditProfileModal({open, onClose, firstname, lastname, bi
         update(userRef,{
           firstname : data.firstName,
           lastName : data.lastName,
-          bio : data.bio
+          bio : data.bio,
         });  
 
         console.log("isSubmitSuccessful : ", isSubmitSuccessful);
