@@ -10,7 +10,7 @@ import UserProfile from "./components/userprofile/UserProfile";
 import Explore from "./components/explore/Explore";
 import SharedPost from "./components/newsfeed/SharedPost";
 import './index.css'
-import {useLocalStorage} from 'react-use-localstorage';
+import useLocalStorage from 'react-use-localstorage';
 
 //App components and paths
 function App() {
