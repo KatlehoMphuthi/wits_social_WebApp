@@ -1,11 +1,7 @@
 import React, { useEffect, useContext } from 'react'
-import { useParams } from 'react-router-dom'
 import SidebarMenu from '../common/SidebarMenu'
-import Topbar from '../common/Topbar'
 import UserTopbar from '../common/UserTopbar'
 import { useLocation } from 'react-router-dom'
-import { getUsername } from '../../firebase'
-import { getUserId } from '../../firebase'
 import { useState } from 'react'
 import { database } from '../../firebase'
 import { onValue, ref, query, update } from 'firebase/database'
@@ -18,6 +14,8 @@ import Post from '../newsfeed/Posts'
 import { Tabs, Tab } from '@mui/material'
 import axios from 'axios'
 import ProfilePicture from './ProfilePicture'
+import Followers from './Followers'
+import '../newsfeed/Newsfeed.css'
 
 function UserProfile ({theme}) {
 
@@ -29,34 +27,30 @@ function UserProfile ({theme}) {
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
   const [postsTest, setPostTest] = useState([])
+  const [Final_Likedposts, setFinalLikedPost] = useState([]) // Liked posts of the user 
+  const [followers, setFollowers] = useState([]) // followers
+  const [following, setFollowing] = useState([]) // user following
+  const [postUserId, setPostUserId] = useState('') // the user's id
   
-
   //Get clicked post id
   const location = useLocation()
   const postId = location.state.clickedpost
-  const [postUserId, setPostUserId] = useState('')
+  const userPath = location.pathname
+  let user = userPath.split('/')
+  let userInfo = JSON.parse(localStorage.getItem('user'))
 
   //To get user id of the clicked post
   useEffect(() => {
     if (location.state.from === 'topbar' || location.state.from === 'menu') {
-      setPostUserId(currentUser.uid)
+      if(currentUser){
+        setPostUserId(currentUser.uid)
+      }
     } else if (location.state.from === 'search') {
       setPostUserId(postId)
     } else {
-      let data
-
-      //Clicked post reference
-      const postRef = ref(database, `posts/${postId}/userId`)
-
-      //get clicked post data -> userid
-      onValue(postRef, snapshot => {
-        data = snapshot.val()
-
-        //Update user id variable to be used to get user details
-        setPostUserId(data)
-      })
+      setPostUserId(user[1])
     }
-  }, [])
+  }, [location.state.from,postId,user,currentUser])
 
   const USER_POST_URL = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${postUserId}.json`;
 
@@ -86,6 +80,7 @@ function UserProfile ({theme}) {
   const [profileImage, setProfileImage] = useState('');
   const [bio, setBio] = useState('');
   const [initals, setInitals] = useState('')
+  const [id, setId]= useState('')
 
   if (currentUser !== null) {
     //Current user reference
@@ -139,6 +134,7 @@ function UserProfile ({theme}) {
       setLastname(response.data.lastName)
       setProfileImage(response.data.profilePictureUrl)
       setBio(response.data.bio)
+      setId(response.data.userid)
 
     console.log("from actual : " ,profileImage)
     }).catch(console.error)
@@ -146,14 +142,14 @@ function UserProfile ({theme}) {
 
     
     //console.log("profile pic",userDetails.profilePicture, "Has Profile Picture ",hasProfilePicture )
-  },[firstname,lastname, profileImage, showEditProfileModal])
+  },[firstname,lastname, profileImage, showEditProfileModal,USER_POST_URL])
 
 
 
 
 
   useEffect(() =>{
-    console.log("axios start")
+    /* console.log("axios start")
     async function getPosts() {
       try {
         const response = await axios.get(POSTS_URL);
@@ -175,7 +171,18 @@ function UserProfile ({theme}) {
 
     getPosts();
     
-    console.log("axios done")
+    console.log("axios done") */
+    axios.get(POSTS_URL).then((response) =>{
+      let postsA = Object.values(response.data)
+      let postsB = []
+
+      for(let i = 0; i < postsA.length; i++){
+        if(postsA[i].userId === postUserId){
+          postsB.push(postsA[i]);
+        }
+      }
+      setPost(postsB.reverse())
+    })
   },[postUserId])
 
 
@@ -184,6 +191,41 @@ function UserProfile ({theme}) {
     setHasProfilePicture(prevState => !prevState)
   }
  */
+
+  //-----  fetch posts liked by user 
+
+ const LikedRef = ref(database, `userLikes/${postUserId}/posts`)
+ //get the number of likes the user made 
+ let numofLikes = 0
+  onValue(LikedRef, snapshot => {
+    numofLikes = snapshot.size
+  })
+ const LikeUrl = `https://sdpwits-social-default-rtdb.firebaseio.com/userLikes/${postUserId}/posts.json`
+ 
+
+  useEffect(() => {
+    axios.get(LikeUrl).then((response) =>{
+      if(response.data !== null){
+        let likes = Object.keys(response.data);
+        let likes_arr = [];
+        likes.forEach((key) =>{
+          const singlePost = `https://sdpwits-social-default-rtdb.firebaseio.com/posts/${key}.json`
+          axios.get(singlePost).then((res) =>{
+            likes_arr.push(res.data);
+          })
+        })
+        console.log(likes_arr);
+        setFinalLikedPost(likes_arr.reverse())
+        
+      }
+      else{
+        console.log("User has no liked posts")
+      }
+      
+    })
+
+
+  }, [LikeUrl])
   //followers + following
   //get reference to users that the current user is following
   let numOfFollowers = 0
@@ -201,6 +243,63 @@ function UserProfile ({theme}) {
     numOfFollowers = snapshot.size
    // console.log(numOfFollowers)
   })
+
+  const followers_url = `https://sdpwits-social-default-rtdb.firebaseio.com/follow/${postUserId}.json`
+  // fetcht the followers and following
+   useEffect(() =>{
+    const getFollowers = (data) =>{
+      let followersA = data
+      let followersB = []
+      
+      followersA.forEach((key) =>{
+        const user = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${key}.json`
+        axios.get(user).then((res) =>{
+          followersB.push(res.data)
+        })
+      })
+  
+      setFollowers(followersB)
+    }
+
+    const getFollowing = (data) =>{
+      let followersA = data
+      let followersB = []
+
+      followersA.forEach((key) =>{
+        const user = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${key}.json`
+        axios.get(user).then((res) =>{
+          followersB.push(res.data)
+        })
+      })
+  
+      setFollowing(followersB)
+    }
+    
+    
+    axios.get(followers_url).then((response) =>{
+      if(response.data !== null){
+        const state = Object.keys(response.data)
+        if(state.length === 1){
+          if(state[0] === "followers"){
+            getFollowers(Object.keys(response.data.following))
+          }
+          if (state[0] === "following"){
+            getFollowing(Object.keys(response.data.following))
+          }
+        } else if(state.length === 2){
+            
+            getFollowers(Object.keys(response.data.followers))
+            getFollowing(Object.keys(response.data.following))
+        }else{
+          console.log("An error has occurred")
+        } 
+      }else{
+        console.log("This user has no followers or is not following anyone");
+      }
+      
+    })
+
+  },[followers_url]);
 
   /*
    *User Profile Tabs functionality
@@ -238,12 +337,12 @@ function UserProfile ({theme}) {
 
                 <div className='userProfile__Stats'>    
                   <div className='stats'>
-                    <h4>{postsTest.length}</h4>
+                    <h4>{posts.length}</h4>
                     <p>Posts</p>
                   </div>
 
                   <div className='stats'>
-                    <h4>{posts.length}</h4>
+                    <h4>{Final_Likedposts.length}</h4>
                     <p>Likes</p>
                   </div>
 
@@ -253,7 +352,7 @@ function UserProfile ({theme}) {
                   </div>
 
                   <div className='stats'>
-                    <h4>{numOfFollowers}</h4>
+                    <h4>{numOfFollowing}</h4>
                     <p>Following</p>
           </div>
                 </div>
@@ -262,7 +361,7 @@ function UserProfile ({theme}) {
             {/* If this is the current user logged in show the edit button */}
 
             <div className='userProfile__editButton'>
-              {currentUser.uid === postUserId ? (
+              {id === postUserId ? (
                 <ActionButton
                   text='Edit'
                   Icon={EditRoundedIcon}
@@ -300,7 +399,7 @@ function UserProfile ({theme}) {
               {value === 'Posts' && (
                 <>
                   {
-                  postsTest.slice(0)
+                  posts.slice(0)
                   .reverse()
                   .map(post => (
                     <Post
@@ -327,14 +426,40 @@ function UserProfile ({theme}) {
                */}
 
               {/*********Display Linked Posts************ */}
-              {value === 'Likes' && <p>Likes tab</p>}
+              {value === 'Likes' && ( numofLikes !== 0 ?
+                <>
+                  {Final_Likedposts.map(post => (
+                    <Post
+                      key={post.id}
+                      username={post.username}
+                      name={post.name}
+                      caption={post.caption === '' ? post.text : post.caption }
+                      imgUrl={post.imageUrl}
+                      time={post.time}
+                      postid={post.id}
+                      userid = {post.userId}
+                      profilePictureUrl = {profileImage}
+                    />
+                  ))}
+                </>: <p> Users has no Likes </p>
+              )}
 
 
 
 
 
               {/*********Display  Followers************ */}
-              {value === 'Followers' && <p>Followers tab</p>}
+              {value === 'Followers' && ( numOfFollowers !== 0 ?
+                <>
+                  {followers.map(follow => (
+                    <Followers
+                      fname = {follow.firstname}
+                      lname = {follow.lastName}
+                      propic = {follow.profilePictureUrl === undefined ? "":follow.profilePictureUrl}
+                    />
+                  ))}
+                </>: <p>User has no followers</p>)
+              }
 
 
 
@@ -343,7 +468,16 @@ function UserProfile ({theme}) {
 
 
               {/*********Display  Following************ */}
-              {value === 'Following' && <><p>Following tab</p></>}
+              {value === 'Following' && (numOfFollowing !== 0 ? 
+                <>
+                  {following.map(follow => (
+                    <Followers
+                      fname = {follow.firstname}
+                      lname = {follow.lastName}
+                      propic = {follow.profilePictureUrl === undefined ? "":follow.profilePictureUrl}
+                    />
+                  ))}
+                </>: <p>User is currently following no one</p>) }
 
 
             </div>

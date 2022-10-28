@@ -33,7 +33,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { FacebookShareButton, WhatsappShareButton, TwitterShareButton,
            } from 'react-share';
 
-function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePicture, profilePictureUrl }) {
+function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePicture, profilePictureUrl, userid }) {
 
     //===================
 
@@ -219,7 +219,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePictu
     } else {
       setTime(Math.floor(timePosted / DAY_MILLIS) + ' days ago')
     }
-  }, [timeCreated])
+  }, [time,MINUTE_MILLIS,DAY_MILLIS,HOUR_MILLIS])
 
   //Get id of a clicked post
   useEffect(() => {
@@ -251,7 +251,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePictu
       setComments(CommentsArr.reverse())
       
     }
-  }, [showCommentBox]);
+  }, [showCommentBox,postid]);
 
 
   useEffect(() =>{
@@ -294,7 +294,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePictu
       },{onlyOnce:true});
 
     }
-  },[liked,clicked,likeActiveColor,likeColor,currentUser]);
+  },[currentUser]);
 
 
 
@@ -302,15 +302,14 @@ function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePictu
   return (
     <div className='tweet' data-testid="post">
       
-      <Link to={`/${name}`}>
+      <Link to={`/${userid}`}>
 
-      {!(profilePictureUrl == null) ?  <img alt =''
+      {profilePictureUrl !== undefined ?  <img alt =''
         className='tweet__author-logo'
         src={profilePictureUrl}
       /> :
-      
       <p className='tweet__author-logo_image'>
-        {!(name == null) ? name[0] : ''}
+        {name !== undefined ? name[0] : ''}
       </p>
       
       }
@@ -321,7 +320,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePictu
         <div className='tweet__header'>
           <div className='tweet__author-name'>{username}</div>
           <div className='tweet__author-slug'>
-            <Link to={`/${name}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
+            <Link to={`/${userid}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
             </div>
           <div className='tweet__publish-time'>{timeCreated}</div>
          
