@@ -217,6 +217,17 @@ align-items: center;
   font-size: 15px;
 }
 
+.who-to-follow__author-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
 .who-to-follow__author-name {
   font-size: 15px;
   font-weight: 700;

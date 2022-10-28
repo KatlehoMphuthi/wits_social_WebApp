@@ -17,6 +17,7 @@ function Newsfeed ({test}) {
   let change = test
 
   const  {currentUser}  = useContext(AuthContext)
+  const user = JSON.parse(localStorage.getItem('user'))
   const [posts, setPost] = useState([])
 
   const getUsername =(userId) =>{
@@ -46,7 +47,7 @@ function Newsfeed ({test}) {
       });
       }
 
-      console.log(profilePictureUrl)
+      //console.log(profilePictureUrl)
       return  profilePictureUrl;
       
   }
@@ -69,11 +70,9 @@ function Newsfeed ({test}) {
             name: getUsername(postdata.userId),
             time: postdata.time,
             id: postdata.postid,
-            profilePictureUrl : getProfilePictureUrl(postdata.userId)
+            profilePictureUrl : getProfilePictureUrl(postdata.userId),
+            userid: postdata.userId
           }
-
-          console.log('url :', post.profilePictureUrl)
-
           PostsArr.current.push(post)
         });
       });
@@ -103,6 +102,7 @@ function Newsfeed ({test}) {
               imgUrl={post.imgUrl}
               time={post.time}
               postid={post.id}
+              userid = {post.userid}
               profilePictureUrl={post.profilePictureUrl}
             />
           ))}
