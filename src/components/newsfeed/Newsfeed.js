@@ -88,7 +88,7 @@ function Newsfeed () {
       <div className='layout'>
           <SidebarMenu userid='kgotso'/>
         <div className='layout__main'>
-          <CreatePost />
+          <CreatePost username={getUsername(currentUser.uid)} profilePictureUrl={getProfilePictureUrl(currentUser.uid)} />
           {posts.map(post => (
             <Post
               key={post.id}
