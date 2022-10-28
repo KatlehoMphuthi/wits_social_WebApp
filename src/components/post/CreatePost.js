@@ -1,18 +1,17 @@
-import { toUnitless } from '@mui/material/styles/cssUtils';
 import React , {useState,useContext, useRef}from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import Explore from '../explore/Explore';
-import Button from '../common/Button';
+import Explore from '../explore/Explore.js';
+import Button from '../common/Button.js';
 import './CreatePost.css';
-import {AuthContext} from '../../AuthProvider';
-import {database,storage} from '../../firebase';
+import {AuthContext} from '../../AuthProvider.js';
+import {database,storage} from '../../firebase.js';
 import {set,ref, push, onValue} from 'firebase/database';
 import {getDownloadURL, ref as Ref,uploadBytesResumable } from 'firebase/storage';
 import { useAlert,positions,transitions } from 'react-alert';
-import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
+import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded.js';
 
 
-function CreatePost({username, profilePictureUrl}) {
+export default function CreatePost({username, profilePictureUrl}) {
 
   const {currentUser} = useContext(AuthContext); //get the current user.
    const [file, setFile] = useState("");
@@ -222,7 +221,6 @@ function CreatePost({username, profilePictureUrl}) {
 
         <div className='action_buttons'>
           <span className='action__buttons-add-image'>
-            <InsertPhotoRoundedIcon style={{color : '#2C76EE'}}/>
         <input className="custom-file-input" type='file' value="" title=" " accept='image/*' onChange={handleChange} />
         </span>
         <Button text='Post' color='#2C76EE' onClick={post} type='' />
@@ -237,4 +235,4 @@ function CreatePost({username, profilePictureUrl}) {
   )
 }
 
-export default CreatePost
+// export default CreatePost;

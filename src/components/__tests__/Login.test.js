@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import Login from "../authentication/Login";
+import Login from "../authentication/Login.js";
 import { AuthProvider} from "../../AuthProvider";
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from "react-alert-template-mui";

@@ -1,7 +1,7 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import Reset from "../authentication/Reset";
+import Reset from "../authentication/Reset.js";
 
 const mock = jest.fn((email ) =>{
     return Promise.resolve(email);

@@ -2,7 +2,7 @@ import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Register from "../authentication/Registration"
+import Register from "../authentication/Registration.js"
 
 const mockSignUp = jest.fn((firstName,lastName,email,password,confirm_password ) =>{
     return Promise.resolve(firstName,lastName,email,password,password,confirm_password);

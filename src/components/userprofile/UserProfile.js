@@ -1,20 +1,20 @@
 import React, { useEffect, useContext } from 'react'
-import SidebarMenu from '../common/SidebarMenu'
-import UserTopbar from '../common/UserTopbar'
+import SidebarMenu from '../common/SidebarMenu.js'
+import UserTopbar from '../common/UserTopbar.js'
 import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
-import { database } from '../../firebase'
+import { database } from '../../firebase.js'
 import { onValue, ref, query, update } from 'firebase/database'
-import { AuthContext } from '../../AuthProvider'
-import ActionButton from '../newsfeed/ActionButton'
-import EditRoundedIcon from '@mui/icons-material/EditRounded'
+import { AuthContext } from '../../AuthProvider.js'
+import ActionButton from '../newsfeed/ActionButton.js'
+import EditRoundedIcon from '@mui/icons-material/EditRounded.js'
 import './UserProfile.css'
-import EditProfileModal from './EditProfileModal'
-import Post from '../newsfeed/Posts'
+import EditProfileModal from './EditProfileModal.js'
+import Posts from '../newsfeed/Posts.js'
 import { Tabs, Tab } from '@mui/material'
 import axios from 'axios'
-import ProfilePicture from './ProfilePicture'
-import Followers from './Followers'
+import ProfilePicture from './ProfilePicture.js'
+import Followers from './Followers.js'
 import '../newsfeed/Newsfeed.css'
 
 function UserProfile ({theme}) {
@@ -396,7 +396,7 @@ function UserProfile ({theme}) {
                   posts.slice(0)
                   .reverse()
                   .map(post => (
-                    <Post
+                    <Posts
                       name={post.name}
                       caption={post.caption === '' ? post.text : post.caption }
                       imgUrl={post.imageUrl}
@@ -423,7 +423,7 @@ function UserProfile ({theme}) {
               {value === 'Likes' && ( numofLikes !== 0 ?
                 <>
                   {Final_Likedposts.map(post => (
-                    <Post
+                    <Posts
                       key={post.id}
                       username={post.username}
                       name={post.name}

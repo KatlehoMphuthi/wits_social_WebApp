@@ -1,11 +1,10 @@
 import "./topbar.css";
-import {database, readData} from "../../firebase"
+import {database, readData} from "../../firebase.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState, } from 'react';
 import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { AuthContext}  from "../../AuthProvider";
+import { AuthContext}  from "../../AuthProvider.js";
 import {onValue,ref, set } from "firebase/database";
 import { Link } from "react-router-dom";
 

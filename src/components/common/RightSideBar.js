@@ -1,5 +1,5 @@
 
-import Users_Rsidebar from "./Users_Rsidebar";
+import Users_Rsidebar from "./Users_Rsidebar.js";
 
 function RightSideBar(){
    

@@ -1,9 +1,9 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { waitFor,screen, fireEvent,act} from "@testing-library/react";
-import {AuthContext,AuthProvider} from "../../AuthProvider";
+import {AuthContext,AuthProvider} from "../../AuthProvider.js";
 import ReactDOM from 'react-dom/client';
-import SidebarMenu from "../common/SidebarMenu";
+import SidebarMenu from "../common/SidebarMenu.js";
 const Props = {
     currentUser:{
       "uid": "dSLFBHzO1ub2y08A6QJuwGmFHki2",

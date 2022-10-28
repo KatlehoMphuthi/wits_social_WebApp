@@ -1,13 +1,13 @@
 import React from 'react'
 import { useState, useContext, useEffect, useRef } from 'react'
-import Post from './Posts'
-import CreatePost from '../post/CreatePost'
+import Posts from './Posts.js'
+import CreatePost from '../post/CreatePost.js'
 import './Newsfeed.css'
-import Topbar from '../common/Topbar'
-import RightSideBar from '../common/RightSideBar'
-import { AuthContext } from '../../AuthProvider'
-import SidebarMenu from '../common/SidebarMenu'
-import { database } from '../../firebase'
+import Topbar from '../common/Topbar.js'
+import RightSideBar from '../common/RightSideBar.js'
+import { AuthContext } from '../../AuthProvider.js'
+import SidebarMenu from '../common/SidebarMenu.js'
+import { database } from '../../firebase.js'
 import { onValue, ref } from 'firebase/database'
 
 
@@ -101,7 +101,7 @@ function Newsfeed ({test}) {
         <div className='layout__main'>
           <CreatePost username={getUsername(userid)} profilePictureUrl={getProfilePictureUrl(userid)} />
           {posts.map(post => (
-            <Post
+            <Posts
               key={post.id}
               username={post.username}
               name={post.name}
@@ -120,4 +120,4 @@ function Newsfeed ({test}) {
   )
 }
 
-export default Newsfeed
+export default Newsfeed;

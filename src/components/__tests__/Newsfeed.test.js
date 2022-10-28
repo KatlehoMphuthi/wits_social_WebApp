@@ -2,10 +2,10 @@ import React from "react";
 import { useContext } from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { waitFor,screen, fireEvent,act} from "@testing-library/react";
-import {AuthContext,AuthProvider} from "../../AuthProvider";
+import {AuthContext} from "../../AuthProvider.js";
 import {  Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from "react-alert-template-mui";
-import Topbar from "../common/Topbar";
+import Topbar from "../common/Topbar.js";
 import ReactDOM from 'react-dom/client';
 import userEvent from "@testing-library/user-event";
 

@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from './components/authentication/Login';
-import Register from './components/authentication/Registration';
-import Reset from './components/authentication/Reset';
-import Newsfeed from './components/newsfeed/Newsfeed';
-import { AuthProvider } from "./AuthProvider";
-import About from "./components/about/About";
-import UserProfile from "./components/userprofile/UserProfile";
-import Explore from "./components/explore/Explore";
-import SharedPost from "./components/newsfeed/SharedPost";
+import Login from './components/authentication/Login.js';
+import Register from './components/authentication/Registration.js';
+import Reset from './components/authentication/Reset.js';
+import Newsfeed from './components/newsfeed/Newsfeed.js';
+import { AuthProvider } from "./AuthProvider.js";
+import About from "./components/about/About.js";
+import UserProfile from "./components/userprofile/UserProfile.js";
+import Explore from "./components/explore/Explore.js";
+import SharedPost from "./components/newsfeed/SharedPost.js";
 import './index.css'
 import useLocalStorage from 'react-use-localstorage';
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from 'semantic-ui-react';
 import { Link, useNavigate } from "react-router-dom";
-import { resetPass } from "../../firebase";
+import { resetPass } from "../../firebase.js";
 import './authentication.css'
 
 function Reset() {

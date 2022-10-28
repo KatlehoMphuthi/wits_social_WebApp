@@ -1,9 +1,9 @@
 import React,{useState,useContext,useEffect,useRef} from "react";
-import { followHelper,database} from "../../firebase";
+import { followHelper,database} from "../../firebase.js";
 import {onValue,ref } from "firebase/database";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser} from '@fortawesome/free-solid-svg-icons';
-import { AuthContext } from "../../AuthProvider";
+import { AuthContext } from "../../AuthProvider.js";
 
 
 export default function Users_Rsidebar(){

@@ -1,17 +1,17 @@
 import React , {useState, useRef, useContext} from 'react'
 import ReactDom from 'react-dom'
-import {database,storage} from '../../firebase';
+import {database,storage} from '../../firebase.js';
 import './EditProfileModal.css'
-import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded.js';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded.js';
 import { useForm } from 'react-hook-form'
-import {AuthContext} from '../../AuthProvider';
+import {AuthContext} from '../../AuthProvider.js';
 import { Form, Button } from 'semantic-ui-react'
 import {set,ref, push, onValue,child, update} from 'firebase/database';
 import {getDownloadURL, ref as Ref,uploadBytesResumable } from 'firebase/storage';
 import { FirebaseError } from 'firebase/app';
 import { useAlert,positions,transitions } from 'react-alert';
-import ProfilePicture from './ProfilePicture';
+import ProfilePicture from './ProfilePicture.js';
 
 export default function EditProfileModal({open, onClose, firstname, lastname, bio,userId, profilePictureUrl}) {
  //   console.log("Modal Names", firstname,lasttname, bio )

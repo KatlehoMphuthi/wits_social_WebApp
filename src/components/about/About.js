@@ -1,8 +1,8 @@
 import React from "react";
 import "./About.css";
-import Topbar from "../common/Topbar";
-import SidebarMenu from "../common/SidebarMenu";
-import RightSideBar from "../common/RightSideBar";
+import Topbar from "../common/Topbar.js";
+import SidebarMenu from "../common/SidebarMenu.js";
+import RightSideBar from "../common/RightSideBar.js";
 
 
 function About(){

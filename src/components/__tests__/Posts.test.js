@@ -1,14 +1,14 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { waitFor,screen, fireEvent,act} from "@testing-library/react";
-import {AuthContext,AuthProvider} from "../../AuthProvider";
+import {AuthContext} from "../../AuthProvider.js";
 import { Provider as AlertProvider } from 'react-alert';
 import * as Alert from 'react-alert';
 import ReactDOM from 'react-dom/client';
-import CreatePost from '../post/CreatePost'
+import CreatePost from '../post/CreatePost.js'
 import AlertTemplate from "react-alert-template-mui";
 import userEvent from "@testing-library/user-event"
-import Posts from "../newsfeed/Posts";
+import Posts from "../newsfeed/Posts.js";
 
 
 const Props = {

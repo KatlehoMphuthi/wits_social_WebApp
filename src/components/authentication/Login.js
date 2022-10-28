@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
 import { useAlert } from 'react-alert'
-import {AuthContext} from '../../AuthProvider'
+import {AuthContext} from '../../AuthProvider.js'
 import './authentication.css'
 
 export default function Login () {

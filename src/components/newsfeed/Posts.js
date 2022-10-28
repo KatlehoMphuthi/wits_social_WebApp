@@ -5,28 +5,28 @@ import React, { useEffect, useState, useContext ,useRef} from 'react'
 
 import './likestyle.scss'
 //Authprovider import
-import { AuthContext } from '../../AuthProvider'
+import { AuthContext } from '../../AuthProvider.js'
 
 //navigation import
 import { Link } from "react-router-dom";
 // import Explore from '../components/newsfeed'
-import Button from '../common/Button'
+import Button from '../common/Button.js'
 //Firebase imports
-import { database } from '../../firebase'
+import { database } from '../../firebase.js'
 
 //comment import
-import { set, ref, push, onValue, DataSnapshot } from 'firebase/database'
+import { set, ref, push, onValue} from 'firebase/database'
 
-import Comment from './Comment'
+import Comment from './Comment.js'
 
 //style and functionality of the button
-import ActionButton from './ActionButton' 
-import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
-import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import FacebookIcon from '@mui/icons-material/Facebook';
+import ActionButton from './ActionButton.js' 
+import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded.js';
+import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded.js';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded.js';
+import TwitterIcon from '@mui/icons-material/Twitter.js';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp.js';
+import FacebookIcon from '@mui/icons-material/Facebook.js';
 
 //FacebookIcon,TwitterIcon,WhatsappIcon
 //Share buttons

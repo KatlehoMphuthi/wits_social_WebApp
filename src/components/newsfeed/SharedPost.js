@@ -6,9 +6,9 @@ import { useEffect,useState } from "react";
 
 //navigation imports
 import { useLocation } from "react-router-dom";
-import { database } from "../../firebase";
+import { database } from "../../firebase.js";
 //topbare
-import SharedTopBar from "./SharedTopBar";
+import SharedTopBar from "./SharedTopBar.js";
 import './Post.css';
 
 function SharedPost(){
