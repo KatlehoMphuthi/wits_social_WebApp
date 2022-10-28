@@ -10,7 +10,12 @@ import SidebarMenu from '../common/SidebarMenu'
 import { database } from '../../firebase'
 import { onValue, ref } from 'firebase/database'
 
-function Newsfeed () {
+
+function Newsfeed ({test}) {
+ 
+
+  let change = test
+
   const  {currentUser}  = useContext(AuthContext)
   const [posts, setPost] = useState([])
 
@@ -29,7 +34,24 @@ function Newsfeed () {
       return  userData;
   }
 
-  
+  const getProfilePictureUrl =(userId) =>{
+    let profilePictureUrl;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        const name = snapshot.val();
+        profilePictureUrl=name.profilePictureUrl;
+      });
+      }
+
+      console.log(profilePictureUrl)
+      return  profilePictureUrl;
+      
+  }
+
+
   const PostsArr = useRef([]);
     //const PostsArr = useRef([]); // create an empty array to store the posts in
     const postRef = ref(database, 'posts/') 
@@ -47,10 +69,10 @@ function Newsfeed () {
             name: getUsername(postdata.userId),
             time: postdata.time,
             id: postdata.postid,
-            userid: postdata.userId
+            profilePictureUrl : getProfilePictureUrl(postdata.userId)
           }
 
-          //console.log('username :', getUsername(postdata.userId))
+          console.log('url :', post.profilePictureUrl)
 
           PostsArr.current.push(post)
         });
@@ -65,13 +87,13 @@ function Newsfeed () {
   
 
   return (
-    <div className='app-container'>
+    <div className='app-container' >
       <Topbar className='navbar' />
 
       <div className='layout'>
-          <SidebarMenu userid='kgotso'/>
+          <SidebarMenu userid='kgotso' change={change}/>
         <div className='layout__main'>
-          <CreatePost />
+          <CreatePost username={getUsername(currentUser.uid)} profilePictureUrl={getProfilePictureUrl(currentUser.uid)} />
           {posts.map(post => (
             <Post
               key={post.id}
@@ -81,7 +103,7 @@ function Newsfeed () {
               imgUrl={post.imgUrl}
               time={post.time}
               postid={post.id}
-              userid = {post.userid}
+              profilePictureUrl={post.profilePictureUrl}
             />
           ))}
         </div>

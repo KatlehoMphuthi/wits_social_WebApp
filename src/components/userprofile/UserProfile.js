@@ -1,58 +1,68 @@
-//import react and important libraries
 import React, { useEffect, useContext } from 'react'
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import axios from 'axios'
-
-//import important components
+import { useParams } from 'react-router-dom'
 import SidebarMenu from '../common/SidebarMenu'
+import Topbar from '../common/Topbar'
 import UserTopbar from '../common/UserTopbar'
+import { useLocation } from 'react-router-dom'
+import { getUsername } from '../../firebase'
+import { getUserId } from '../../firebase'
+import { useState } from 'react'
+import { database } from '../../firebase'
+import { onValue, ref, query, update } from 'firebase/database'
+import { AuthContext } from '../../AuthProvider'
+import ActionButton from '../newsfeed/ActionButton'
+import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import './UserProfile.css'
 import EditProfileModal from './EditProfileModal'
 import Post from '../newsfeed/Posts'
-import Followers from './Followers'
-import '../newsfeed/Newsfeed.css'
-
-//import necessary functions from backend and firebase
-import { database } from '../../firebase'
-import { onValue, ref} from 'firebase/database'
-import { AuthContext } from '../../AuthProvider'
-
-//import icons for UIX 
-import ActionButton from '../newsfeed/ActionButton'
-import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import { Tabs, Tab } from '@mui/material'
+import axios from 'axios'
+import ProfilePicture from './ProfilePicture'
 
-function UserProfile () {
+function UserProfile ({theme}) {
+
+  const POSTS_URL = "https://sdpwits-social-default-rtdb.firebaseio.com/posts.json"
+  
+
 
   //Global
   const { currentUser } = useContext(AuthContext) //get the current user.
-  const [posts, setPost] = useState([]) // user's posts
-  const [Final_Likedposts, setFinalLikedPost] = useState([]) // Liked posts of the user 
-  const [followers, setFollowers] = useState([]) // followers
-  const [following, setFollowing] = useState([]) // user following
-  const [postUserId, setPostUserId] = useState('') // the user's id
+  const [posts, setPost] = useState([])
+  const [postsTest, setPostTest] = useState([])
   
+
   //Get clicked post id
   const location = useLocation()
   const postId = location.state.clickedpost
-  const userPath = location.pathname
-  let user = userPath.split('/')
-  let userInfo = JSON.parse(localStorage.getItem('user'))
-
+  const [postUserId, setPostUserId] = useState('')
 
   //To get user id of the clicked post
   useEffect(() => {
     if (location.state.from === 'topbar' || location.state.from === 'menu') {
-      setPostUserId(userInfo.uid)
+      setPostUserId(currentUser.uid)
     } else if (location.state.from === 'search') {
       setPostUserId(postId)
     } else {
-      
-      setPostUserId(user[1]);
+      let data
+
+      //Clicked post reference
+      const postRef = ref(database, `posts/${postId}/userId`)
+
+      //get clicked post data -> userid
+      onValue(postRef, snapshot => {
+        data = snapshot.val()
+
+        //Update user id variable to be used to get user details
+        setPostUserId(data)
+      })
     }
-  }, [location.state.from,postId,user,userInfo.uid])
-  
+  }, [])
+
+  const USER_POST_URL = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${postUserId}.json`;
+
+  //Profile picture
+  const [hasProfilePicture, setHasProfilePicture] = useState(false);
+
   /*
    *Edit Profile functionality
    */
@@ -60,6 +70,9 @@ function UserProfile () {
   const [showEditProfileModal, setShowEditProfileModal] = useState(false)
   //Toggle edit profile modal
   const toggelEditProfile = () => {
+    axios.get(USER_POST_URL).then((response)=>{
+      setProfileImage(response.data.profilePictureUrl)
+    }).catch(console.error)
     setShowEditProfileModal(prevState => !prevState)
   }
 
@@ -67,7 +80,12 @@ function UserProfile () {
   //Find anither way to reoplace this code
   let userData
 
-  const [profileInitals, setProfileInitals] = useState('')
+  const [userDetails, setUserDetails] = useState({ firstname: "", lastname: "", profilePicture: ""})
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [profileImage, setProfileImage] = useState('');
+  const [bio, setBio] = useState('');
+  const [initals, setInitals] = useState('')
 
   if (currentUser !== null) {
     //Current user reference
@@ -75,155 +93,114 @@ function UserProfile () {
 
     onValue(userRef, snapshot => {
       userData = snapshot.val()
-
-      //console.log(userData.firstname, userData.lastName)
-
     })
   }
   //===============================================================
- 
 
-  const USER_POST_URL = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${postUserId}.json`
+  const getUsername =(userId) =>{
+    let userData;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        const name = snapshot.val();
+        userData=name.firstname;
+      });
+      }
+
+      return  userData;
+  }
+
+
+  const getProfilePictureUrl =(userId) =>{
+    let profilePictureUrl;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        const name = snapshot.val();
+        profilePictureUrl=name.profilePictureUrl;
+      });
+      }
+
+      console.log(profilePictureUrl)
+      return  profilePictureUrl;
+  }
+
+
+
   useEffect(()=>{
-    //console.log("user posts")
+    console.log("user posts start")
     axios.get(USER_POST_URL).then((response)=>{
-      setProfileInitals(response.data.firstname)
+     
+      setFirstname(response.data.firstname)
+      setLastname(response.data.lastName)
+      setProfileImage(response.data.profilePictureUrl)
+      setBio(response.data.bio)
+
+    console.log("from actual : " ,profileImage)
     }).catch(console.error)
 
-    //console.log("hi")
-  },[USER_POST_URL])
 
-  // fetch users posts
-  const POSTS_URL = "https://sdpwits-social-default-rtdb.firebaseio.com/posts.json"
+    
+    //console.log("profile pic",userDetails.profilePicture, "Has Profile Picture ",hasProfilePicture )
+  },[firstname,lastname, profileImage, showEditProfileModal])
+
+
+
+
+
   useEffect(() =>{
-
-    axios.get(POSTS_URL).then((response) =>{
-      let postsA = Object.values(response.data)
-      let postsB = []
-
-      for(let i = 0; i < postsA.length; i++){
-        if(postsA[i].userId === postUserId){
-          postsB.push(postsA[i]);
-        }
+    console.log("axios start")
+    async function getPosts() {
+      try {
+        const response = await axios.get(POSTS_URL);
+        
+        let data = Object.values(response.data)
+        data.forEach(d=>{
+          if(d.userId === postUserId){
+            d.name = getUsername(postUserId)
+            d.profilePictureUrl = getProfilePictureUrl(postUserId)
+            console.log( d.profilePictureUrl);
+            setPostTest(prevArray => [...prevArray, d])
+          }
+        
+     })
+      } catch (error) {
+        console.error(error);
       }
-      setPost(postsB.reverse())
-    })
+    }
+
+    getPosts();
+    
+    console.log("axios done")
   },[postUserId])
 
 
-  //-----  fetch posts liked by user 
-
- const LikedRef = ref(database, `userLikes/${postUserId}/posts`)
- //get the number of likes the user made 
- let numofLikes = 0
-  onValue(LikedRef, snapshot => {
-    numofLikes = snapshot.size
-  })
- const LikeUrl = `https://sdpwits-social-default-rtdb.firebaseio.com/userLikes/${postUserId}/posts.json`
- 
-
-  useEffect(() => {
-    axios.get(LikeUrl).then((response) =>{
-      if(response.data !== null){
-        let likes = Object.keys(response.data);
-        let likes_arr = [];
-        likes.forEach((key) =>{
-          const singlePost = `https://sdpwits-social-default-rtdb.firebaseio.com/posts/${key}.json`
-          axios.get(singlePost).then((res) =>{
-            likes_arr.push(res.data);
-          })
-        })
-        console.log(likes_arr);
-        setFinalLikedPost(likes_arr)
-        
-      }
-      else{
-        console.log("User has no liked posts")
-      }
-      
-    })
-
-
-  }, [LikeUrl])
-
-//====================================end of 
-
+/*
+  if(!(userDetails.profilePicture === "")){
+    setHasProfilePicture(prevState => !prevState)
+  }
+ */
   //followers + following
-
   //get reference to users that the current user is following
   let numOfFollowers = 0
   let numOfFollowing = 0
   const followingRef = ref(database, 'follow/' + postUserId + '/following')
   const followersRef = ref(database, 'follow/' + postUserId + '/followers')
 
-  //get the number of following
   onValue(followingRef, snapshot => {
     numOfFollowing = snapshot.size
+  //  console.log(numOfFollowing)
   })
 
-  // get the number of followers
+  //followers
   onValue(followersRef, snapshot => {
     numOfFollowers = snapshot.size
+   // console.log(numOfFollowers)
   })
-
-  const followers_url = `https://sdpwits-social-default-rtdb.firebaseio.com/follow/${postUserId}.json`
-  // fetcht the followers and following
-   useEffect(() =>{
-    const getFollowers = (data) =>{
-      let followersA = data
-      let followersB = []
-      
-      followersA.forEach((key) =>{
-        const user = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${key}.json`
-        axios.get(user).then((res) =>{
-          followersB.push(res.data)
-        })
-      })
-  
-      setFollowers(followersB)
-    }
-
-    const getFollowing = (data) =>{
-      let followersA = data
-      let followersB = []
-
-      followersA.forEach((key) =>{
-        const user = `https://sdpwits-social-default-rtdb.firebaseio.com/users/${key}.json`
-        axios.get(user).then((res) =>{
-          followersB.push(res.data)
-        })
-      })
-  
-      setFollowing(followersB)
-    }
-    
-    
-    axios.get(followers_url).then((response) =>{
-      if(response.data !== null){
-        const state = Object.keys(response.data)
-        if(state.length === 1){
-          if(state[0] === "followers"){
-            getFollowers(Object.keys(response.data.following))
-          }
-          if (state[0] === "following"){
-            getFollowing(Object.keys(response.data.following))
-          }
-        } else if(state.length === 2){
-            
-            getFollowers(Object.keys(response.data.followers))
-            getFollowing(Object.keys(response.data.following))
-        }else{
-          console.log("An error has occurred")
-        } 
-      }else{
-        console.log("This user has no followers or is not following anyone");
-      }
-      
-    })
-
-  },[followers_url]);
- 
-  
 
   /*
    *User Profile Tabs functionality
@@ -236,6 +213,7 @@ function UserProfile () {
   }
 
   //Add tabs code here
+  
 
   return (
     <div className='app-container'>
@@ -247,22 +225,23 @@ function UserProfile () {
           <div className='userProfile__header'>
             <div className='user_details_wrapper'>
               <div className='userProfile__displayPicture'>
-                <p className='displayPicture'>{profileInitals}</p>
+                {console.log("inside render :" , profileImage)}
+                {!(profileImage == null) ? <img alt='' src={profileImage} className="displayPicture__image"/> : <p>{!(firstname == null) ? firstname.charAt(0) : null}</p> }
               </div>
 
               <div className='userProfile__userDetails'>
                 <h2>
-                  {profileInitals}
+                  {firstname} {lastname}
                 </h2>
-                <p></p>
+                <p>{bio}</p>
                 <div className='userProfile__Stats'>
                   <div className='stats'>
-                    <h4>{posts.length}</h4>
+                    <h4>{postsTest.length}</h4>
                     <p>Posts</p>
                   </div>
 
                   <div className='stats'>
-                    <h4>{numofLikes}</h4>
+                    <h4>{posts.length}</h4>
                     <p>Likes</p>
                   </div>
 
@@ -272,7 +251,7 @@ function UserProfile () {
                   </div>
 
                   <div className='stats'>
-                    <h4>{numOfFollowing}</h4>
+                    <h4>{numOfFollowers}</h4>
                     <p>Following</p>
                   </div>
                 </div>
@@ -281,7 +260,7 @@ function UserProfile () {
             {/* If this is the current user logged in show the edit button */}
 
             <div className='userProfile__editButton'>
-              { postUserId === userInfo.uid ? (
+              {currentUser.uid === postUserId ? (
                 <ActionButton
                   text='Edit'
                   Icon={EditRoundedIcon}
@@ -296,13 +275,13 @@ function UserProfile () {
           <Tabs
             value={value}
             onChange={handleChange}
-            textColor='secondary'
+            textColor= {theme === 'light' ? '#ffffff'  : '#000000'}
             indicatorColor='secondary'
             aria-label='secondary tabs example'
           >
             <Tab value='Posts' label='Posts' />
             <Tab value='Likes' label='Likes' />
-            <Tab value='Followers' label='Follow' />
+            <Tab value='Followers' label='Followers' />
             <Tab value='Following' label='Following' />
           </Tabs>
 
@@ -312,21 +291,22 @@ function UserProfile () {
 
           <div className='userProfile__posts'>
             <div className='layout__main'>
-              {value === 'Posts' && (posts.length !== 0 ?
+              {value === 'Posts' && (
                 <>
-                  {posts.map(post => (
+                  {
+                  postsTest.slice(0)
+                  .reverse()
+                  .map(post => (
                     <Post
-                      key={post.postid}
-                      username={post.username}
                       name={post.name}
                       caption={post.caption === '' ? post.text : post.caption }
                       imgUrl={post.imageUrl}
                       time={post.time}
                       postid={post.postid}
-                      userid = {post.userId}
+                      profilePictureUrl={post.profilePictureUrl}
                     />
-                  ))}
-                </>: <p> User has no posts</p>
+))}   
+                </>
               )}
 
 
@@ -341,52 +321,23 @@ function UserProfile () {
                */}
 
               {/*********Display Linked Posts************ */}
+              {value === 'Likes' && <p>Likes tab</p>}
 
-               {value === 'Likes'  &&  ( numofLikes !== 0 ?
-                <>
-                  {Final_Likedposts.map(post => (
-                    <Post
-                      key={post.id}
-                      username={post.username}
-                      name={post.name}
-                      caption={post.caption === '' ? post.text : post.caption }
-                      imgUrl={post.imageUrl}
-                      time={post.time}
-                      postid={post.id}
-                      userid = {post.userId}
-                    />
-                  ))}
-                </>: <p> Users has no Likes </p>
-              )}
-              
 
-              {/*********Display  Following************ */}
-              { value === 'Following' && (numOfFollowing !== 0 ? 
-                <>
-                  {following.map(follow => (
-                    <Followers
-                      fname = {follow.firstname}
-                      lname = {follow.lastName}
-                      propic = {follow.profilePictureUrl === undefined ? "":follow.profilePictureUrl}
-                    />
-                  ))}
-                </>: <p>User is currently following no one</p>) }
-           
 
 
 
               {/*********Display  Followers************ */}
-              {value === 'Followers' && ( numOfFollowers !== 0 ?
-                <>
-                  {followers.map(follow => (
-                    <Followers
-                      fname = {follow.firstname}
-                      lname = {follow.lastName}
-                      propic = {follow.profilePictureUrl === null ? "":follow.profilePictureUrl}
-                    />
-                  ))}
-                </>: <p>User has no followers</p>
-              )}
+              {value === 'Followers' && <p>Followers tab</p>}
+
+
+
+
+
+
+
+              {/*********Display  Following************ */}
+              {value === 'Following' && <><p>Following tab</p></>}
 
 
             </div>
@@ -396,7 +347,10 @@ function UserProfile () {
           open={showEditProfileModal}
           onClose={toggelEditProfile}
           userId={postUserId}
-          bio=""
+          firstname={firstname}
+          lastname={lastname}
+          profilePictureUrl={profileImage}
+          bio={bio}
         />
       </div>
     </div>
