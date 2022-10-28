@@ -212,9 +212,6 @@ align-items: center;
 .who-to-follow__block:last-child {
   border-bottom: none;
 }
-
-
-
 .who-to-follow__author-slug {
   color: var(--text-secondary);
   font-size: 15px;
