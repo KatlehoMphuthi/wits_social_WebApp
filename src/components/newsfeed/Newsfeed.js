@@ -19,7 +19,14 @@ function Newsfeed ({test}) {
   const  {currentUser}  = useContext(AuthContext)
   const user = JSON.parse(localStorage.getItem('user'))
   const [posts, setPost] = useState([])
-
+  let userid;
+  if(user !== null){
+    userid = user.uid
+  }else{
+    if(currentUser !== null){
+      userid = currentUser.uid
+    }
+  }
   const getUsername =(userId) =>{
     let userData;
     if (currentUser !== null) {
@@ -92,7 +99,7 @@ function Newsfeed ({test}) {
       <div className='layout'>
           <SidebarMenu userid='kgotso' change={change}/>
         <div className='layout__main'>
-          <CreatePost username={getUsername(currentUser.uid)} profilePictureUrl={getProfilePictureUrl(currentUser.uid)} />
+          <CreatePost username={getUsername(userid)} profilePictureUrl={getProfilePictureUrl(userid)} />
           {posts.map(post => (
             <Post
               key={post.id}
