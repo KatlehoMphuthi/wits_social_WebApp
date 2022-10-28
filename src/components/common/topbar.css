@@ -33,9 +33,9 @@
 
 .searchbar {
   width: 100%;
-  border-color: black;
+  border-color:var(--text-primary);
   border-radius: 8px;
-  background: #ECEEF2;
+  background: var(--accent-dark);
   display: flex;
   align-items: center;
   padding-left: 1 rem !important;
@@ -50,7 +50,7 @@
 .searchInput {
   border: none;
   width: 70%;
-  background: #ECEEF2;
+  background:var(--accent-dark);
   padding: 1rem;
 }
 
@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  color: black;
+  color: var(--text-primary);
 }
 
 .topbarLink {
@@ -118,7 +118,7 @@ font-style: normal;
 font-weight: 600;
 font-size: 16px;
 border-radius: 50%;
-color: white;
+color: var(--foreground);
 }
 
 .topbarCenter__backButton{
@@ -129,7 +129,7 @@ color: white;
   position: absolute;
   top: 3.8rem;
   width: 43%;
-  background-color: #ECEEF2;
+  background-color:var(--accent-dark);
   border-radius: 0 0 8px 8px;
 }
 
@@ -148,7 +148,7 @@ color: white;
 }
 
 .topbarCenter--userprofile:hover{
-  background-color: white !important;
+  background-color: var(--foreground) !important;
 }
 
 .topbarLinks{

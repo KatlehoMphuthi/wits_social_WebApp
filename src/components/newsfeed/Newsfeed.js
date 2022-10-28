@@ -10,7 +10,12 @@ import SidebarMenu from '../common/SidebarMenu'
 import { database } from '../../firebase'
 import { onValue, ref } from 'firebase/database'
 
-function Newsfeed () {
+
+function Newsfeed ({test}) {
+ 
+
+  let change = test
+
   const  {currentUser}  = useContext(AuthContext)
   const [posts, setPost] = useState([])
 
@@ -82,11 +87,11 @@ function Newsfeed () {
   
 
   return (
-    <div className='app-container'>
+    <div className='app-container' >
       <Topbar className='navbar' />
 
       <div className='layout'>
-          <SidebarMenu userid='kgotso'/>
+          <SidebarMenu userid='kgotso' change={change}/>
         <div className='layout__main'>
           <CreatePost username={getUsername(currentUser.uid)} profilePictureUrl={getProfilePictureUrl(currentUser.uid)} />
           {posts.map(post => (

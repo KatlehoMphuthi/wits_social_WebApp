@@ -32,7 +32,7 @@ line-height: 31px;
 
 letter-spacing: 0.650273px;
 
-color: #000000;
+color: var(--text-primary);
 }
 
 .userProfile__userDetails p{
@@ -45,7 +45,7 @@ line-height: 22px;
 
 letter-spacing: 0.650273px;
 
-color: rgba(0, 0, 0, 0.54);
+color:var(--text-secondary);
 }
 
 .userProfile__userDetails h2{
@@ -59,7 +59,7 @@ line-height: 31px;
 
 letter-spacing: 0.650273px;
 
-color: #000000;
+color: var(--text-primary);
 margin-bottom: 0.5rem;
 }
 
@@ -102,11 +102,11 @@ margin-bottom: 0.5rem;
     height: 150px !important;
     border-radius: 50%;
     margin-right: 1.5rem;
-    background-color: #1b94e0;
+    background-color:var(--accent);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: var(--foreground);
     font-family: 'Roboto';
 font-style: normal;
 font-weight: 700;

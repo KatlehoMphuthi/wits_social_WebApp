@@ -119,7 +119,7 @@ export default function Users_Rsidebar(){
     return(
      <div className="who-to-follow__block">
 
-            <div className="who-to-follow__author-logo">
+            <div>
 
             {!(profilePictureUrl == null) ?  <img alt =''
         className='tweet__author-logo'

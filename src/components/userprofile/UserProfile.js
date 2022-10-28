@@ -19,7 +19,7 @@ import { Tabs, Tab } from '@mui/material'
 import axios from 'axios'
 import ProfilePicture from './ProfilePicture'
 
-function UserProfile () {
+function UserProfile ({theme}) {
 
   const POSTS_URL = "https://sdpwits-social-default-rtdb.firebaseio.com/posts.json"
   
@@ -275,7 +275,7 @@ function UserProfile () {
           <Tabs
             value={value}
             onChange={handleChange}
-            textColor='secondary'
+            textColor= {theme === 'light' ? '#ffffff'  : '#000000'}
             indicatorColor='secondary'
             aria-label='secondary tabs example'
           >

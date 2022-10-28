@@ -53,7 +53,7 @@
 
 .ui.form > label {
   font-size: 12px;
-  color: gray;
+  color: var(--accent-dark);
 }
 
 /*-------------- SIGN IN & SIAN UP--------------------*/
