@@ -2,6 +2,7 @@
 import './Post.css'
 
 import React, { useEffect, useState, useContext ,useRef} from 'react'
+import axios from 'axios'
 
 import './likestyle.scss'
 //Authprovider import
@@ -15,7 +16,7 @@ import Button from '../common/Button'
 import { database } from '../../firebase'
 
 //comment import
-import { set, ref, push, onValue, DataSnapshot } from 'firebase/database'
+import { set, ref, push, onValue} from 'firebase/database'
 
 import Comment from './Comment'
 
@@ -33,7 +34,8 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { FacebookShareButton, WhatsappShareButton, TwitterShareButton,
            } from 'react-share';
 
-function Posts ({ username, name, caption, imgUrl, time, postid }) {
+
+function Posts ({ username, name, caption, imgUrl, time, postid,userid }) {
 
     //===================
 
@@ -49,6 +51,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [clickedPostId, setClickedPostId] = useState(postid) //get the current post
   const [timeCreated, setTime] = useState('') // time the post was created
+  const Time = useRef(time)
 
 
   //Comments State
@@ -101,16 +104,12 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
             console.log("user has un-liked this post:" + clickedPostId);
       }
 
-    }
-    
-    
-    
-    
+    }   
   }
 
   //Toggle comments section
   const toggleComment = () => {
-    if (showCommentBox == true) {
+    if (showCommentBox === true) {
       setShowComentBox(false)
     } else {
       setShowComentBox(true)
@@ -119,7 +118,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
   //Toggle share section
   const toggleshare = () => {
-    if (showShareBox == true) {
+    if (showShareBox === true) {
       setShareBox(false)
     } else {
       setShareBox(true)
@@ -157,7 +156,6 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         //get reference for posts
 
         //Get post id from the clicked post
-        const postsRef = ref(database, 'posts/')
         const userRef = ref(database, 'users/' + currentUser.uid)
 
         const commentid = push(commentsRef).key
@@ -188,15 +186,15 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
 //converting the time 
   useEffect(() => {
-    if (time < 1000000000000) {
-      time *= 1000
+    if (Time.current < 1000000000000) {
+      Time.current *= 1000
     }
     let now = Date.now()
 
-    if (time > now || time <= 0) {
+    if (Time.current > now || Time.current <= 0) {
       setTime('')
     }
-    let timePosted = now - time
+    let timePosted = now - Time.current
 
     if (timePosted < MINUTE_MILLIS) {
       setTime('just now')
@@ -213,7 +211,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     } else {
       setTime(Math.floor(timePosted / DAY_MILLIS) + ' days ago')
     }
-  }, [timeCreated])
+  }, [DAY_MILLIS,HOUR_MILLIS,MINUTE_MILLIS])
 
   //Get id of a clicked post
   useEffect(() => {
@@ -245,13 +243,13 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       setComments(CommentsArr.reverse())
       
     }
-  }, [showCommentBox]);
+  }, [currentUser,clickedPostId,commentsRef,postid]);
 
 
   useEffect(() =>{
     // to get the count for share reference
     setClickedPostId(postid);
-    const shareRef = ref(database,`share/${clickedPostId}/sharedby`);
+    const shareRef = ref(database,`share/${postid}/sharedby`);
 
     onValue(shareRef,(DataSnapshot) =>{
       if(DataSnapshot.exists()){
@@ -262,33 +260,32 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
 
       }
     });
-  },[shareCount]);
+  },[postid]);
 
   //gets the liked content and as well as the number of likes
+  
+  // const countLikeUrl = `https://sdpwits-social-default-rtdb.firebaseio.com/like/${postid}/likes.json`
+  //get the number of likes 
+  onValue(ref(database,`like/${postid}/likes`),(snap) =>{
+    if(snap.exists()){
+      count.current = 0 + snap.size
+    }
+  })
+
+    
   useEffect(() => {
     if(currentUser){
-      const likeRef = ref(database,'userLikes/'+currentUser.uid+'/posts/'+ clickedPostId);
-      onValue(likeRef,(DataSnapshot) =>{
-        if(DataSnapshot.exists()){
-          setLiked(!liked);
+      const LikeUrl = `https://sdpwits-social-default-rtdb.firebaseio.com/userLikes/${currentUser.uid}/posts/${postid}.json`
+      axios.get(LikeUrl).then((response) =>{
+        if(response.data !== null){
+          setLiked(true);
           setClicked(true);
-          setLikeActiveColor('#FFE9E9');
-          setlikeColor('#F2383A');
+          setLikeActiveColor('#FFE9E9')
+          setlikeColor('#F2383A')
         }
-      });
-      
-      const countLikeRef = ref(database,'like/'+ clickedPostId );
-      onValue(countLikeRef,(DataSnapshot) =>{
-        if(DataSnapshot.exists()){
-           count.current = DataSnapshot.child('likes').size;
-        }else{
-          count.current = 0;
-        }
-        
-      },{onlyOnce:true});
-
+      }).catch((error) =>{ console.log(error)})
     }
-  },[liked,clicked,likeActiveColor,likeColor,currentUser]);
+  },[currentUser,postid]);
 
 
 
@@ -296,7 +293,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   return (
     <div className='tweet' data-testid="post">
       
-      <Link to={`/${name}`}>
+      <Link to={`/${userid}`}>
       <img 
         className='tweet__author-logo'
         src='https://source.unsplash.com/random/100*100'
@@ -306,7 +303,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         <div className='tweet__header'>
           <div className='tweet__author-name'>{username}</div>
           <div className='tweet__author-slug'>
-            <Link to={`/${name}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
+            <Link to={`/${userid}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
             </div>
           <div className='tweet__publish-time'>{timeCreated}</div>
          

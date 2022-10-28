@@ -46,7 +46,8 @@ function Newsfeed () {
             imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
             name: getUsername(postdata.userId),
             time: postdata.time,
-            id: postdata.postid
+            id: postdata.postid,
+            userid: postdata.userId
           }
 
           //console.log('username :', getUsername(postdata.userId))
@@ -80,6 +81,7 @@ function Newsfeed () {
               imgUrl={post.imgUrl}
               time={post.time}
               postid={post.id}
+              userid = {post.userid}
             />
           ))}
         </div>
