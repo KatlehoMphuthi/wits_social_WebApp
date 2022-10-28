@@ -10,7 +10,7 @@
 
 top: 135px;
 
-background: #FFFFFF;
+background: var(--foreground );
 border-radius: 8px;   
 }
 
@@ -27,7 +27,7 @@ line-height: 24px;
 
 letter-spacing: 0.15px;
 
-color: #343E4B;
+color: var(--text-secondary);
 }
 
 
@@ -137,8 +137,8 @@ gap: 16px;
 width: 110px;
 height: 34px;
 
-background: #2C76EE;
-border: 1.3px solid #2C76EE;
+background: var(--twitter-color);
+border: 1.3px solid var(--twitter-color);
 border-radius: 8px;
 
 /* Inside auto layout */

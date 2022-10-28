@@ -27,8 +27,12 @@
     color: var(--twitter-color);
   }
 
+  .sidebarOption--backButton{
+    color: var(--text-primary) !important;
+  }
+
   .sidebarOption--backButton:hover{
-    background-color:#e6ecf0 !important;
-    color: black !important;
+    background-color:var(--background) !important;
+    color: var(--text-primary) !important;
     border-radius: 0;
   }

@@ -33,7 +33,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import { FacebookShareButton, WhatsappShareButton, TwitterShareButton,
            } from 'react-share';
 
-function Posts ({ username, name, caption, imgUrl, time, postid }) {
+function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePicture, profilePictureUrl, userid }) {
 
     //===================
 
@@ -106,6 +106,12 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     
     
     
+  }
+
+ const getColour = () => {
+    let colourArray = ['#ca12db','#39901c','#949ae9','#ea4c18', '#98CE00', '#16E0BD', '#F18701', '#F35B04' ]
+    let colourPicker = Math.floor(Math.random() * colourArray.length) + 1;
+    return colourArray[colourPicker]
   }
 
   //Toggle comments section
@@ -213,7 +219,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     } else {
       setTime(Math.floor(timePosted / DAY_MILLIS) + ' days ago')
     }
-  }, [timeCreated])
+  }, [time,MINUTE_MILLIS,DAY_MILLIS,HOUR_MILLIS])
 
   //Get id of a clicked post
   useEffect(() => {
@@ -245,7 +251,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       setComments(CommentsArr.reverse())
       
     }
-  }, [showCommentBox]);
+  }, [showCommentBox,postid]);
 
 
   useEffect(() =>{
@@ -288,7 +294,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       },{onlyOnce:true});
 
     }
-  },[liked,clicked,likeActiveColor,likeColor,currentUser]);
+  },[currentUser]);
 
 
 
@@ -296,17 +302,25 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   return (
     <div className='tweet' data-testid="post">
       
-      <Link to={`/${name}`}>
-      <img 
+      <Link to={`/${userid}`}>
+
+      {profilePictureUrl !== undefined ?  <img alt =''
         className='tweet__author-logo'
-        src='https://source.unsplash.com/random/100*100'
-      />
+        src={profilePictureUrl}
+      /> :
+      <p className='tweet__author-logo_image'>
+        {name !== undefined ? name[0] : ''}
+      </p>
+      
+      }
+
+     
       </Link>
       <div className='tweet__main'>
         <div className='tweet__header'>
           <div className='tweet__author-name'>{username}</div>
           <div className='tweet__author-slug'>
-            <Link to={`/${name}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
+            <Link to={`/${userid}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
             </div>
           <div className='tweet__publish-time'>{timeCreated}</div>
          
@@ -314,7 +328,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         
         <div className='tweet__content'>
           {caption}
-          <img className='tweet__image' src={imgUrl} />
+          <img className='tweet__image' alt ='' src={imgUrl} />
           <Link to ={`/newsfeed/post/${clickedPostId}`} state ={{from:'post',clickedpost:clickedPostId}}></Link> 
         </div>
         

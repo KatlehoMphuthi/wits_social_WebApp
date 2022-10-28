@@ -1,19 +1,66 @@
 .userProfile__header{
     display: flex;
     padding: 1rem 0;
-    justify-content:flex-start;
+    justify-content:space-between;
     align-items: center;
+}
+
+.user_details_wrapper{
+    display: flex;
+    width: 80%;
 }
 
 .userProfile__Stats{
     display: flex;
     padding: 0.8rem 0;
-    justify-content: start;
+    justify-content: flex-start;
     margin-right: 1rem !important;
 }
 
 .stats{
-    margin-right: 2.5rem;
+    margin-right: 3rem;
+    cursor: pointer;
+}
+
+.stats h4{
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 31px;
+/* identical to box height, or 129% */
+
+letter-spacing: 0.650273px;
+
+color: var(--text-primary);
+}
+
+.userProfile__userDetails p{
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+line-height: 22px;
+/* identical to box height, or 138% */
+
+letter-spacing: 0.650273px;
+
+color:var(--text-secondary);
+}
+
+.userProfile__userDetails h2{
+
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 31px;
+/* identical to box height, or 129% */
+
+letter-spacing: 0.650273px;
+
+color: var(--text-primary);
+margin-bottom: 0.5rem;
 }
 
 .userProfile__posts{
@@ -37,19 +84,43 @@
     align-items: center;
 }*/
 
-.userProfile__displayPicture{
-    width: 180px !important;
-    height: 120px !important;
-    margin-right: 1rem;
-    border-radius: 50% !important; 
-    background-image: url(https://source.unsplash.com/random/200*200);
-}
+
+
+
 
 .userProfile__displayPicture img{
     border-radius: 50%;
 }
 
 .userProfile__userDetails{
-    flex: auto;
-    margin-right: 4rem !important;
+    flex: 1;
+   /* margin-right: 3rem !important;*/
+}
+
+.userProfile__displayPicture{
+    width: 150px !important;
+    height: 150px !important;
+    border-radius: 50%;
+    margin-right: 1.5rem;
+    background-color:var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--foreground);
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 31px;
+    
+}
+
+.displayPicture__image{
+    width: 150px !important;
+    height: 150px !important;
+    border-radius: 50%;
+}
+
+.userProfile__editButton{
+    flex: 1;
 }

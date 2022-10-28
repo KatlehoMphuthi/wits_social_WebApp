@@ -1,5 +1,5 @@
-import React, { useEffect, useState,useRef } from "react";
-import { onAuthStateChanged,signInWithEmailAndPassword,setPersistence,browserLocalPersistence,browserSessionPersistence, signOut } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { onAuthStateChanged,signInWithEmailAndPassword,setPersistence,browserLocalPersistence } from "firebase/auth";
 import { auth } from "./firebase";
 
 export const AuthContext = React.createContext({
@@ -10,7 +10,6 @@ export const AuthContext = React.createContext({
 export  function AuthProvider({ children }){
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [isloggedin,setisLoggedin ] = useState(null);
 
   function login(email,password){
     return signInWithEmailAndPassword(auth,email,password); 
@@ -20,7 +19,7 @@ export  function AuthProvider({ children }){
   .catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
-    const errorMessage = error.message;
+    console.log(errorCode);
   });
   
 
@@ -29,19 +28,15 @@ export  function AuthProvider({ children }){
   onAuthStateChanged(auth, (currentUser) =>{
             if(currentUser){
               setCurrentUser(currentUser);
-              localStorage.setItem('user',currentUser);
-              setisLoggedin(true);
+              localStorage.setItem('user',JSON.stringify(currentUser));
               console.log(currentUser);
             }
             else{
               console.log("Auth has changed");
-              setisLoggedin(false)
             }
             
        });
        
-     
-    // console.log(currentUser);
  }, []);
 
   const value = {

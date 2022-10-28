@@ -10,10 +10,23 @@ import SidebarMenu from '../common/SidebarMenu'
 import { database } from '../../firebase'
 import { onValue, ref } from 'firebase/database'
 
-function Newsfeed () {
-  const  {currentUser}  = useContext(AuthContext)
-  const [posts, setPost] = useState([])
 
+function Newsfeed ({test}) {
+ 
+
+  let change = test
+
+  const  {currentUser}  = useContext(AuthContext)
+  const user = JSON.parse(localStorage.getItem('user'))
+  const [posts, setPost] = useState([])
+  let userid;
+  if(user !== null){
+    userid = user.uid
+  }else{
+    if(currentUser !== null){
+      userid = currentUser.uid
+    }
+  }
   const getUsername =(userId) =>{
     let userData;
     if (currentUser !== null) {
@@ -29,9 +42,27 @@ function Newsfeed () {
       return  userData;
   }
 
-  //const PostsArr = useRef([]); // create an empty array to store the posts in
-  const postRef = ref(database, 'posts/')
+  const getProfilePictureUrl =(userId) =>{
+    let profilePictureUrl;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        const name = snapshot.val();
+        profilePictureUrl=name.profilePictureUrl;
+      });
+      }
+
+      //console.log(profilePictureUrl)
+      return  profilePictureUrl;
+      
+  }
+
+
   const PostsArr = useRef([]);
+    //const PostsArr = useRef([]); // create an empty array to store the posts in
+    const postRef = ref(database, 'posts/') 
   useEffect(() => {
     if (currentUser !== null) {
       PostsArr.current = [];
@@ -45,29 +76,30 @@ function Newsfeed () {
             imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
             name: getUsername(postdata.userId),
             time: postdata.time,
-            id: postdata.postid
+            id: postdata.postid,
+            profilePictureUrl : getProfilePictureUrl(postdata.userId),
+            userid: postdata.userId
           }
-
-          //console.log('username :', getUsername(postdata.userId))
-
           PostsArr.current.push(post)
         });
       });
+
       setPost(PostsArr.current.reverse());
-     
+      
     }
-  },[currentUser,postRef]);
+
+  },[currentUser,postRef,setPost]);
 
   
 
   return (
-    <div className='app-container'>
+    <div className='app-container' >
       <Topbar className='navbar' />
 
       <div className='layout'>
-          <SidebarMenu userid='kgotso'/>
+          <SidebarMenu userid='kgotso' change={change}/>
         <div className='layout__main'>
-          <CreatePost />
+          <CreatePost username={getUsername(userid)} profilePictureUrl={getProfilePictureUrl(userid)} />
           {posts.map(post => (
             <Post
               key={post.id}
@@ -77,6 +109,8 @@ function Newsfeed () {
               imgUrl={post.imgUrl}
               time={post.time}
               postid={post.id}
+              userid = {post.userid}
+              profilePictureUrl={post.profilePictureUrl}
             />
           ))}
         </div>
