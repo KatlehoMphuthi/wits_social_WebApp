@@ -22,6 +22,7 @@ export default function Users_Rsidebar(){
     //current state for the name and follow status
     const [isActive, setIsActive] = useState(true);
     const[name, setName] = useState("NAME");
+    const[profilePictureUrl, setProfilePictureUrl] = useState('')
     const [followbtn,setfollowBtn] = useState("Follow");
 
     //renders this as long there is a current users
@@ -60,7 +61,7 @@ export default function Users_Rsidebar(){
                 const data = DataSnapshot.val();
                 
                 setName(data.firstname);// set it on the user container
-
+                setProfilePictureUrl(data.profilePictureUrl)
                  // To check if function is works 
                 console.log(data.firstname); // should log the name of the user
               }});
@@ -118,8 +119,19 @@ export default function Users_Rsidebar(){
     return(
      <div className="who-to-follow__block">
 
-            <div className="who-to-follow__author-logo">
-                <FontAwesomeIcon icon={faUser}/>
+            <div>
+
+            {!(profilePictureUrl == null) ?  <img alt =''
+        className='tweet__author-logo'
+        src={profilePictureUrl}
+      /> :
+      
+      <p className='tweet__author-logo_image'>
+        {!(name == null) ? name[0] : ''}
+      </p>
+      
+      }
+               {/*} <FontAwesomeIcon icon={faUser}/>*/}
             </div>
 
             <div className="who-to-follow__content">

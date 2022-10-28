@@ -12,7 +12,7 @@ import { useAlert,positions,transitions } from 'react-alert';
 import InsertPhotoRoundedIcon from '@mui/icons-material/InsertPhotoRounded';
 
 
-function CreatePost() {
+function CreatePost({username, profilePictureUrl}) {
 
   const {currentUser} = useContext(AuthContext); //get the current user.
    const [file, setFile] = useState("");
@@ -194,7 +194,16 @@ function CreatePost() {
 
   return (
     <div className="tweet">
-        <img className="tweet__author-logo" src="https://source.unsplash.com/random/100*100" />
+           {!(profilePictureUrl == null) ?  <img alt =''
+        className='tweet__author-logo'
+        src={profilePictureUrl}
+      /> :
+      
+      <p className='tweet__author-logo_image'>
+        {!(username == null) ? username[0] : ''}
+      </p>
+      
+      }
         <div className="create-post__main">
 
         <div className="postTextInput">

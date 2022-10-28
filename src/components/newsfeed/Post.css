@@ -6,7 +6,7 @@
  
  .post{
     /* size of pic */
-    background-color: #ffffff;
+    background-color: var(--foreground);
     max-width: 800px;
     border: 1px solid lightgray;
     /* placing the images in a border-start-end-radius: ; */
@@ -57,18 +57,18 @@
  }
 
  .tweet__comment-section input:focus{
-   border: 2px solid blue;
-   background-color: white;
+   border: 2px solid var(--accent);
+   background-color: var(--foreground);
    color: #0F141A;
  }
 
  .tweet-action__item{
-  color: #0F141A;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   font-weight: 700;
   justify-content: space-around;
-  background-color: #F8F8F8;
+  background-color: var(--accent-light);
   padding: 0 1rem;
   border-radius: 8px;
   flex: 1;
@@ -91,7 +91,12 @@
 }
 
 .tweet__share-section input:focus{
-  border: 2px solid blue;
-  background-color: white;
+  border: 2px solid var(--accent);
+  background-color: var(--foreground);
   color: #0F141A;
 }
+
+a{
+  color: var(--text-secondary) !important;
+}
+

@@ -1,6 +1,6 @@
 .app-container{
   max-width: 1300px;
-  background-color: #F5F7F9;
+  background-color: var(--background);
   margin: auto;
   height: 100vh;
   overflow-y: hidden;
@@ -24,7 +24,7 @@ p{
   width: 400px;
     height: 20;
   object-fit: contain;
-  background-color: white;
+  background-color: var(--foreground);
   /* boarder grey line */
   padding: 1%;
   border-bottom:1px solid lightblue ;
@@ -41,7 +41,7 @@ p{
   margin-top: 2rem;
   padding: 2rem 2rem 1rem 2rem;
   border-radius: 10px;
-  background-color: white;
+  background-color:var(--foreground);
 
 }
 
@@ -51,7 +51,7 @@ p{
 }
 
 .tweet a {
-  color: #1b94e0;
+  color: var(--accent);
   text-decoration: none;
 }
 
@@ -59,11 +59,20 @@ p{
   text-decoration: underline;
 }
 
-.tweet__author-logo {
+.tweet__author-logo,.tweet__author-logo_image {
   width: 50px !important;
   height: 50px !important; 
   border-radius: 50%;
   margin-right: 1.5rem;
+}
+
+.tweet__author-logo_image{
+  background-color: var(--accent);
+  display: flex;
+  color:var(--foreground);
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
 }
 
 .tweet__main{
@@ -85,7 +94,7 @@ line-height: 26px;
 
 letter-spacing: 0.203906px;
 
-color: #343E4B;
+color:var(--text-secondary);
   margin-right: 5px;
 }
 
@@ -98,7 +107,7 @@ font-size: 16.3125px;
 
 letter-spacing: 0.203906px;
 
-color: #343E4B;
+color: var(--text-secondary);
 }
 
 .tweet__publish-time {
@@ -112,7 +121,7 @@ line-height: 17px;
 
 letter-spacing: 0.203906px;
 
-color: #7890A7;
+color:var( --text-tertiary);
 }
 
 .tweet__image {
@@ -133,7 +142,7 @@ min-height: fit-content;
 
 /* 00. On Surface / Medium Emphasis */
 
-color: rgba(0, 0, 0, 0.6);
+color:var(--text-secondary);
 }
 
 /*--------------------SIDEBAR MENU---------------------*/
@@ -150,7 +159,7 @@ color: rgba(0, 0, 0, 0.6);
 
 .sidebar-menu__item {
   font-size: 19px;
-  color: #0F141A;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   font-weight: 700;
@@ -159,13 +168,13 @@ color: rgba(0, 0, 0, 0.6);
 
 .sidebar-menu__item:hover {
   background: rgba(29, 161, 242, 0.1);
-  color: #1da0f2;
+  color: var(--accent);
   border-radius: 20px;
   cursor: pointer;
 }
 
 .sidebar-menu__item--active {
-  color: #1da0f2;
+  color: var(--accent);
 }
 
 .sidebar-menu__item-icon {
@@ -194,7 +203,7 @@ color: rgba(0, 0, 0, 0.6);
   padding: 10px 15px;
   display: flex;
   align-items: center;
-  background: #EEF2F6;
+  background: var(--background);
 border-radius: 8px;
 margin: 1rem 0;
 align-items: center;
@@ -203,15 +212,15 @@ align-items: center;
 .who-to-follow__block:last-child {
   border-bottom: none;
 }
-
 .who-to-follow__author-slug {
-  color: #657786;
+  color: var(--text-secondary);
   font-size: 15px;
 }
 
 .who-to-follow__author-name {
   font-size: 15px;
   font-weight: 700;
+  color: var(--text-secondary);
 }
 
 .who-to-follow__content {
@@ -226,8 +235,8 @@ align-items: center;
 .who-to-follow__heading {
   font-size: 19px;
   font-weight: bold;
-  color: #14171a;
-  background: white;
+  color:var(--text-main);
+  background: var(--foreground);
 
   font-family: 'Roboto';
 font-style: normal;
@@ -238,7 +247,7 @@ line-height: 24px;
 
 letter-spacing: 0.15px;
 
-color: #343E4B;
+color: var(--text-secondary);
 }
 
 .who-to-follow__button {
@@ -248,13 +257,13 @@ color: #343E4B;
   align-items: center;
   padding: 0px 24px;
   gap: 16px;
-  background: #F9FAFC;
+  background: var(--accent-light);
   border-radius: 8px;
 }
 
 .followcont p, .followbtn{
   padding: 10px;
-  background: #F9FAFC;
+  background: var(--accent-light);
 border-radius: 8px;
 min-width: 120px;
 text-align: center;
@@ -266,7 +275,7 @@ font-weight: 450;
 font-size: 14px;
 /* identical to box height, or 171% */
 letter-spacing: 0.15px;
-color: #343E4B;
+color: var(--text-secondary);
 }
 
 
@@ -293,7 +302,7 @@ color: #343E4B;
 }
 
 .layout__right-sidebar{
-  background-color: white;
+  background-color: var(--foreground);
   border-radius: 8px;
   height: fit-content;
   margin: 2rem 1rem;
@@ -309,5 +318,9 @@ color: #343E4B;
 .layout__main {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+a{
+  color: var(--text-secondary) !important;
 }
 
