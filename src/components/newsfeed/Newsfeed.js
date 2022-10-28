@@ -9,10 +9,12 @@ import { AuthContext } from '../../AuthProvider'
 import SidebarMenu from '../common/SidebarMenu'
 import { database } from '../../firebase'
 import { onValue, ref } from 'firebase/database'
+import useLocalStorage from 'react-use-localstorage';
 
 
 function Newsfeed ({test, theme}) {
  
+  console.log("theme from app.js", localStorage.getItem("theme"))
 
   let change = test
 
@@ -45,8 +47,6 @@ function Newsfeed ({test, theme}) {
         profilePictureUrl=name.profilePictureUrl;
       });
       }
-
-      console.log(profilePictureUrl)
       return  profilePictureUrl;
       
   }
@@ -72,7 +72,6 @@ function Newsfeed ({test, theme}) {
             profilePictureUrl : getProfilePictureUrl(postdata.userId)
           }
 
-          console.log('url :', post.profilePictureUrl)
 
           PostsArr.current.push(post)
         });
@@ -88,7 +87,7 @@ function Newsfeed ({test, theme}) {
 
   return (
     <div className='app-container' >
-      <Topbar className='navbar'  change={change}/>
+      <Topbar className='navbar'  change={change} theme={theme}/>
 
       <div className='layout'>
           <SidebarMenu userid='kgotso' change={change}/>
