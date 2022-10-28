@@ -166,12 +166,7 @@ function CreatePost({username, profilePictureUrl}) {
             }
 
 
-            alert.show("Posted successfully",{
-              type: 'success',
-              position: 'bottom right',
-              timeout: 2000,
-              transition: transitions.SCALE
-            });
+            alert("Posted successfully");
           }
       }
         

@@ -57,12 +57,12 @@ afterEach(() =>{
 //logout
 it("Show logout button", () =>{
 
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('button',{name: /logout/i})).toBeInTheDocument();
 
 });
 it("Should logout", async() => {
     const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button',{name: /logout/i}));
     waitFor(() => expect(alertMock).toBeCalled());
 });
 
