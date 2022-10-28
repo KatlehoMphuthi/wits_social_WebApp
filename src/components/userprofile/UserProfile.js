@@ -97,6 +97,39 @@ function UserProfile () {
   }
   //===============================================================
 
+  const getUsername =(userId) =>{
+    let userData;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        const name = snapshot.val();
+        userData=name.firstname;
+      });
+      }
+
+      return  userData;
+  }
+
+
+  const getProfilePictureUrl =(userId) =>{
+    let profilePictureUrl;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        const name = snapshot.val();
+        profilePictureUrl=name.profilePictureUrl;
+      });
+      }
+
+      console.log(profilePictureUrl)
+      return  profilePictureUrl;
+  }
+
+
 
   useEffect(()=>{
     console.log("user posts start")
@@ -107,7 +140,7 @@ function UserProfile () {
       setProfileImage(response.data.profilePictureUrl)
       setBio(response.data.bio)
 
-    console.log("response : " , response.data.firstname)
+    console.log("from actual : " ,profileImage)
     }).catch(console.error)
 
 
@@ -128,6 +161,9 @@ function UserProfile () {
         let data = Object.values(response.data)
         data.forEach(d=>{
           if(d.userId === postUserId){
+            d.name = getUsername(postUserId)
+            d.profilePictureUrl = getProfilePictureUrl(postUserId)
+            console.log( d.profilePictureUrl);
             setPostTest(prevArray => [...prevArray, d])
           }
         
@@ -189,7 +225,8 @@ function UserProfile () {
           <div className='userProfile__header'>
             <div className='user_details_wrapper'>
               <div className='userProfile__displayPicture'>
-                {!(profileImage === " ") ? <img alt='' src={profileImage} className="displayPicture__image"/> : <p className='displayPicture'> {firstname[0]}{lastname[0]}</p>}
+                {console.log("inside render :" , profileImage)}
+                {!(profileImage == null) ? <img alt='' src={profileImage} className="displayPicture__image"/> : <p>{!(firstname == null) ? firstname.charAt(0) : null}</p> }
               </div>
 
               <div className='userProfile__userDetails'>
@@ -261,12 +298,12 @@ function UserProfile () {
                   .reverse()
                   .map(post => (
                     <Post
-                      username={post.username}
                       name={post.name}
                       caption={post.caption === '' ? post.text : post.caption }
                       imgUrl={post.imageUrl}
                       time={post.time}
                       postid={post.postid}
+                      profilePictureUrl={post.profilePictureUrl}
                     />
 ))}   
                 </>

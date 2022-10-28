@@ -15,6 +15,7 @@ export default function Topbar() {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
 const [lname, setlname] = useState("");
+const [profilePicture,setProfilePicture] = useState("");
 //const navigate = useNavigate();
 const [filtered, setFiltered] = useState([]);
 const [word, setWord] = useState("");
@@ -58,7 +59,8 @@ useEffect(()=>{
     onValue(ref(database,`users/${currentUser.uid}`),(DataSnapshot)=>{
         const data = DataSnapshot.val();
         setfname(data.firstname);
-        setlname(data.lastName);               
+        setlname(data.lastName);
+        setProfilePicture(data.profilePictureUrl);               
     });
   fetchUsers();
 
@@ -107,12 +109,25 @@ return currentUser !== null ?
     </div>}
     </div>
     <div className="topbarRight">
-      <div className="topbarLinks" data-testid = "user">
-      {<span> <p> <span className="profile__initals" >{fname[0]}{lname[0]} </span>
-        <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
-      </p></span>}
+      <span className="topbarLinks" data-testid = "user">
+
       
-      </div>
+      {!(profilePicture == null) ?  <img alt =''
+        className='tweet__author-logo'
+        src={profilePicture}
+      /> :
+      
+      <p className='tweet__author-logo_image'>
+        {fname[0]}{lname[0]}
+      </p>}
+
+      {<span>
+        <p> 
+        <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
+      </p>
+      </span>}
+      
+      </span>
     </div>
   </div>
   )

@@ -150,3 +150,9 @@ color: white;
 .topbarCenter--userprofile:hover{
   background-color: white !important;
 }
+
+.topbarLinks{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

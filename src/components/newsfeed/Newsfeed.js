@@ -29,7 +29,24 @@ function Newsfeed () {
       return  userData;
   }
 
-  
+  const getProfilePictureUrl =(userId) =>{
+    let profilePictureUrl;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        const name = snapshot.val();
+        profilePictureUrl=name.profilePictureUrl;
+      });
+      }
+
+      console.log(profilePictureUrl)
+      return  profilePictureUrl;
+      
+  }
+
+
   const PostsArr = useRef([]);
     //const PostsArr = useRef([]); // create an empty array to store the posts in
     const postRef = ref(database, 'posts/') 
@@ -46,10 +63,11 @@ function Newsfeed () {
             imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
             name: getUsername(postdata.userId),
             time: postdata.time,
-            id: postdata.postid
+            id: postdata.postid,
+            profilePictureUrl : getProfilePictureUrl(postdata.userId)
           }
 
-          //console.log('username :', getUsername(postdata.userId))
+          console.log('url :', post.profilePictureUrl)
 
           PostsArr.current.push(post)
         });
@@ -80,6 +98,7 @@ function Newsfeed () {
               imgUrl={post.imgUrl}
               time={post.time}
               postid={post.id}
+              profilePictureUrl={post.profilePictureUrl}
             />
           ))}
         </div>

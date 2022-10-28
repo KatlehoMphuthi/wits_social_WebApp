@@ -154,7 +154,6 @@ if(!open) return null
             <div className='modal-header-right'>
                 <CloseRoundedIcon onClick={onClose} />
                 <h3>Edit Profile</h3>
-                <p>{percent} "% done"</p>
             </div>
         </div>
 
@@ -183,6 +182,7 @@ if(!open) return null
                 style={{
                   height: "120px",
                   width: "120px",
+                  backgroundColor: "#2185d0",
                   borderRadius : "50%",
                   border: "1px dashed black"
                 }}
