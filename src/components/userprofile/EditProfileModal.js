@@ -244,7 +244,7 @@ if(!open) return null
               rows={4}
               type='text'
               defaultValue={bio}
-              {...register('bio', { required: false, maxLength: 500 })}
+              {...register('bio', { required: false, maxLength: 160 })}
             />
           </Form.Field>
 

@@ -12,7 +12,7 @@ p{
     margin:  1rem 0;
     padding: 1rem;
     border-radius: 0.5rem;
-    background-color: #DFF3FF;
+    background-color:var(--accent-light);
     color: var(--accent);
 }
 

@@ -13,7 +13,7 @@ import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import { Button } from '@material-ui/core'
 import './SidebarMenu.css'
 
-function SidebarMenu ({userid, switchTheme, change}) {
+function SidebarMenu ({userid, switchTheme, change, theme}) {
   const currentUser  = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -68,9 +68,14 @@ function SidebarMenu ({userid, switchTheme, change}) {
 </NavLink>
       </div>
 
+     
+
+{/*
       <button onClick={change}>
         Tetsing
       </button>
+
+}     
 
       {/* Button -> Logout */}
       <Button

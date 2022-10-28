@@ -12,13 +12,13 @@
 
 .userProfile__Stats{
     display: flex;
-    padding: 0.8rem 0;
     justify-content: flex-start;
     margin-right: 1rem !important;
 }
 
 .stats{
-    margin-right: 3rem;
+    margin-right: 2rem;
+    display: flex;
     cursor: pointer;
 }
 
@@ -26,8 +26,8 @@
 font-family: 'Roboto';
 font-style: normal;
 font-weight: 700;
-font-size: 24px;
-line-height: 31px;
+font-size: 16px;
+padding-right: 0.5rem;
 /* identical to box height, or 129% */
 
 letter-spacing: 0.650273px;
@@ -38,14 +38,14 @@ color: var(--text-primary);
 .userProfile__userDetails p{
 font-family: 'Roboto';
 font-style: normal;
-font-weight: 400;
-font-size: 15px;
-line-height: 22px;
+font-weight: 300;
+font-size: 14px;
 /* identical to box height, or 138% */
 
 letter-spacing: 0.650273px;
 
 color:var(--text-secondary);
+margin-right: 0.5rem;
 }
 
 .userProfile__userDetails h2{
@@ -94,6 +94,10 @@ margin-bottom: 0.5rem;
 
 .userProfile__userDetails{
     flex: 1;
+    display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
    /* margin-right: 3rem !important;*/
 }
 
@@ -123,4 +127,12 @@ line-height: 31px;
 
 .userProfile__editButton{
     flex: 1;
+}
+
+.MuiTabs-indicator{
+    max-width: 5% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-left: 10%;
+    background-color: var(--accent) !important;
 }

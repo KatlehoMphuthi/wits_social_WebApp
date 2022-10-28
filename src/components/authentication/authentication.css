@@ -25,6 +25,7 @@
   flex-direction: column;
   min-height: 50%;
   border-radius: 1rem;
+  color: var(--text-primary);
 }
 
 .ui.form {
@@ -41,10 +42,13 @@
   font-size: 1rem;
   font-weight: bolder;
   text-transform: none;
+  margin-left: 0.5rem;
+  color: var(--accent) !important;
 }
 
 .form-header {
   margin-bottom: 1.5rem;
+  color: var(--text-primary);
 }
 
 .form-logo {
@@ -54,6 +58,10 @@
 .ui.form > label {
   font-size: 12px;
   color: var(--accent-dark);
+}
+
+.ui.form .field>label {
+  color:var(--accent-dark) !important;
 }
 
 /*-------------- SIGN IN & SIAN UP--------------------*/

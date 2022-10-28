@@ -11,7 +11,7 @@ import { database } from '../../firebase'
 import { onValue, ref } from 'firebase/database'
 
 
-function Newsfeed ({test}) {
+function Newsfeed ({test, theme}) {
  
 
   let change = test
@@ -88,7 +88,7 @@ function Newsfeed ({test}) {
 
   return (
     <div className='app-container' >
-      <Topbar className='navbar' />
+      <Topbar className='navbar'  change={change}/>
 
       <div className='layout'>
           <SidebarMenu userid='kgotso' change={change}/>

@@ -234,7 +234,9 @@ function UserProfile ({theme}) {
                   {firstname} {lastname}
                 </h2>
                 <p>{bio}</p>
-                <div className='userProfile__Stats'>
+
+
+                <div className='userProfile__Stats'>    
                   <div className='stats'>
                     <h4>{postsTest.length}</h4>
                     <p>Posts</p>
@@ -253,7 +255,7 @@ function UserProfile ({theme}) {
                   <div className='stats'>
                     <h4>{numOfFollowers}</h4>
                     <p>Following</p>
-                  </div>
+          </div>
                 </div>
               </div>
             </div>
@@ -270,14 +272,18 @@ function UserProfile ({theme}) {
             </div>
           </div>
 
+            {console.log("theme : ", theme)}
           {/*********Testing Tabs************* */}
 
           <Tabs
             value={value}
             onChange={handleChange}
-            textColor= {theme === 'light' ? '#ffffff'  : '#000000'}
+            textColor= {theme === 'light' ? '#000000'  : '#ffffff'}
             indicatorColor='secondary'
             aria-label='secondary tabs example'
+            sx={{
+              color : (theme === 'light') ? '#000000'  : '#ffffff',
+            }}
           >
             <Tab value='Posts' label='Posts' />
             <Tab value='Likes' label='Likes' />
