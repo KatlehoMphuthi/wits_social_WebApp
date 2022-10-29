@@ -12,11 +12,9 @@ import { onValue, ref } from 'firebase/database'
 import useLocalStorage from 'react-use-localstorage';
 
 
-function Newsfeed ({test, theme}) {
+function Newsfeed ({switchTheme, theme}) {
  
   console.log("theme from app.js", localStorage.getItem("theme"))
-
-  let change = test
 
   const  {currentUser}  = useContext(AuthContext)
   const user = JSON.parse(localStorage.getItem('user'))
@@ -96,10 +94,10 @@ function Newsfeed ({test, theme}) {
 
   return (
     <div className='app-container' >
-      <Topbar className='navbar'  change={change} theme={theme}/>
+      <Topbar className='navbar'  switchTheme={switchTheme} theme={theme}/>
 
       <div className='layout'>
-          <SidebarMenu userid='kgotso' change={change}/>
+          <SidebarMenu userid='kgotso' switchTheme={switchTheme}/>
         <div className='layout__main'>
           <CreatePost username={getUsername(userid)} profilePictureUrl={getProfilePictureUrl(userid)} />
           {posts.map(post => (

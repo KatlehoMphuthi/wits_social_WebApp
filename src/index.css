@@ -153,3 +153,7 @@ body, .App{
   background-color:var(--background);
 }
 
+li{
+  color: var(--text-secondary);
+}
+

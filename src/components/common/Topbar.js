@@ -14,7 +14,7 @@ import useLocalStorage from 'react-use-localstorage';
 
 
 
-export default function Topbar({change, theme}) {
+export default function Topbar({switchTheme, theme}) {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
 const [lname, setlname] = useState("");
@@ -129,7 +129,7 @@ return currentUser !== null ?
       </span>}
       </span>
 
-        <div className="theme_toggel" onClick={change}>
+        <div className="theme_toggel" onClick={switchTheme}>
          
        
      

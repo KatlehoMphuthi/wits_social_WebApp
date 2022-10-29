@@ -10,22 +10,22 @@ import Explore from "./components/explore/Explore";
 import SharedPost from "./components/newsfeed/SharedPost";
 import './index.css'
 import useLocalStorage from 'react-use-localstorage';
+import { useState } from "react";
+import { useEffect } from "react";
 
 //App components and paths
 function App() {
 
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+  const [theme, setTheme] = useState('theme', defaultDark ? 'dark' : 'light');
+
+  useEffect(() =>{
+    localStorage.setItem('theme', theme)
+  },[theme])
+
 
   console.log("theme from app.js", localStorage.getItem("theme"))
-  const switchTheme =(e) =>{
-    e.preventDefault()
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme)
-    alert(newTheme)
-  }
- 
-  const change = () =>{
+  const switchTheme =() =>{
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme)
   }
@@ -38,10 +38,10 @@ function App() {
           <Route exact path="/"  element ={<Login />} />
           <Route exact path="/register" element ={<Register />} />
           <Route  exact path="/reset" element ={<Reset />} />
-          <Route exact path="/newsfeed" element ={<Newsfeed test={change} theme={theme}/>} />
-          <Route exact path="/about" element ={<About test={change} theme={theme}/>} />
+          <Route exact path="/newsfeed" element ={<Newsfeed switchTheme={switchTheme} theme={theme}/>} />
+          <Route exact path="/about" element ={<About switchTheme={switchTheme} theme={theme}/>} />
           <Route exact path="/:userId" element ={<UserProfile theme={theme}/>} />
-          <Route exact path="/explore" element ={<Explore test={change} theme={theme}/>} />
+          <Route exact path="/explore" element ={<Explore switchTheme={switchTheme} theme={theme}/>} />
           <Route exact path= "/newsfeed/post/:postid" element = {<SharedPost />}/>
         </Routes>
       </Router>

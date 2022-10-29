@@ -21,8 +21,6 @@ function UserProfile ({theme}) {
 
   const POSTS_URL = "https://sdpwits-social-default-rtdb.firebaseio.com/posts.json"
   
-
-
   //Global
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
@@ -182,7 +180,7 @@ function UserProfile ({theme}) {
           postsB.push(postsA[i]);
         }
       }
-      setPost(postsB.reverse())
+      setPost(postsB)
     })
   },[postUserId])
 
@@ -216,7 +214,7 @@ function UserProfile ({theme}) {
           })
         })
         console.log(likes_arr);
-        setFinalLikedPost(likes_arr.reverse())
+        setFinalLikedPost(likes_arr)
         
       }
       else{
@@ -429,8 +427,7 @@ function UserProfile ({theme}) {
               {/*********Display Linked Posts************ */}
               {value === 'Likes' && ( numofLikes !== 0 ?
                 <>
-                  {Final_Likedposts.slice(0)
-                  .reverse().map(post => (
+                  {Final_Likedposts.map(post => (
                     <Post
                       key={post.id}
                       username={post.username}
