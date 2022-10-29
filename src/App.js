@@ -15,16 +15,14 @@ import { useEffect } from "react";
 
 //App components and paths
 function App() {
-
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const [theme, setTheme] = useState('theme', defaultDark ? 'dark' : 'light');
+  const [theme, setTheme] = useState(defaultDark ? 'dark' : 'light');
+  console.log("==================",theme)
 
   useEffect(() =>{
     localStorage.setItem('theme', theme)
   },[theme])
 
-
-  console.log("theme from app.js", localStorage.getItem("theme"))
   const switchTheme =() =>{
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme)

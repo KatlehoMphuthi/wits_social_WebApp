@@ -136,12 +136,12 @@ return currentUser !== null ?
         {localStorage.getItem("theme") === 'dark'?
         
         <div>
-          <p className="theme_name">Dark</p>
+          <p className="theme_name">{localStorage.getItem("theme")}</p>
           <FontAwesomeIcon icon={faMoon} />
         </div> 
         :
         <div>
-          <p className="theme_name">Light</p>
+          <p className="theme_name">{localStorage.getItem("theme")}</p>
           <FontAwesomeIcon icon={faSun} />
         </div> 
         }
