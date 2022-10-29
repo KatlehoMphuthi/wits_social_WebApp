@@ -20,7 +20,7 @@ export default function EditProfileModal({open, onClose, firstname, lastname, bi
     //check if the user has set a profile picture
    // let hasProfilePicture = false;
    const userRef = ref(database, 'users/' + userId);
-   const  alert2 = useAlert();
+   
     //Profile picture States
     //const [file, setFile] = useState("");
     //const [hasProfilePicture, setHasProfilePicture] = useState(false); //Shoe and hide remove image cross
@@ -129,12 +129,7 @@ export default function EditProfileModal({open, onClose, firstname, lastname, bi
         //Close the modal
         onClose()
 
-        alert2.show("Profile Updated Successfully",{
-          type: 'success',
-          position: 'bottom right',
-          timeout: 2000,
-          transition: transitions.SCALE
-        });
+        alert("Profile Updated Successfully");
       } 
     
 
@@ -146,8 +141,8 @@ if(!open) return null
 
   return ReactDom.createPortal(
     <>
-    <div className='modal-overlay'></div>
-    <div className='editProfileModal'>
+    <div className='modal-overlay' ></div>
+    <div className='editProfileModal' id='editprofile'>
         
         {/**************    Modal Header    ***************/}
         <div className="modal-header">

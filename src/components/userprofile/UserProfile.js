@@ -205,7 +205,8 @@ function UserProfile ({theme}) {
 
   useEffect(() => {
     axios.get(LikeUrl).then((response) =>{
-      if(response.data !== null){
+      if(response.data !== null || response.data !== undefined){
+        console.log(response)
         let likes = Object.keys(response.data);
         let likes_arr = [];
         likes.forEach((key) =>{
@@ -323,9 +324,9 @@ function UserProfile ({theme}) {
         <div className='layout__main'>
           <div className='userProfile__header'>
             <div className='user_details_wrapper'>
-              <div className='userProfile__displayPicture'>
+              <div className='userProfile__displayPicture' data-testid= "proPic">
                 {console.log("inside render :" , profileImage)}
-                {!(profileImage == null) ? <img alt='' src={profileImage} className="displayPicture__image"/> : <p>{!(firstname == null) ? firstname.charAt(0) : null}</p> }
+                {!(profileImage == null) ? <img  alt='' src={profileImage} className="displayPicture__image"/> : <p>{!(firstname == null) ? firstname.charAt(0) : null}</p> }
               </div>
 
               <div className='userProfile__userDetails'>
@@ -358,7 +359,7 @@ function UserProfile ({theme}) {
             </div>
             {/* If this is the current user logged in show the edit button */}
 
-            <div className='userProfile__editButton'>
+            <div className='userProfile__editButton' data-testid ="edit" id="editButton">
               {id === postUserId ? (
                 <ActionButton
                   text='Edit'
@@ -389,7 +390,7 @@ function UserProfile ({theme}) {
           {/*********End of Testing Tabs************* */}
 
           <div className='userProfile__posts'>
-            <div className='layout__main'>
+            <div className='layout__main' id = 'userposts' data-testid = 'user'>
               {value === 'Posts' && (
                 <>
                   {

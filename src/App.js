@@ -9,8 +9,8 @@ import About from "./components/about/About.js";
 import UserProfile from "./components/userprofile/UserProfile.js";
 import Explore from "./components/explore/Explore.js";
 import SharedPost from "./components/newsfeed/SharedPost.js";
-import './index.css'
-import useLocalStorage from 'react-use-localstorage';
+import './index.css';
+import useLocalStorage from "react-use-localstorage";
 
 //App components and paths
 function App() {

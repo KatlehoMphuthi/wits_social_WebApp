@@ -78,4 +78,5 @@ it("Should go to explore", async() => {
     fireEvent.click(screen.getByText(/explore/i));
     waitFor(() => expect(container.querySelector('#resultExplore > div:nth-child(1) > div')).toBeInTheDocument());
 });
+
 })
