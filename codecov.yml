@@ -22,3 +22,5 @@ ignore:
   - "src/components/common"
   - "src/components/common/SidebarMenu.js"
   - "src/components/authentication/Login.js"
+  - "src/components/authentication/Registration.js"
+  - "src/App.js"
