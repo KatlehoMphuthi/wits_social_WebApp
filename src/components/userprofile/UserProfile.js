@@ -137,6 +137,7 @@ function UserProfile ({theme}) {
       setId(response.data.userid)
 
     console.log("from actual : " ,profileImage)
+    console.log("from actual user id : " ,response.data.userid)
     }).catch(console.error)
 
 
@@ -403,12 +404,12 @@ function UserProfile ({theme}) {
                   .reverse()
                   .map(post => (
                     <Post
-                      name={post.name}
+                      name={getUsername(post.userId)}
                       caption={post.caption === '' ? post.text : post.caption }
                       imgUrl={post.imageUrl}
                       time={post.time}
                       postid={post.postid}
-                      profilePictureUrl={post.profilePictureUrl}
+                      profilePictureUrl={getProfilePictureUrl(post.userId)}
                     />
 ))}   
                 </>
@@ -428,7 +429,8 @@ function UserProfile ({theme}) {
               {/*********Display Linked Posts************ */}
               {value === 'Likes' && ( numofLikes !== 0 ?
                 <>
-                  {Final_Likedposts.map(post => (
+                  {Final_Likedposts.slice(0)
+                  .reverse().map(post => (
                     <Post
                       key={post.id}
                       username={post.username}
@@ -438,7 +440,7 @@ function UserProfile ({theme}) {
                       time={post.time}
                       postid={post.id}
                       userid = {post.userId}
-                      profilePictureUrl = {profileImage}
+                      profilePictureUrl = {getProfilePictureUrl(post.userId)}
                     />
                   ))}
                 </>: <p> Users has no Likes </p>
@@ -478,8 +480,6 @@ function UserProfile ({theme}) {
                     />
                   ))}
                 </>: <p>User is currently following no one</p>) }
-
-
             </div>
           </div>
         </div>

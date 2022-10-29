@@ -106,7 +106,7 @@ export default function EditProfileModal({open, onClose, firstname, lastname, bi
 
 
       const onSubmit = data =>{
-       
+      
         //get form from data and upload to firebase
 
         //only upload to firebase if a new file was added
@@ -135,6 +135,9 @@ export default function EditProfileModal({open, onClose, firstname, lastname, bi
           timeout: 2000,
           transition: transitions.SCALE
         });
+      
+       
+      
       } 
     
 
@@ -247,6 +250,9 @@ if(!open) return null
               {...register('bio', { required: false, maxLength: 160 })}
             />
           </Form.Field>
+          {errors.bio && (
+            <p className='text-error'>You have reached the maxinum number of charaters</p>
+          )}
 
             <button type='submit'>Save</button>
         </Form>

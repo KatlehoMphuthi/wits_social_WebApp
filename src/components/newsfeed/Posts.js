@@ -344,7 +344,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePictu
     onClick={toggleComment}/>
     
     <ActionButton
-    text= {'Like  ' + count.current}
+    text= {'Like  '/* + count.current*/}
     Icon = {FavoriteBorderRoundedIcon}
     active = {clicked}
     activeColor = {likeActiveColor}
@@ -352,7 +352,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePictu
     onClick={likePost}/>
 
     <ActionButton
-    text={`Share  ${shareCount}`}
+    text={'Share' /* ${shareCount}`*/}
     Icon = {IosShareRoundedIcon}
     activeColor = {shareActiveColor}
     color = {shareColor}

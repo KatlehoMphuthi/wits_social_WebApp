@@ -39,9 +39,9 @@ function App() {
           <Route exact path="/register" element ={<Register />} />
           <Route  exact path="/reset" element ={<Reset />} />
           <Route exact path="/newsfeed" element ={<Newsfeed test={change} theme={theme}/>} />
-          <Route exact path="/about" element ={<About />} />
+          <Route exact path="/about" element ={<About test={change} theme={theme}/>} />
           <Route exact path="/:userId" element ={<UserProfile theme={theme}/>} />
-          <Route exact path="/explore" element ={<Explore />} />
+          <Route exact path="/explore" element ={<Explore test={change} theme={theme}/>} />
           <Route exact path= "/newsfeed/post/:postid" element = {<SharedPost />}/>
         </Routes>
       </Router>

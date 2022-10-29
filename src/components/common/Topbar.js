@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import { AuthContext}  from "../../AuthProvider";
 import {onValue,ref, set } from "firebase/database";
 import { Link } from "react-router-dom";
+import {faMoon} from '@fortawesome/free-solid-svg-icons';
+import {faSun} from '@fortawesome/free-solid-svg-icons';
 import useLocalStorage from 'react-use-localstorage';
 
 
@@ -127,21 +129,25 @@ return currentUser !== null ?
       </span>}
       </span>
 
-{console.log("theme : ", theme)}
-      <div className="toggle-theme-wrapper">
-
-      <span>🌒</span>
-      <label className="toggle-theme" htmlFor="checkbox">
-        <input
-          type="checkbox"
-          id="checkbox"
-          onChange={change}
-          defaultChecked={ localStorage.getItem("theme") === 'dark'? 'light' : 'dark'}
-        />
-        <div className="slider round"></div>
-      </label>
-      <span>☀️</span>
-    </div>
+        <div className="theme_toggel" onClick={change}>
+         
+       
+     
+        {localStorage.getItem("theme") === 'dark'?
+        
+        <div>
+          <p className="theme_name">Dark</p>
+          <FontAwesomeIcon icon={faMoon} />
+        </div> 
+        :
+        <div>
+          <p className="theme_name">Light</p>
+          <FontAwesomeIcon icon={faSun} />
+        </div> 
+        }
+    
+      </div>
+      
     </div>
   </div>
   )

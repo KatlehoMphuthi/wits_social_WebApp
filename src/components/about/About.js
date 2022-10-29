@@ -5,10 +5,10 @@ import SidebarMenu from "../common/SidebarMenu";
 import RightSideBar from "../common/RightSideBar";
 
 
-function About(){
+function About({test, theme}){
 
     return(<div className="app-container">
-    <Topbar className="navbar"/>
+    <Topbar className="navbar" change={test} theme={theme}/>
     
     <div className="layout">
 
@@ -17,8 +17,8 @@ function About(){
       </div>
 
       <div className="layout__main">
-        <h1>           </h1>
-        <h1 style= {{color: 'blue'}}>WHO ARE WE </h1>
+        <h1>WHO ARE WE</h1>
+        
       <text>
        We are a group of final year  computer science students at Wits university.<br/>
        This project ought to help students communicate with each other. <br/>
