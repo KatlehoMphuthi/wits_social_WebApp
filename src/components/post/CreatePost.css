@@ -27,7 +27,7 @@ line-height: 20px;
 letter-spacing: 0.33984375px;
 text-align: left;
 
-color:#00000099;
+color:var(--text-secondary);
 background:var( --search-textarea);
 border-radius: 8px;
 overflow: hidden;

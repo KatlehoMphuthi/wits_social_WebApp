@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext}  from "../../AuthProvider.js";
 import {onValue,ref, set } from "firebase/database";
 import { Link } from "react-router-dom";
+import useLocalStorage from 'react-use-localstorage';
 
 
 
-export default function Topbar() {
+export default function Topbar({change, theme}) {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
 const [lname, setlname] = useState("");
@@ -109,24 +110,37 @@ return currentUser !== null ?
     </div>
     <div className="topbarRight">
       <span className="topbarLinks" data-testid = "user">
-
-      
       {!(profilePicture == null) ?  <img alt =''
-        className='tweet__author-logo'
+        className='tweet__author-logo topBar_image'
         src={profilePicture}
       /> :
       
-      <p className='tweet__author-logo_image'>
+      <p className='tweet__author-logo_image topBar_image'>
         {fname[0]}{lname[0]}
       </p>}
 
       {<span>
-        <p> 
+        <p > 
         <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
       </p>
       </span>}
-      
       </span>
+
+{console.log("theme : ", theme)}
+      <div className="toggle-theme-wrapper">
+
+      <span>🌒</span>
+      <label className="toggle-theme" htmlFor="checkbox">
+        <input
+          type="checkbox"
+          id="checkbox"
+          onChange={change}
+          defaultChecked={ localStorage.getItem("theme") === 'dark'? 'light' : 'dark'}
+        />
+        <div className="slider round"></div>
+      </label>
+      <span>☀️</span>
+    </div>
     </div>
   </div>
   )

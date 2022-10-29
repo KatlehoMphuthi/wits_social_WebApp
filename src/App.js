@@ -18,7 +18,9 @@ function App() {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
 
-  const switchTheme =() =>{
+  console.log("theme from app.js", localStorage.getItem("theme"))
+  const switchTheme =(e) =>{
+    e.preventDefault()
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme)
     alert(newTheme)
@@ -27,8 +29,6 @@ function App() {
   const change = () =>{
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme)
-    alert(newTheme)
-    alert("in App.js")
   }
 
   return (
@@ -39,7 +39,7 @@ function App() {
           <Route exact path="/"  element ={<Login />} />
           <Route exact path="/register" element ={<Register />} />
           <Route  exact path="/reset" element ={<Reset />} />
-          <Route exact path="/newsfeed" element ={<Newsfeed test={change}/>} />
+          <Route exact path="/newsfeed" element ={<Newsfeed test={change} theme={theme}/>} />
           <Route exact path="/about" element ={<About />} />
           <Route exact path="/:userId" element ={<UserProfile theme={theme}/>} />
           <Route exact path="/explore" element ={<Explore />} />

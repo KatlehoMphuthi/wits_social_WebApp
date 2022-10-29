@@ -13,7 +13,7 @@
  
 
 .actionButton:hover{
-    background-color:var(--acent-dark);
+   opacity: 50%;
 }
 
 .actionButton__text{
@@ -25,4 +25,8 @@ font-size: 14px;
 letter-spacing: 0.15px;
 color: var(--text-secondary);
 
+}
+
+.actionButton__icon{
+    color: var(--text-secondary);
 }
