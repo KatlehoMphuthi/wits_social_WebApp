@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext}  from "../../AuthProvider.js";
 import {onValue,ref, set } from "firebase/database";
 import { Link } from "react-router-dom";
-import useLocalStorage from 'react-use-localstorage';
+
 
 
 
@@ -127,7 +127,7 @@ return currentUser !== null ?
       </span>
 
 {console.log("theme : ", theme)}
-      <div className="toggle-theme-wrapper">
+      <div className="toggle-theme-wrapper" id="theme1">
 
       <span>🌒</span>
       <label className="toggle-theme" htmlFor="checkbox">

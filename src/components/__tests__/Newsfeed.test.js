@@ -160,6 +160,51 @@ describe("Testing Topbar", () => {
     container = null;
 
   });
+  
+  //changing themes 
+  it("should show the toggle button", () =>{
+    let container;  
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    
+    act(() =>{
+      ReactDOM.createRoot(container).render((
+        <AuthContext.Provider value = {{...Props}}>
+          <Router>
+            <Topbar />
+          </Router>
+        </AuthContext.Provider>
+      ));
+    });
+    
+   expect(container.querySelector('#theme1')).toBeVisible();
+
+    document.body.removeChild(container);
+
+    container = null;
+  });
+
+  it("should be functional toggle theme button",() =>{
+    let container;  
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    
+    act(() =>{
+      ReactDOM.createRoot(container).render((
+        <AuthContext.Provider value = {{...Props}}>
+          <Router>
+            <Topbar />
+          </Router>
+        </AuthContext.Provider>
+      ));
+    });
+    
+   expect(container.querySelector('#checkbox')).toBeVisible();
+
+    document.body.removeChild(container);
+
+    container = null;
+  });
 
 });
 

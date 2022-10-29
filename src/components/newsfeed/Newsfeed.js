@@ -9,7 +9,7 @@ import { AuthContext } from '../../AuthProvider.js'
 import SidebarMenu from '../common/SidebarMenu.js'
 import { database } from '../../firebase.js'
 import { onValue, ref } from 'firebase/database'
-import useLocalStorage from 'react-use-localstorage';
+
 
 
 function Newsfeed ({test, theme}) {
