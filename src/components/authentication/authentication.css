@@ -57,11 +57,22 @@
 
 .ui.form > label {
   font-size: 12px;
-  color: var(--accent-dark);
+  color: var(--text-primary) !important;
 }
 
 .ui.form .field>label {
-  color:var(--accent-dark) !important;
+  color:var(--text-primary) !important;
+  
+}
+
+.ui.form .field>input{
+  background-color: var(--foreground) !important;
+  color: var(--text-primary) !important;
+}
+
+.ui.form .field>textarea{
+  background-color: var(--foreground) !important;
+  color: var(--text-primary) !important;
 }
 
 /*-------------- SIGN IN & SIAN UP--------------------*/

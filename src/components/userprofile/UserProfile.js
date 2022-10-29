@@ -481,6 +481,7 @@ function UserProfile ({theme}) {
           </div>
         </div>
         <EditProfileModal
+        theme={theme}
           open={showEditProfileModal}
           onClose={toggelEditProfile}
           userId={postUserId}

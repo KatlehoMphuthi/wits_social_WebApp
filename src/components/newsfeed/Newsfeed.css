@@ -316,7 +316,7 @@ color: var(--text-secondary);
   flex: 0.65;
   min-width: auto;
   overflow-y: scroll;
-  margin-bottom: 7rem;
+  padding-bottom: 7rem;
 }
 
 .layout__right-sidebar{

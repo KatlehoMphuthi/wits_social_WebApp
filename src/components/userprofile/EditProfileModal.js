@@ -13,7 +13,7 @@ import { FirebaseError } from 'firebase/app';
 import { useAlert,positions,transitions } from 'react-alert';
 import ProfilePicture from './ProfilePicture';
 
-export default function EditProfileModal({open, onClose, firstname, lastname, bio,userId, profilePictureUrl}) {
+export default function EditProfileModal({open, onClose, firstname, lastname, bio,userId, profilePictureUrl, theme}) {
  //   console.log("Modal Names", firstname,lasttname, bio )
     const {currentUser} = useContext(AuthContext);
 
@@ -150,7 +150,7 @@ if(!open) return null
   return ReactDom.createPortal(
     <>
     <div className='modal-overlay'></div>
-    <div className='editProfileModal'>
+    <div className='editProfileModal'  data-theme={theme}>
         
         {/**************    Modal Header    ***************/}
         <div className="modal-header">

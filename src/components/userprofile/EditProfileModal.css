@@ -1,4 +1,4 @@
-.editProfileModal {
+#portal .editProfileModal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -16,10 +16,15 @@
   height: 650px;
 }
 
+#portal h3{
+    margin-top: 0;
+}
+
 .modal-header{
     display: flex;
     margin-bottom: 1rem;
     background-color:var(--background) !important;
+    color: var(--text-primary);
 }
 
 .modal-header-right{
