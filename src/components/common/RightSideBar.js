@@ -1,5 +1,5 @@
 
-import Users_Rsidebar from "./Users_Rsidebar";
+import Users_Rsidebar from "./Users_Rsidebar.js";
 
 function RightSideBar(){
    
@@ -13,8 +13,8 @@ function RightSideBar(){
                 <Users_Rsidebar />
                 <Users_Rsidebar />
                 <Users_Rsidebar />
-       
-
+                <Users_Rsidebar />
+                <Users_Rsidebar />
         </div>
             </div>
 

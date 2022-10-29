@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Form, Button } from 'semantic-ui-react'
-import { createUsers } from '../../firebase'
+import { createUsers } from '../../firebase.js'
 import './authentication.css'
 
 export default function Register () {

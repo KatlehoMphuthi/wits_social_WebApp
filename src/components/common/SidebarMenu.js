@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react'
 import { useState, useContext } from 'react'
-import { AuthContext } from '../../AuthProvider'
-import { auth } from '../../firebase'
+import { AuthContext } from '../../AuthProvider.js'
+import { auth } from '../../firebase.js'
 import { useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { NavLink } from 'react-router-dom'
-import ViewStreamRoundedIcon from '@mui/icons-material/ViewStreamRounded'
-import InfoRoundedIcon from '@mui/icons-material/InfoRounded'
-import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import SidebarOption from './SidebarOption'
-import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import ViewStreamRoundedIcon from '@mui/icons-material/ViewStreamRounded.js'
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded.js'
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded.js';
+import SidebarOption from './SidebarOption.js'
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded.js';
 import { Button } from '@material-ui/core'
 import './SidebarMenu.css'
 
-function SidebarMenu ({userid}) {
+function SidebarMenu ({userid, switchTheme, change, theme}) {
   const currentUser  = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -68,6 +68,14 @@ function SidebarMenu ({userid}) {
 </NavLink>
       </div>
 
+     
+
+{/*
+      <button onClick={change}>
+        Tetsing
+      </button>
+
+}     
 
       {/* Button -> Logout */}
       <Button

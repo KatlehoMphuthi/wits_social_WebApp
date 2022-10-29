@@ -5,7 +5,7 @@
     align-items: center;
     padding: 10px 30px;
     gap: 15px;
-    background: #F8F8F8;
+    background: var(--accent-light);
     border-radius: 8px;
     cursor: pointer;
     max-height: 44px;
@@ -13,7 +13,7 @@
  
 
 .actionButton:hover{
-    background-color: lightgrey;
+   opacity: 50%;
 }
 
 .actionButton__text{
@@ -23,6 +23,10 @@ font-weight: 450;
 font-size: 14px;
 /* identical to box height, or 171% */
 letter-spacing: 0.15px;
-color: #343E4B;
+color: var(--text-secondary);
 
+}
+
+.actionButton__icon{
+    color: var(--text-secondary);
 }

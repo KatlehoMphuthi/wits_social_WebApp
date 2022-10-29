@@ -33,9 +33,9 @@
 
 .searchbar {
   width: 100%;
-  border-color: black;
+  border-color:var(--text-primary);
   border-radius: 8px;
-  background: #ECEEF2;
+  background: var(--search-textarea);
   display: flex;
   align-items: center;
   padding-left: 1 rem !important;
@@ -50,8 +50,9 @@
 .searchInput {
   border: none;
   width: 70%;
-  background: #ECEEF2;
+  background:var(--search-textarea);
   padding: 1rem;
+  color: var(--text-secondary);
 }
 
 .searchInput:focus {
@@ -62,8 +63,8 @@
   flex: 4;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  color: black;
+  justify-content: flex-end;
+  color: var(--text-primary);
 }
 
 .topbarLink {
@@ -118,7 +119,7 @@ font-style: normal;
 font-weight: 600;
 font-size: 16px;
 border-radius: 50%;
-color: white;
+color: var(--foreground);
 }
 
 .topbarCenter__backButton{
@@ -129,7 +130,7 @@ color: white;
   position: absolute;
   top: 3.8rem;
   width: 43%;
-  background-color: #ECEEF2;
+  background-color:var(--accent-dark);
   border-radius: 0 0 8px 8px;
 }
 
@@ -137,6 +138,7 @@ color: white;
  padding: 1.5rem !important;
  border-radius: 8px;
  cursor: pointer;
+ background-color: var(--foreground) !important;
 }
 
 .searchbar__result:hover{
@@ -148,5 +150,17 @@ color: white;
 }
 
 .topbarCenter--userprofile:hover{
-  background-color: white !important;
+  background-color: var(--foreground) !important;
+}
+
+.topbarLinks{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topBar_image{
+  margin-right: 0.5rem !important;
+  width: 40px !important;
+  height: 40px !important;
 }

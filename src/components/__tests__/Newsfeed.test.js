@@ -2,10 +2,10 @@ import React from "react";
 import { useContext } from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { waitFor,screen, fireEvent,act} from "@testing-library/react";
-import {AuthContext,AuthProvider} from "../../AuthProvider";
+import {AuthContext} from "../../AuthProvider.js";
 import {  Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from "react-alert-template-mui";
-import Topbar from "../common/Topbar";
+import Topbar from "../common/Topbar.js";
 import ReactDOM from 'react-dom/client';
 import userEvent from "@testing-library/user-event";
 
@@ -159,6 +159,51 @@ describe("Testing Topbar", () => {
 
     container = null;
 
+  });
+  
+  //changing themes 
+  it("should show the toggle button", () =>{
+    let container;  
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    
+    act(() =>{
+      ReactDOM.createRoot(container).render((
+        <AuthContext.Provider value = {{...Props}}>
+          <Router>
+            <Topbar />
+          </Router>
+        </AuthContext.Provider>
+      ));
+    });
+    
+   expect(container.querySelector('#theme1')).toBeVisible();
+
+    document.body.removeChild(container);
+
+    container = null;
+  });
+
+  it("should be functional toggle theme button",() =>{
+    let container;  
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    
+    act(() =>{
+      ReactDOM.createRoot(container).render((
+        <AuthContext.Provider value = {{...Props}}>
+          <Router>
+            <Topbar />
+          </Router>
+        </AuthContext.Provider>
+      ));
+    });
+    
+   expect(container.querySelector('#checkbox')).toBeVisible();
+
+    document.body.removeChild(container);
+
+    container = null;
   });
 
 });

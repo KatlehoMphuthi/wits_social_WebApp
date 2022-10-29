@@ -1,5 +1,5 @@
 import "../common/topbar.css";
-import { database, readData } from "../../firebase"
+import { database, readData } from "../../firebase.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState, } from 'react';
@@ -8,13 +8,13 @@ import Button from "@mui/material/Button";
 import { AuthContext } from "../../AuthProvider";
 import { onValue, ref, set } from "firebase/database";
 import styled from "styled-components";
-import Posts from '../newsfeed/Posts'
-import Post from '../newsfeed/Posts'
-import CreatePost from '../post/CreatePost'
+import Posts from '../newsfeed/Posts.js'
+import Post from '../newsfeed/Posts.js'
+import CreatePost from '../post/CreatePost.js'
 import '../newsfeed//Newsfeed.css'
-import Topbar from '../common/Topbar'
-import RightSideBar from '../common/RightSideBar'
-import SidebarMenu from '../common/SidebarMenu'
+import Topbar from '../common/Topbar.js'
+import RightSideBar from '../common/RightSideBar.js'
+import SidebarMenu from '../common/SidebarMenu.js'
 
 
 const FetchCurrentUserPosts = () => {

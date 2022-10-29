@@ -1,0 +1,26 @@
+/*.profilePicture__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.profilePicture__image_input{
+    display: none;
+}
+
+.profilePicture__wrapper{
+        height: 60px;
+          width: 60px;
+          border: 1px dashed black;
+}
+
+.profilePicture__image{
+    width: 100%;
+            height: 100%;
+            position: acsolute;
+}
+
+*/

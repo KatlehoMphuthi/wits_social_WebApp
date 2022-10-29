@@ -1,19 +1,34 @@
 import React from 'react'
 import { useState, useContext, useEffect, useRef } from 'react'
-import Post from './Posts'
-import CreatePost from '../post/CreatePost'
+import Posts from './Posts.js'
+import CreatePost from '../post/CreatePost.js'
 import './Newsfeed.css'
-import Topbar from '../common/Topbar'
-import RightSideBar from '../common/RightSideBar'
-import { AuthContext } from '../../AuthProvider'
-import SidebarMenu from '../common/SidebarMenu'
-import { database } from '../../firebase'
+import Topbar from '../common/Topbar.js'
+import RightSideBar from '../common/RightSideBar.js'
+import { AuthContext } from '../../AuthProvider.js'
+import SidebarMenu from '../common/SidebarMenu.js'
+import { database } from '../../firebase.js'
 import { onValue, ref } from 'firebase/database'
 
-function Newsfeed () {
-  const  {currentUser}  = useContext(AuthContext)
-  const [posts, setPost] = useState([])
 
+
+function Newsfeed ({test, theme}) {
+ 
+  console.log("theme from app.js", localStorage.getItem("theme"))
+
+  let change = test
+
+  const  {currentUser}  = useContext(AuthContext)
+  const user = JSON.parse(localStorage.getItem('user'))
+  const [posts, setPost] = useState([])
+  let userid;
+  if(user !== null){
+    userid = user.uid
+  }else{
+    if(currentUser !== null){
+      userid = currentUser.uid
+    }
+  }
   const getUsername =(userId) =>{
     let userData;
     if (currentUser !== null) {
@@ -29,7 +44,22 @@ function Newsfeed () {
       return  userData;
   }
 
-  
+  const getProfilePictureUrl =(userId) =>{
+    let profilePictureUrl;
+    if (currentUser !== null) {
+      //Current user reference
+      const userRef = ref(database, 'users/' + userId);
+      
+      onValue(userRef, (snapshot) => {
+        const name = snapshot.val();
+        profilePictureUrl=name.profilePictureUrl;
+      });
+      }
+      return  profilePictureUrl;
+      
+  }
+
+
   const PostsArr = useRef([]);
     //const PostsArr = useRef([]); // create an empty array to store the posts in
     const postRef = ref(database, 'posts/') 
@@ -46,10 +76,11 @@ function Newsfeed () {
             imgUrl: postdata.imageUrl === '' ? '' : postdata.imageUrl,
             name: getUsername(postdata.userId),
             time: postdata.time,
-            id: postdata.postid
+            id: postdata.postid,
+            profilePictureUrl : getProfilePictureUrl(postdata.userId),
+            userid: postdata.userId
           }
 
-          //console.log('username :', getUsername(postdata.userId))
 
           PostsArr.current.push(post)
         });
@@ -64,15 +95,15 @@ function Newsfeed () {
   
 
   return (
-    <div className='app-container'>
-      <Topbar className='navbar' />
+    <div className='app-container' >
+      <Topbar className='navbar'  change={change} theme={theme}/>
 
       <div className='layout'>
-          <SidebarMenu userid='kgotso'/>
+          <SidebarMenu userid='kgotso' change={change}/>
         <div className='layout__main'>
-          <CreatePost />
+          <CreatePost username={getUsername(userid)} profilePictureUrl={getProfilePictureUrl(userid)} />
           {posts.map(post => (
-            <Post
+            <Posts
               key={post.id}
               username={post.username}
               name={post.name}
@@ -80,6 +111,8 @@ function Newsfeed () {
               imgUrl={post.imgUrl}
               time={post.time}
               postid={post.id}
+              userid = {post.userid}
+              profilePictureUrl={post.profilePictureUrl}
             />
           ))}
         </div>
@@ -89,4 +122,4 @@ function Newsfeed () {
   )
 }
 
-export default Newsfeed
+export default Newsfeed;

@@ -1,9 +1,9 @@
 import React from "react";
 import {BrowserRouter as Router} from 'react-router-dom';
 import { waitFor,screen, fireEvent,act} from "@testing-library/react";
-import {AuthContext,AuthProvider} from "../../AuthProvider";
+import {AuthContext,AuthProvider} from "../../AuthProvider.js";
 import ReactDOM from 'react-dom/client';
-import SidebarMenu from "../common/SidebarMenu";
+import SidebarMenu from "../common/SidebarMenu.js";
 const Props = {
     currentUser:{
       "uid": "dSLFBHzO1ub2y08A6QJuwGmFHki2",
@@ -57,12 +57,12 @@ afterEach(() =>{
 //logout
 it("Show logout button", () =>{
 
-    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('button',{name: /logout/i})).toBeInTheDocument();
 
 });
 it("Should logout", async() => {
     const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button',{name: /logout/i}));
     waitFor(() => expect(alertMock).toBeCalled());
 });
 
@@ -78,4 +78,5 @@ it("Should go to explore", async() => {
     fireEvent.click(screen.getByText(/explore/i));
     waitFor(() => expect(container.querySelector('#resultExplore > div:nth-child(1) > div')).toBeInTheDocument());
 });
+
 })

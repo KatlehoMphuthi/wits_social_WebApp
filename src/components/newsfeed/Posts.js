@@ -5,35 +5,35 @@ import React, { useEffect, useState, useContext ,useRef} from 'react'
 
 import './likestyle.scss'
 //Authprovider import
-import { AuthContext } from '../../AuthProvider'
+import { AuthContext } from '../../AuthProvider.js'
 
 //navigation import
 import { Link } from "react-router-dom";
 // import Explore from '../components/newsfeed'
-import Button from '../common/Button'
+import Button from '../common/Button.js'
 //Firebase imports
-import { database } from '../../firebase'
+import { database } from '../../firebase.js'
 
 //comment import
-import { set, ref, push, onValue, DataSnapshot } from 'firebase/database'
+import { set, ref, push, onValue} from 'firebase/database'
 
-import Comment from './Comment'
+import Comment from './Comment.js'
 
 //style and functionality of the button
-import ActionButton from './ActionButton' 
-import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
-import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import FacebookIcon from '@mui/icons-material/Facebook';
+import ActionButton from './ActionButton.js' 
+import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded.js';
+import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded.js';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded.js';
+import TwitterIcon from '@mui/icons-material/Twitter.js';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp.js';
+import FacebookIcon from '@mui/icons-material/Facebook.js';
 
 //FacebookIcon,TwitterIcon,WhatsappIcon
 //Share buttons
 import { FacebookShareButton, WhatsappShareButton, TwitterShareButton,
            } from 'react-share';
 
-function Posts ({ username, name, caption, imgUrl, time, postid }) {
+function Posts ({ username, name, caption, imgUrl, time, postid, hasProfilePicture, profilePictureUrl, userid }) {
 
     //===================
 
@@ -106,6 +106,12 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     
     
     
+  }
+
+ const getColour = () => {
+    let colourArray = ['#ca12db','#39901c','#949ae9','#ea4c18', '#98CE00', '#16E0BD', '#F18701', '#F35B04' ]
+    let colourPicker = Math.floor(Math.random() * colourArray.length) + 1;
+    return colourArray[colourPicker]
   }
 
   //Toggle comments section
@@ -213,7 +219,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
     } else {
       setTime(Math.floor(timePosted / DAY_MILLIS) + ' days ago')
     }
-  }, [timeCreated])
+  }, [time,MINUTE_MILLIS,DAY_MILLIS,HOUR_MILLIS])
 
   //Get id of a clicked post
   useEffect(() => {
@@ -245,7 +251,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       setComments(CommentsArr.reverse())
       
     }
-  }, [showCommentBox]);
+  }, [showCommentBox,postid]);
 
 
   useEffect(() =>{
@@ -288,7 +294,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
       },{onlyOnce:true});
 
     }
-  },[liked,clicked,likeActiveColor,likeColor,currentUser]);
+  },[currentUser]);
 
 
 
@@ -296,17 +302,25 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
   return (
     <div className='tweet' data-testid="post">
       
-      <Link to={`/${name}`}>
-      <img 
+      <Link to={`/${userid}`}>
+
+      {profilePictureUrl !== undefined ?  <img alt =''
         className='tweet__author-logo'
-        src='https://source.unsplash.com/random/100*100'
-      />
+        src={profilePictureUrl}
+      /> :
+      <p className='tweet__author-logo_image'>
+        {name !== undefined ? name[0] : ''}
+      </p>
+      
+      }
+
+     
       </Link>
       <div className='tweet__main'>
         <div className='tweet__header'>
           <div className='tweet__author-name'>{username}</div>
           <div className='tweet__author-slug'>
-            <Link to={`/${name}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
+            <Link to={`/${userid}`} state={{from:'post', clickedpost:clickedPostId, username:{name}}}>{name}</Link>
             </div>
           <div className='tweet__publish-time'>{timeCreated}</div>
          
@@ -314,7 +328,7 @@ function Posts ({ username, name, caption, imgUrl, time, postid }) {
         
         <div className='tweet__content'>
           {caption}
-          <img className='tweet__image' src={imgUrl} />
+          <img className='tweet__image' alt ='' src={imgUrl} />
           <Link to ={`/newsfeed/post/${clickedPostId}`} state ={{from:'post',clickedpost:clickedPostId}}></Link> 
         </div>
         

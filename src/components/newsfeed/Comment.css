@@ -12,8 +12,8 @@ p{
     margin:  1rem 0;
     padding: 1rem;
     border-radius: 0.5rem;
-    background-color: #DFF3FF;
-    color: #08A0F7;
+    background-color:var(--accent-light);
+    color: var(--accent);
 }
 
 .comment__username{

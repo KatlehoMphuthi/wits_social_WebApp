@@ -1,20 +1,21 @@
 import "./topbar.css";
-import {database, readData} from "../../firebase"
+import {database, readData} from "../../firebase.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useContext, useEffect, useState, } from 'react';
 import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { AuthContext}  from "../../AuthProvider";
+import { AuthContext}  from "../../AuthProvider.js";
 import {onValue,ref, set } from "firebase/database";
 import { Link } from "react-router-dom";
 
 
 
-export default function Topbar() {
+
+export default function Topbar({change, theme}) {
 const {currentUser} = useContext(AuthContext);
 const [fname, setfname] = useState("");
 const [lname, setlname] = useState("");
+const [profilePicture,setProfilePicture] = useState("");
 //const navigate = useNavigate();
 const [filtered, setFiltered] = useState([]);
 const [word, setWord] = useState("");
@@ -58,7 +59,8 @@ useEffect(()=>{
     onValue(ref(database,`users/${currentUser.uid}`),(DataSnapshot)=>{
         const data = DataSnapshot.val();
         setfname(data.firstname);
-        setlname(data.lastName);               
+        setlname(data.lastName);
+        setProfilePicture(data.profilePictureUrl);               
     });
   fetchUsers();
 
@@ -107,12 +109,38 @@ return currentUser !== null ?
     </div>}
     </div>
     <div className="topbarRight">
-      <div className="topbarLinks" data-testid = "user">
-      {<span> <p> <span className="profile__initals" >{fname[0]}{lname[0]} </span>
-        <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
-      </p></span>}
+      <span className="topbarLinks" data-testid = "user">
+      {!(profilePicture == null) ?  <img alt =''
+        className='tweet__author-logo topBar_image'
+        src={profilePicture}
+      /> :
       
-      </div>
+      <p className='tweet__author-logo_image topBar_image'>
+        {fname[0]}{lname[0]}
+      </p>}
+
+      {<span>
+        <p > 
+        <Link to={`/${fname}`} state={{from:'topbar', clickedpost:'', username:{fname}}}>{fname} {lname}</Link>
+      </p>
+      </span>}
+      </span>
+
+{console.log("theme : ", theme)}
+      <div className="toggle-theme-wrapper" id="theme1">
+
+      <span>🌒</span>
+      <label className="toggle-theme" htmlFor="checkbox">
+        <input
+          type="checkbox"
+          id="checkbox"
+          onChange={change}
+          defaultChecked={ localStorage.getItem("theme") === 'dark'? 'light' : 'dark'}
+        />
+        <div className="slider round"></div>
+      </label>
+      <span>☀️</span>
+    </div>
     </div>
   </div>
   )
