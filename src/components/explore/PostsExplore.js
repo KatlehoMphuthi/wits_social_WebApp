@@ -4,15 +4,9 @@ import cn from 'classnames'
 import '../newsfeed/likestyle.scss'
 import { AuthContext } from '../../AuthProvider.js'
 import { useNavigate } from 'react-router-dom'
-import { Link } from "react-router-dom";
-import Button from '../common/Button.js'
 import { database } from '../../firebase.js'
 import { set, ref, push, onValue } from 'firebase/database'
-import Comment from '../newsfeed/Comment.js'
-import ActionButton from '../newsfeed/ActionButton.js'
-import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded.js';
-import IosShareRoundedIcon from '@mui/icons-material/IosShareRounded.js';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded.js';
+
 
 
 const LikeButton = () => {
