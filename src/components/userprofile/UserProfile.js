@@ -402,7 +402,7 @@ function UserProfile ({theme}) {
                   posts.slice(0)
                   .reverse()
                   .map(post => (
-                    <Post
+                    <Posts
                       name={getUsername(post.userId)}
                       caption={post.caption === '' ? post.text : post.caption }
                       imgUrl={post.imageUrl}
