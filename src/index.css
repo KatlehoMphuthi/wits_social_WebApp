@@ -21,6 +21,7 @@
   --text-tertiary:#7890A7;
   --text-main:rgba(0, 0, 0, 0.6);
   --accent: #1b94e0;
+  --accent2: green;
   
 }
 
@@ -31,6 +32,7 @@
   --foreground :  #101011;
   --twitter-color: #2185d0;
   --search-textarea :#16181C;
+  --accent2: purple;
 
   --text-primary: white;
   --text-secondary: white;
@@ -151,5 +153,9 @@ h1 {
 
 body, .App{
   background-color:var(--background);
+}
+
+li{
+  color: var(--text-secondary);
 }
 
