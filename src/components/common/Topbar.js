@@ -127,7 +127,7 @@ return currentUser !== null ?
       </span>}
       </span>
 
-        <div className="theme_toggel" onClick={switchTheme}>
+        <div className="theme_toggel" onClick={switchTheme} id = 'theme1'>
          
        
      

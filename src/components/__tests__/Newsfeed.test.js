@@ -199,7 +199,7 @@ describe("Testing Topbar", () => {
       ));
     });
     
-   expect(container.querySelector('#checkbox')).toBeVisible();
+   expect(container.querySelector('#theme1')).toBeVisible();
 
     document.body.removeChild(container);
 
