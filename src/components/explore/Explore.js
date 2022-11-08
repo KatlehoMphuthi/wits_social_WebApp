@@ -12,7 +12,7 @@ import { onValue, ref, query } from 'firebase/database'
 import PostsExplore from './PostsExplore.js'
 import './explore.css'
 
-function Explore() {
+function Explore({switchTheme, theme}) {
   const { currentUser } = useContext(AuthContext)
   const [posts, setPost] = useState([])
 
@@ -47,7 +47,7 @@ function Explore() {
 
   return (
     <div className='app-container'>
-      <Topbar className='navbar' />
+      <Topbar className='navbar' switchTheme={switchTheme} theme={theme} />
 
       <div className='layout'>
           <SidebarMenu />

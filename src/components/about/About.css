@@ -1,0 +1,27 @@
+h1{
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 700;
+font-size: 24px;
+line-height: 31px;
+/* identical to box height, or 129% */
+
+letter-spacing: 0.650273px;
+
+color: var(--accent);
+margin-bottom: 0.5rem;
+}
+
+p{
+    color: var(--text-secondary);
+    font-size: 15px;
+    font-weight: 700;  
+}
+
+section{
+    margin-top: 1rem;
+}
+
+a{
+    color: var(--accent) !important;
+}

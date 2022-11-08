@@ -6,6 +6,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  margin-top: 0.5rem;
   background-color: inherit;
 }
 
@@ -71,6 +72,12 @@
   margin-right: 10px;
   font-size: 14px;
   cursor: pointer;
+}
+
+.topbarLinks p a{
+  font-size: 15px;
+  font-weight: 700;
+
 }
 
 .topbarIcons {
@@ -163,4 +170,116 @@ color: var(--foreground);
   margin-right: 0.5rem !important;
   width: 40px !important;
   height: 40px !important;
+}
+
+ /* Custom Dark Mode Toggle Element */
+
+ .toggle-theme-wrapper {
+    
+}
+
+.theme_toggel p{
+ margin: 0;
+ padding: 0 1.5rem;
+ display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 700;
+
+}
+
+.theme_toggel div:hover{
+  background-color: var(--accent);
+  transition: background-color 0.2s ease-out;
+}
+
+.theme_toggel >div{
+  padding: 0.4rem;
+  border-radius: 1.6rem;
+  display: flex;
+  background-color: var(--foreground);
+  color: var(--text-primary);
+}
+
+.theme_toggel {
+  margin-left: 2.5rem;
+  cursor: pointer;
+}
+
+.fa-moon, .fa-sun{
+  background-color: var(--background);
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+}
+
+.theme_toggel > .MuiSvgIcon-root{
+  background-color: black !important;
+}
+
+.theme_toggel .theme_icon{
+  background: red;
+  color: white;
+  padding: 0.2rem;
+}
+
+.toggle-theme-wrapper span {
+  font-size: 28px;
+  margin: 0 4px;
+}
+
+.toggle-theme {
+  position: relative;
+  display: inline-block;
+  height: 34px;
+  width: 60px;
+}
+
+.toggle-theme input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  position: absolute;
+  cursor: pointer;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  transition: 0.2s;
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: 0.4s;
+  width: 26px;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+input:checked + .slider {
+  background-color: var(--accent);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+.fa-magnifying-glass{
+  color: var(--text-secondary);
 }

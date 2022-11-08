@@ -13,7 +13,7 @@ import { FirebaseError } from 'firebase/app';
 import { useAlert,positions,transitions } from 'react-alert';
 import ProfilePicture from './ProfilePicture.js';
 
-export default function EditProfileModal({open, onClose, firstname, lastname, bio,userId, profilePictureUrl}) {
+export default function EditProfileModal({open, onClose, firstname, lastname, bio,userId, profilePictureUrl, theme}) {
  //   console.log("Modal Names", firstname,lasttname, bio )
     const {currentUser} = useContext(AuthContext);
 
@@ -106,7 +106,7 @@ export default function EditProfileModal({open, onClose, firstname, lastname, bi
 
 
       const onSubmit = data =>{
-       
+      
         //get form from data and upload to firebase
 
         //only upload to firebase if a new file was added
@@ -141,8 +141,8 @@ if(!open) return null
 
   return ReactDom.createPortal(
     <>
-    <div className='modal-overlay' ></div>
-    <div className='editProfileModal' id='editprofile'>
+    <div className='modal-overlay'></div>
+    <div className='editProfileModal'  data-theme={theme} id ='editprofile'>
         
         {/**************    Modal Header    ***************/}
         <div className="modal-header">
@@ -242,6 +242,9 @@ if(!open) return null
               {...register('bio', { required: false, maxLength: 160 })}
             />
           </Form.Field>
+          {errors.bio && (
+            <p className='text-error'>You have reached the maxinum number of charaters</p>
+          )}
 
             <button type='submit'>Save</button>
         </Form>

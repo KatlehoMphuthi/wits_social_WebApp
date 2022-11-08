@@ -21,8 +21,6 @@ function UserProfile ({theme}) {
 
   const POSTS_URL = "https://sdpwits-social-default-rtdb.firebaseio.com/posts.json"
   
-
-
   //Global
   const { currentUser } = useContext(AuthContext) //get the current user.
   const [posts, setPost] = useState([])
@@ -137,6 +135,7 @@ function UserProfile ({theme}) {
       setId(response.data.userid)
 
     console.log("from actual : " ,profileImage)
+    console.log("from actual user id : " ,response.data.userid)
     }).catch(console.error)
 
 
@@ -181,7 +180,7 @@ function UserProfile ({theme}) {
           postsB.push(postsA[i]);
         }
       }
-      setPost(postsB.reverse())
+      setPost(postsB)
     })
   },[postUserId])
 
@@ -216,7 +215,7 @@ function UserProfile ({theme}) {
           })
         })
         console.log(likes_arr);
-        setFinalLikedPost(likes_arr.reverse())
+        setFinalLikedPost(likes_arr)
         
       }
       else{
@@ -403,13 +402,13 @@ function UserProfile ({theme}) {
                   posts.slice(0)
                   .reverse()
                   .map(post => (
-                    <Posts
-                      name={post.name}
+                    <Post
+                      name={getUsername(post.userId)}
                       caption={post.caption === '' ? post.text : post.caption }
                       imgUrl={post.imageUrl}
                       time={post.time}
                       postid={post.postid}
-                      profilePictureUrl={post.profilePictureUrl}
+                      profilePictureUrl={getProfilePictureUrl(post.userId)}
                     />
 ))}   
                 </>
@@ -439,7 +438,7 @@ function UserProfile ({theme}) {
                       time={post.time}
                       postid={post.id}
                       userid = {post.userId}
-                      profilePictureUrl = {profileImage}
+                      profilePictureUrl = {getProfilePictureUrl(post.userId)}
                     />
                   ))}
                 </>: <p> Users has no Likes </p>
@@ -479,12 +478,11 @@ function UserProfile ({theme}) {
                     />
                   ))}
                 </>: <p>User is currently following no one</p>) }
-
-
             </div>
           </div>
         </div>
         <EditProfileModal
+        theme={theme}
           open={showEditProfileModal}
           onClose={toggelEditProfile}
           userId={postUserId}
